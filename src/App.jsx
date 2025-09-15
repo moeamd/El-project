@@ -6,6 +6,7 @@ import Footer from "./Components/Footer";
 import Home from "./Pages/Home";
 import NotFound from "./Pages/NotFound";
 import { NewCourse } from "./Pages/NewCourse";
+HEAD
 import { MainDashboard } from "./Dashboard/MainDahsbord";
 
 function App() {
