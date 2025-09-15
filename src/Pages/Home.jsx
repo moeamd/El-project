@@ -1,8 +1,14 @@
-import React from 'react'
+import Banner from "../Components/BannerComponent";
+import JoinComponent from "../Components/JoinComponent";
 
- const Home = () => {
+function Home() {
   return (
-    <div>Home</div>
-  )
+    <>
+      <Banner />
+      <JoinComponent />
+    </>
+  );
 }
-export default Home
+
+export default Home;
+
