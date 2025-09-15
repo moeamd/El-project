@@ -6,6 +6,8 @@ import Home from "./Pages/Home";
 import NotFound from "./Pages/NotFound";
 import { NewCourse } from "./Pages/NewCourse";
 import {  MainDashboard } from "./Dashboard/MainDahsbord";
+import  InstructorSignUp  from "./Pages/Instructor-signup";
+import Checkout from "./Pages/Checkout";
 
 function App() {
   return (
@@ -15,7 +17,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/newCourse" element={<NewCourse />} />
         <Route path="/MainDahsbord" element={<MainDashboard />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/instructorsignup" element={<InstructorSignUp/>} />
+        <Route path="/checkout" element={<Checkout />} />
+         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </>
