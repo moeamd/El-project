@@ -1,9 +1,9 @@
-// MainDashboard.js
+// CoursesDahsbord.js
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourses } from "../features/courses/coursesSlice";
 
-export const MainDashboard = () => {
+export const CoursesDahsbord = () => {
   const dispatch = useDispatch();
   const { course, isLoading, error } = useSelector((state) => state.course);
   console.log(course);
@@ -26,3 +26,6 @@ export const MainDashboard = () => {
     </div>
   );
 };
+
+
+
