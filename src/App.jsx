@@ -1,3 +1,4 @@
+
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./Components/Navbar";
@@ -5,7 +6,7 @@ import Footer from "./Components/Footer";
 import Home from "./Pages/Home";
 import NotFound from "./Pages/NotFound";
 import { NewCourse } from "./Pages/NewCourse";
-import {  MainDashboard } from "./Dashboard/MainDahsbord";
+import { MainDashboard } from "./Dashboard/MainDahsbord";
 
 function App() {
   return (
