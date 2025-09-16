@@ -10,6 +10,7 @@ import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
 import InstructorSignUp from "./Pages/Instructor-signup";
 import Checkout from "./Pages/Checkout";
+import { MainDashboard } from "./Dashboard/MainDashboard";
 
 
 function App() {
@@ -19,11 +20,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/newCourse" element={<NewCourse />} />
-        <Route path="/MainDahsbord" element={<CoursesDahsbord />} />
+        <Route path="/CoursesDahsbord" element={<CoursesDahsbord />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/MainDahsbord" element={<MainDashboard />} /> */}
-         <Route path="/instructorsignup" element={<InstructorSignUp/>} />
+        <Route path="/MainDahsbord" element={<MainDashboard />} />
+        <Route path="/instructorsignup" element={<InstructorSignUp/>} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
