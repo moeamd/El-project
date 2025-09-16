@@ -20,6 +20,9 @@ function App() {
         <Route path="/MainDahsbord" element={<CoursesDahsbord />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/MainDahsbord" element={<MainDashboard />} />
+         <Route path="/instructorsignup" element={<InstructorSignUp/>} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
