@@ -8,6 +8,8 @@ import { NewCourse } from "./Pages/NewCourse";
 import {  CoursesDahsbord } from "./Dashboard/CoursesDahsbord";
 import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
+import InstructorSignUp from "./Pages/Instructor-signup";
+import Checkout from "./Pages/Checkout";
 
 
 function App() {
@@ -20,7 +22,7 @@ function App() {
         <Route path="/MainDahsbord" element={<CoursesDahsbord />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/MainDahsbord" element={<MainDashboard />} />
+        {/* <Route path="/MainDahsbord" element={<MainDashboard />} /> */}
          <Route path="/instructorsignup" element={<InstructorSignUp/>} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="*" element={<NotFound />} />

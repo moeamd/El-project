@@ -18,6 +18,7 @@ export default function InstructorSignUp({ isOpen, onClose }) {
             linkedin: "",
             image: null,
             status: false,
+            courses: [],
         },
         onSubmit: async (values) => {
             setError("");
@@ -97,8 +98,6 @@ export default function InstructorSignUp({ isOpen, onClose }) {
                 </h2>
                 <p className="text-center text-gray-700 mt-2">
                     Your account is under review. We will get back to you shortly.
-
-
                 </p>
             </div>
         }
