@@ -31,7 +31,7 @@ const instructorsSlice = createSlice({
       })
       .addCase(getInstructors.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.course = action.payload;
+        state.instructors  = action.payload;
       })
       .addCase(getInstructors.rejected, (state, action) => {
         state.isLoading = false;

@@ -16,19 +16,18 @@ import { MainDashboard } from "./Dashboard/MainDashboard";
 function App() {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/newCourse" element={<NewCourse />} />
-        <Route path="/CoursesDahsbord" element={<CoursesDahsbord />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/MainDahsbord" element={<MainDashboard />} />
+        <Route path="/MainDashboard/*" element={<MainDashboard />} />
         <Route path="/instructorsignup" element={<InstructorSignUp/>} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
