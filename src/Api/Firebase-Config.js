@@ -6,6 +6,7 @@ import {
   collection,
   getDocs,
   addDoc,
+  setDoc,
   updateDoc,
   deleteDoc,
   doc
@@ -58,7 +59,7 @@ export {
   auth,
   storage,
   // Firestore
-  collection, getDocs, addDoc, updateDoc, deleteDoc, doc,
+  collection, getDocs, addDoc, setDoc, updateDoc, deleteDoc, doc,
   // Auth
   createUserWithEmailAndPassword, signInWithEmailAndPassword,
   sendEmailVerification, updateProfile, signOut, onAuthStateChanged,

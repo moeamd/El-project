@@ -1,19 +1,34 @@
-
-import React, { useState } from "react";
-import { ShoppingCartIcon, BellIcon } from '@heroicons/react/24/solid';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { ShoppingCartIcon, BellIcon } from "@heroicons/react/24/solid";
 import profileImg from "../assets/images/profileImage.png";
 import logoImg from "../assets/images/logo.png";
 import ProfilePopup from "./ProfilePopup";
-
+import {
+  fetchCurrentUser,
+  selectCurrentUser,
+} from "../features/auth/currentUserSlice";
+import LoadingSpinner from "./loading-spinner";
+import { Navigate } from "react-router-dom";
 function Navbar() {
   const [showPopup, setShowPopup] = useState(false);
 
-  const [currentUser, setCurrentUser] = useState({
-    name: "Amal Salah",
-    email: "amalsalah00945@gmail.com"
-  });
+  const { user, isLoading, error } = useSelector(selectCurrentUser);
 
-  const togglePopup = () => setShowPopup(prev => !prev);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchCurrentUser());
+  }, [dispatch]);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+  // const [currentUser, setCurrentUser] = useState({
+  //   name: "Amal Salah",
+  //   email: "amalsalah00945@gmail.com",
+  // });
+
+  const togglePopup = () => setShowPopup((prev) => !prev);
 
   return (
     <nav className="bg-transparent text-black px-6 md:px-12 py-4 flex justify-between items-center shadow-md  mb-9 absolute top-0 z-20 w-[100%]">
@@ -25,7 +40,6 @@ function Navbar() {
 
       {/* Items */}
       <div className="flex items-center gap-6 relative">
-
         <span className="cursor-pointer font-medium hover:underline hidden sm:inline">
           Become Instructor
         </span>
@@ -46,13 +60,26 @@ function Navbar() {
             {/* Popup */}
             {showPopup && (
               <div className="absolute top-full right-0 mt-1">
-                <ProfilePopup
-                  show={showPopup}
-                  userName={currentUser.name}
-                  userEmail={currentUser.email}
-                />
+                {user && (
+                  <ProfilePopup
+                    show={showPopup}
+                    userName={user.displayName || "User"}
+                    userEmail={user.email || ""}
+                  />
+                )}
               </div>
             )}
+          </div>
+
+          <div>
+            <button
+              onClick={() => {
+                Navigate("login");
+              }}
+              className="border-2 rounded-xl py-1.5 px-3 font-bold hover:bg-[#3DCBB1] hover:text-white hover:border-0"
+            >
+              Login
+            </button>
           </div>
         </div>
       </div>
@@ -61,4 +88,3 @@ function Navbar() {
 }
 
 export default Navbar;
-

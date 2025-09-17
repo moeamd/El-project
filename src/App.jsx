@@ -5,13 +5,13 @@ import Footer from "./Components/Footer";
 import Home from "./Pages/Home";
 import NotFound from "./Pages/NotFound";
 import { NewCourse } from "./Pages/NewCourse";
-import {  CoursesDahsbord } from "./Dashboard/CoursesDahsbord";
+import { CoursesDahsbord } from "./Dashboard/CoursesDahsbord";
 import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
 import InstructorSignUp from "./Pages/Instructor-signup";
 import Checkout from "./Pages/Checkout";
 import { MainDashboard } from "./Dashboard/MainDashboard";
-
+import UserProfile from "./Components/UserProfile";
 
 function App() {
   return (
@@ -24,8 +24,9 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/MainDahsbord" element={<MainDashboard />} />
-        <Route path="/instructorsignup" element={<InstructorSignUp/>} />
+        <Route path="/instructorsignup" element={<InstructorSignUp />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/userProfile" element={<UserProfile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
