@@ -9,16 +9,16 @@ import {
   selectCurrentUser,
 } from "../features/auth/currentUserSlice";
 import LoadingSpinner from "./loading-spinner";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Navbar() {
   const [showPopup, setShowPopup] = useState(false);
 
   const { user, isLoading, error } = useSelector(selectCurrentUser);
-  console.log(user);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchCurrentUser());
   }, [dispatch]);
@@ -26,28 +26,29 @@ function Navbar() {
   if (isLoading) {
     return <LoadingSpinner />;
   }
-  // const [currentUser, setCurrentUser] = useState({
-  //   name: "Amal Salah",
-  //   email: "amalsalah00945@gmail.com",
-  // });
 
   const togglePopup = () => setShowPopup((prev) => !prev);
 
   return (
-    <nav className="bg-transparent text-black px-6 md:px-12 py-4 flex justify-between items-center shadow-md  mb-9 absolute top-0 z-20 w-[100%]">
+    <nav className="bg-transparent text-black px-6 md:px-12 py-4 flex justify-between items-center shadow-md mb-9 absolute top-0 z-20 w-full">
       {/* Logo */}
-      <div className="flex items-center gap-2 font-bold text-xl">
-        <img src={logoImg} alt="Logo" className="w-10 h-10 object-cover" />
-        <span>MyCourse.io</span>
-      </div>
+      <Link to="/">
+        <div className="flex items-center gap-2 font-bold text-xl">
+          <img src={logoImg} alt="Logo" className="w-10 h-10 object-cover" />
+          <span>MyCourse.io</span>
+        </div>
+      </Link>
 
       {/* Items */}
       <div className="flex items-center gap-6 relative">
         {!user && (
-          <span className="cursor-pointer font-medium hover:underline hidden sm:inline">
-            Become Instructor
-          </span>
+          <Link to="instructorsignup">
+            <span className="cursor-pointer font-medium hover:underline hidden sm:inline">
+              Become Instructor
+            </span>
+          </Link>
         )}
+
         <div className="flex items-center gap-4 relative">
           {user && (
             <>
@@ -65,13 +66,11 @@ function Navbar() {
                 {/* Popup */}
                 {showPopup && (
                   <div className="absolute top-full right-0 mt-1">
-                    {user && (
-                      <ProfilePopup
-                        show={showPopup}
-                        userName={user.displayName || "User"}
-                        userEmail={user.email || ""}
-                      />
-                    )}
+                    <ProfilePopup
+                      show={showPopup}
+                      userName={user.displayName || "User"}
+                      userEmail={user.email || ""}
+                    />
                   </div>
                 )}
               </div>
@@ -81,9 +80,7 @@ function Navbar() {
           {!user && (
             <div>
               <button
-                onClick={() => {
-                  navigate("/login");
-                }}
+                onClick={() => navigate("/login")}
                 className="border-2 rounded-xl py-1.5 px-3 font-bold hover:bg-[#3DCBB1] focus:bg-[#48a392]"
               >
                 Login
