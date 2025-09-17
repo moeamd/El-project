@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { logOut } from "../features/auth/auth";
 
 function ProfilePopup({ show, userName, userEmail }) {
   if (!show) return null;
 
   return (
-    <div className="absolute right-0 mt-2 w-48 bg-white rounded shadow-lg border border-gray-200 z-50">
+    <div className="absolute right-0 mt-2  bg-white rounded shadow-lg border border-gray-200 z-50">
       {/* Name & Email */}
       <Link
         to="/MainProfile"
@@ -41,7 +42,9 @@ function ProfilePopup({ show, userName, userEmail }) {
       </div>
 
       {/* Logout */}
-      <Link to="/logout" className="block p-2 text-red-500 hover:underline">
+      <Link to="/" className="block p-2 text-red-500 hover:underline " 
+      onClick={logOut}
+      >
         Logout
       </Link>
     </div>

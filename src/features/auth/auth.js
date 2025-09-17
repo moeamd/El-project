@@ -14,7 +14,10 @@ import {
     collection,
     addDoc,
     db,
+    setDoc,
+    doc,
 } from "../../Api/Firebase-Config";
+import { supabase } from "../../Api/supabase";
 
 async function signUp(user) {
 
@@ -125,9 +128,11 @@ async function addUser(user, createdWith) {
             email: user.email,
             displayName: user.displayName || "",
             photoURL: user.photoURL || "",
-            createdAt: new Date(),
             createdWith: createdWith,
             createdAt: new Date(),
+            wishList:[],
+            
+            block:false
         };
 
         await addDoc(collection(db, 'users'), cleanedUser);
@@ -138,4 +143,57 @@ async function addUser(user, createdWith) {
     }
 }
 
-export { signUp, logIn, resetPassword, addUser, logOut, getCurrentUser, signInWithGoogle, signInWithGithub };
+async function updateUser(updates) {
+    try {
+        const current = auth.currentUser || await getCurrentUser().catch(() => null);
+        if (!current) throw new Error("AUTH_REQUIRED");
+
+        // Optionally upload photo file to Supabase Storage
+        let uploadedPhotoURL;
+        if (updates?.photoFile instanceof Blob) {
+            const objectPath = `users/${current.uid}/profile.jpg`;
+            const { error: uploadError } = await supabase
+                .storage
+                .from('avatars')
+                .upload(objectPath, updates.photoFile, {
+                    upsert: true,
+                    contentType: updates.photoFile.type || 'image/jpeg'
+                });
+            if (uploadError) throw uploadError;
+            const { data } = supabase.storage.from('avatars').getPublicUrl(objectPath);
+            uploadedPhotoURL = data?.publicUrl;
+        }
+
+        // Update Auth profile if name or photo changed
+        const shouldUpdateName = typeof updates?.displayName === 'string' && updates.displayName !== current.displayName;
+        if (shouldUpdateName || uploadedPhotoURL) {
+            await updateProfile(current, {
+                ...(shouldUpdateName ? { displayName: updates.displayName } : {}),
+                ...(uploadedPhotoURL ? { photoURL: uploadedPhotoURL } : {}),
+            });
+        }
+
+        const userRef = doc(db, 'users', current.uid);
+        const payload = {
+            uid: current.uid,
+            email: typeof updates?.email === 'string' && updates.email ? updates.email : current.email,
+            name: typeof updates?.displayName === 'string' ? updates.displayName : (current.displayName || ""),
+            phone: typeof updates?.phone === 'string' ? updates.phone : undefined,
+            bio: typeof updates?.bio === 'string' ? updates.bio : undefined,
+            photoURL: uploadedPhotoURL !== undefined ? uploadedPhotoURL : (current.photoURL || ""),
+            updatedAt: new Date().toISOString(),
+        };
+        // Remove undefined to avoid overwriting with undefined
+        Object.keys(payload).forEach((k) => payload[k] === undefined && delete payload[k]);
+
+        await setDoc(userRef, payload, { merge: true });
+        return payload;
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function getCurrentUserInfoById(userId){
+
+}
+export { signUp, logIn, resetPassword, addUser, updateUser, logOut, getCurrentUser, signInWithGoogle, signInWithGithub };
