@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
@@ -12,16 +12,22 @@ import InstructorSignUp from "./Pages/Instructor-signup";
 import Checkout from "./Pages/Checkout";
 import { MainDashboard } from "./Dashboard/MainDashboard";
 import UserProfile from "./Components/UserProfile";
+import MainProfile from "./profile/MainProfile";
 
 function App() {
+  const location = useLocation();
+
+  const hiddenRoutes = ["/login", "/signup"];
+  const shouldHideNavbarAndFooter = hiddenRoutes.includes(location.pathname);
+
   return (
     <>
-      <Navbar />
+      {!shouldHideNavbarAndFooter && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/newCourse" element={<NewCourse />} />
-        <Route path="/CoursesDahsbord" element={<CoursesDahsbord />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/MainProfile/*" element={<MainProfile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/MainDahsbord" element={<MainDashboard />} />
         <Route path="/instructorsignup" element={<InstructorSignUp />} />
@@ -29,7 +35,7 @@ function App() {
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer />
+      {!shouldHideNavbarAndFooter && <Footer />}
     </>
   );
 }

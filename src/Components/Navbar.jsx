@@ -9,12 +9,15 @@ import {
   selectCurrentUser,
 } from "../features/auth/currentUserSlice";
 import LoadingSpinner from "./loading-spinner";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 function Navbar() {
   const [showPopup, setShowPopup] = useState(false);
 
   const { user, isLoading, error } = useSelector(selectCurrentUser);
+  console.log(user);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchCurrentUser());
@@ -40,47 +43,53 @@ function Navbar() {
 
       {/* Items */}
       <div className="flex items-center gap-6 relative">
-        <span className="cursor-pointer font-medium hover:underline hidden sm:inline">
-          Become Instructor
-        </span>
-
+        {!user && (
+          <span className="cursor-pointer font-medium hover:underline hidden sm:inline">
+            Become Instructor
+          </span>
+        )}
         <div className="flex items-center gap-4 relative">
-          <ShoppingCartIcon className="w-6 h-6 cursor-pointer hover:scale-110 transition-transform" />
-          <BellIcon className="w-6 h-6 cursor-pointer hover:scale-110 transition-transform" />
+          {user && (
+            <>
+              <ShoppingCartIcon className="w-6 h-6 cursor-pointer hover:scale-110 transition-transform" />
+              <BellIcon className="w-6 h-6 cursor-pointer hover:scale-110 transition-transform" />
 
-          {/* Profile */}
-          <div className="relative">
-            <img
-              src={profileImg}
-              alt="Profile"
-              className="w-8 h-8 rounded-full cursor-pointer hover:scale-110 transition-transform ml-2"
-              onClick={togglePopup}
-            />
+              <div className="relative">
+                <img
+                  src={profileImg}
+                  alt="Profile"
+                  className="w-8 h-8 rounded-full cursor-pointer hover:scale-110 transition-transform ml-2"
+                  onClick={togglePopup}
+                />
 
-            {/* Popup */}
-            {showPopup && (
-              <div className="absolute top-full right-0 mt-1">
-                {user && (
-                  <ProfilePopup
-                    show={showPopup}
-                    userName={user.displayName || "User"}
-                    userEmail={user.email || ""}
-                  />
+                {/* Popup */}
+                {showPopup && (
+                  <div className="absolute top-full right-0 mt-1">
+                    {user && (
+                      <ProfilePopup
+                        show={showPopup}
+                        userName={user.displayName || "User"}
+                        userEmail={user.email || ""}
+                      />
+                    )}
+                  </div>
                 )}
               </div>
-            )}
-          </div>
+            </>
+          )}
 
-          <div>
-            <button
-              onClick={() => {
-                Navigate("login");
-              }}
-              className="border-2 rounded-xl py-1.5 px-3 font-bold hover:bg-[#3DCBB1] hover:text-white hover:border-0"
-            >
-              Login
-            </button>
-          </div>
+          {!user && (
+            <div>
+              <button
+                onClick={() => {
+                  navigate("/login");
+                }}
+                className="border-2 rounded-xl py-1.5 px-3 font-bold hover:bg-[#3DCBB1] focus:bg-[#48a392]"
+              >
+                Login
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </nav>

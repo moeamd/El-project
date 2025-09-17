@@ -16,10 +16,6 @@ import {
     db,
     setDoc,
     doc,
-    storage,
-    ref,
-    uploadBytes,
-    getDownloadURL,
 } from "../../Api/Firebase-Config";
 import { supabase } from "../../Api/supabase";
 
@@ -132,9 +128,11 @@ async function addUser(user, createdWith) {
             email: user.email,
             displayName: user.displayName || "",
             photoURL: user.photoURL || "",
-            createdAt: new Date(),
             createdWith: createdWith,
             createdAt: new Date(),
+            wishList:[],
+            
+            block:false
         };
 
         await addDoc(collection(db, 'users'), cleanedUser);
@@ -195,4 +193,7 @@ async function updateUser(updates) {
     }
 }
 
+async function getCurrentUserInfoById(userId){
+
+}
 export { signUp, logIn, resetPassword, addUser, updateUser, logOut, getCurrentUser, signInWithGoogle, signInWithGithub };

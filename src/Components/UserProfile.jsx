@@ -3,16 +3,29 @@ import { useEffect, useRef, useState } from "react";
 import { CameraIcon, Edit } from "lucide-react";
 import defaultProfile from "../assets/images/RegisterImages/defaultProfile.jpg";
 import { getCurrentUser, updateUser } from "../features/auth/auth";
+import {
+  fetchCurrentUser,
+  selectCurrentUser,
+} from "../features/auth/currentUserSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function UserProfile() {
   const [editableField, setEditableField] = useState(null);
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
+
+  const { user, isLoading, error } = useSelector(selectCurrentUser);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchCurrentUser());
+  }, [dispatch]);
+
   const [form, setForm] = useState({
-    name: "abdullah",
-    email: "abdullah@gmail.com",
-    phone: "3453535",
-    bio: "I am Software engineer",
+    name: "",
+    email: "",
+    phone: "",
+    bio: "",
   });
 
   const nameInputRef = useRef(null);
@@ -82,7 +95,7 @@ function UserProfile() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-10 gap-10">
+    <div className="flex flex-col items-center  justify-center min-h-screen bg-gray-100 p-10 gap-10">
       <div className="flex flex-col items-center justify-center  rounded-full w-30 h-30">
         {!image ? (
           <label className="cursor-pointer w-30 h-30  text-gray-400 bg-gray-300 rounded-full ">

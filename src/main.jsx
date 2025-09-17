@@ -4,6 +4,7 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./Store/store.js";
+import { MainDashboard } from "./Dashboard/MainDashboard.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
