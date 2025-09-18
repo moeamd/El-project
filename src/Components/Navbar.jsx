@@ -57,7 +57,7 @@ function Navbar() {
 
               <div className="relative">
                 <img
-                  src={profileImg}
+                  src={user.photoURL}
                   alt="Profile"
                   className="w-8 h-8 rounded-full cursor-pointer hover:scale-110 transition-transform ml-2"
                   onClick={togglePopup}

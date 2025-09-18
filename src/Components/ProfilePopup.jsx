@@ -20,13 +20,13 @@ function ProfilePopup({ show, userName, userEmail }) {
 
       {/*Courses & Cart & Wishlist */}
       <div className="flex flex-col p-2 border-b border-gray-200">
-        <Link to="/my-courses" className="p-2 hover:underline">
+        <Link to="/MainProfile/MyCourses" className="p-2 hover:underline">
           My Courses
         </Link>
-        <Link to="/my-cart" className="p-2 hover:underline">
-          My Cart
+        <Link to="/MainProfile/Favorites" className="p-2 hover:underline">
+          Favorites
         </Link>
-        <Link to="/my-wishlist" className="p-2 hover:underline">
+        <Link to="/MainProfile/Wishlist" className="p-2 hover:underline">
           My Wishlist
         </Link>
       </div>

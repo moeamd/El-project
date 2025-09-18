@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getInstructors } from "../features/users/getinstructors-aprove";
 import { Check, X, Mail, Phone, Linkedin } from "lucide-react";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../Api/Firebase-Config";
 
 const InstructorDashboard = () => {
   const dispatch = useDispatch();
@@ -9,9 +11,25 @@ const InstructorDashboard = () => {
     (state) => state.instructors
   );
 
-  const handelApprove = (Id)=> {
-            
-  }
+  const handleApprove = async (id) => {
+    try {
+      const ref = doc(db, "Instructors", id);
+      await updateDoc(ref, { status: true });
+      dispatch(getInstructors());
+    } catch (err) {
+      console.error("Error approving:", err.message);
+    }
+  };
+  
+  const handleReject = async (id) => {
+    try {
+      const ref = doc(db, "Instructors", id);
+      await updateDoc(ref, { status: false });
+      dispatch(getInstructors());
+    } catch (err) {
+      console.error("Error rejecting:", err.message);
+    }
+  };
 
   useEffect(() => {
     dispatch(getInstructors());
@@ -30,7 +48,7 @@ const InstructorDashboard = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {instructors
-            .filter((inst) => inst.status === false) 
+            .filter((inst) => inst.status === "pending") 
             .map((instructor) => (
               <div
                 key={instructor.id}
@@ -49,11 +67,12 @@ const InstructorDashboard = () => {
                 </div>
 
                 <div className="mt-4 flex justify-center gap-3">
-                  <button className="flex items-center gap-1 px-3 py-1 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600" onClick={()=> {handelApprove(instructor.id);
+                  <button className="flex items-center gap-1 px-3 py-1 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600" onClick={()=> {handleApprove(instructor.id);
                   }}>
                     <Check className="w-4 h-4" /> Approve
                   </button>
-                  <button className="flex items-center gap-1 px-3 py-1 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600">
+                  <button className="flex items-center gap-1 px-3 py-1 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600"  onClick={()=> {handleReject(instructor.id);
+                  }}>
                     <X className="w-4 h-4" /> Reject
                   </button>
                 </div>
@@ -90,10 +109,10 @@ const InstructorDashboard = () => {
                 className={`px-3 py-1 text-xs rounded-full ${
                   instructor.status
                     ? "bg-green-100 text-green-700"
-                    : "bg-yellow-100 text-yellow-700"
+                    : "bg-red-300 text-yellow-700"
                 }`}
               >
-                {instructor.status ? "Approved" : "Pending"}
+                {instructor.status ? "Approved" : "Rejected"}
               </span>
             </div>
           ))}
