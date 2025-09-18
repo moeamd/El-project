@@ -14,13 +14,14 @@ import { useNavigate, Link } from "react-router-dom";
 function Navbar() {
   const [showPopup, setShowPopup] = useState(false);
 
-  const { user, isLoading, error } = useSelector(selectCurrentUser);
+  const { currentUser, isLoading, error } = useSelector(selectCurrentUser);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCurrentUser());
+    
   }, [dispatch]);
 
   if (isLoading) {
@@ -41,7 +42,7 @@ function Navbar() {
 
       {/* Items */}
       <div className="flex items-center gap-6 relative">
-        {!user && (
+        {!currentUser && (
           <Link to="instructorsignup">
             <span className="cursor-pointer font-medium hover:underline hidden sm:inline">
               Become Instructor
@@ -49,15 +50,15 @@ function Navbar() {
           </Link>
         )}
 
-        <div className="flex items-center gap-4 relative">
-          {user && (
+        <div className="flex items-center  sm:gap-1.5 md:gap-4 relative">
+          {currentUser && (
             <>
               <ShoppingCartIcon className="w-6 h-6 cursor-pointer hover:scale-110 transition-transform" />
               <BellIcon className="w-6 h-6 cursor-pointer hover:scale-110 transition-transform" />
 
               <div className="relative">
                 <img
-                  src={user.photoURL}
+                  src={currentUser.photoURL ? currentUser.photoURL : profileImg}
                   alt="Profile"
                   className="w-8 h-8 rounded-full cursor-pointer hover:scale-110 transition-transform ml-2"
                   onClick={togglePopup}
@@ -68,8 +69,8 @@ function Navbar() {
                   <div className="absolute top-full right-0 mt-1">
                     <ProfilePopup
                       show={showPopup}
-                      userName={user.displayName || "User"}
-                      userEmail={user.email || ""}
+                      userName={currentUser.displayName || "User"}
+                      userEmail={currentUser.email || ""}
                     />
                   </div>
                 )}
@@ -77,15 +78,25 @@ function Navbar() {
             </>
           )}
 
-          {!user && (
-            <div>
-              <button
-                onClick={() => navigate("/login")}
-                className="border-2 rounded-xl py-1.5 px-3 font-bold hover:bg-[#3DCBB1] focus:bg-[#48a392]"
-              >
-                Login
-              </button>
-            </div>
+          {!currentUser && (
+            <>
+              <div>
+                <button
+                  onClick={() => navigate("/login")}
+                  className="border-1 rounded-xl py-1.5 px-3 font-bold hover:bg-[#3DCBB1] focus:bg-[#48a392]"
+                >
+                  Login
+                </button>
+              </div>
+              <div>
+                <button
+                  onClick={() => navigate("/signup")}
+                  className=" rounded-xl py-2 px-3 font-bold bg-[#3DCBB1] hover:bg-[#7bc5b7] focus:bg-[#48a392]"
+                >
+                  Signup
+                </button>
+              </div>
+            </>
           )}
         </div>
       </div>

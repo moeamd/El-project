@@ -89,7 +89,7 @@ function Signup() {
 
           setTimeout(() => {
             navigate("/login");
-          }, 3000);
+          }, 5000);
         })
         .catch((error) => {
           let msg = "";
@@ -112,7 +112,6 @@ function Signup() {
             default:
               msg = "Something went wrong. Please try again.";
           }
-          console.log(error);
 
           setAlertMessage(msg);
           setAlertType("error");
@@ -199,21 +198,8 @@ function Signup() {
       });
   };
 
-  function fetchAndAddUser() {
-    useEffect(() => {
-      async () => {
-        try {
-          const user = await getCurrentUser();
-          if (user) {
-            addUser(user); // or dispatch(addUser(user)) if using Redux
-          }
-        } catch (error) {
-          console.error("Error fetching user:", error);
-        }
-      };
-    }, []);
-  }
   return (
+
     <main
       id="signup"
       className={" w-full  h-screen inset-0 bg-[rgba(27,27,27,0.6)] z-50"}
@@ -240,7 +226,7 @@ function Signup() {
               size={20}
               className="cursor-pointer absolute top-2 right-2"
               onClick={() => {
-                navigate(-2);
+                navigate(-1);
               }}
             />
 

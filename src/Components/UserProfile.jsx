@@ -1,24 +1,30 @@
 import React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { CameraIcon, Edit } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
 import defaultProfile from "../assets/images/RegisterImages/defaultProfile.jpg";
-import { getCurrentUser, updateUser } from "../features/auth/auth";
+import { updateUser } from "../features/auth/auth";
 import {
   fetchCurrentUser,
   selectCurrentUser,
 } from "../features/auth/currentUserSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { getUsers, selectUsers } from "../features/auth/usersSlice";
 
 function UserProfile() {
   const [editableField, setEditableField] = useState(null);
-  const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
 
-  const { user, isLoading, error } = useSelector(selectCurrentUser);
+  const { currentUser } = useSelector(selectCurrentUser);
+  const { users, isLoading, error } = useSelector(selectUsers);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchCurrentUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getUsers());
   }, [dispatch]);
 
   const [form, setForm] = useState({
@@ -28,30 +34,28 @@ function UserProfile() {
     bio: "",
   });
 
+  const currentUserInfo = useMemo(() => {
+    if (!currentUser?.uid || !Array.isArray(users)) return null;
+    return users.find((u) => u?.uid === currentUser.uid) || null;
+  }, [users, currentUser]);
+
+  useEffect(() => {
+    if (currentUserInfo) {
+      setForm({
+        name: currentUserInfo.displayName || "",
+        email: currentUserInfo.email || "",
+        phone: currentUserInfo.phone || "",
+        bio: currentUserInfo.bio || "",
+      });
+      setImagePreviewUrl(currentUserInfo.photoURL || null);
+      return;
+    }
+  }, [currentUserInfo]);
+
   const nameInputRef = useRef(null);
   const emailInputRef = useRef(null);
   const phoneInputRef = useRef(null);
   const bioInputRef = useRef(null);
-
-  useEffect(() => {
-    let mounted = true;
-    (async () => {
-      try {
-        const user = await getCurrentUser();
-        if (!mounted || !user) return;
-        setForm((prev) => ({
-          ...prev,
-          name: user.displayName || prev.name,
-          email: user.email || prev.email,
-          phone: user.phone || prev.phone,
-          bio: user.bio || prev.bio,
-        }));
-      } catch (_) {}
-    })();
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   const handleNameChange = (e) => {
     setForm((prev) => ({ ...prev, name: e.target.value }));
@@ -71,33 +75,35 @@ function UserProfile() {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setImage(URL.createObjectURL(file));
-      setImageFile(file);
-    }
+    if (!file) return;
+    if (imagePreviewUrl) URL.revokeObjectURL(imagePreviewUrl);
+    const preview = URL.createObjectURL(file);
+    setImageFile(file);
+    setImagePreviewUrl(preview);
   };
 
   const handleSave = async () => {
     try {
       await updateUser({
+        ...currentUserInfo,
         displayName: form.name,
         email: form.email,
         phone: form.phone,
         bio: form.bio,
-        photoFile: imageFile || undefined,
+        photoFile: imageFile,
       });
     } catch (error) {
       console.error("Failed to save profile:", error);
     } finally {
       setEditableField(null);
-      setImageFile(null);
     }
   };
 
+
   return (
-    <div className="flex flex-col items-center  justify-center min-h-screen bg-gray-100 p-10 gap-10">
+    <div className="flex flex-col items-center w-[50%] m-auto justify-center min-h-screen p-10 gap-10 shadow-2xl mb-4">
       <div className="flex flex-col items-center justify-center  rounded-full w-30 h-30">
-        {!image ? (
+        {!currentUser.photoURL ? (
           <label className="cursor-pointer w-30 h-30  text-gray-400 bg-gray-300 rounded-full ">
             <img
               src={defaultProfile}
@@ -110,12 +116,13 @@ function UserProfile() {
               accept="image/*"
               onChange={handleImageChange}
               className="hidden"
+              onClick={() => setEditableField("photo")}
             />
           </label>
         ) : (
-          <div className="">
+          <div>
             <img
-              src={image}
+              src={currentUser.photoURL}
               alt="Preview"
               className="w-30 h-30 rounded-full object-cover shadow-lg "
             />
@@ -128,7 +135,7 @@ function UserProfile() {
           <Edit
             size={20}
             onClick={() => setEditableField("name")}
-            className="focus:size-6 cursor-pointer"
+            className="focus:size-6 cursor-pointer focus:bg-[#3DCBB1]"
           />
         </div>
         <input
@@ -202,9 +209,8 @@ function UserProfile() {
           type="button"
           onClick={handleSave}
           disabled={!editableField}
-          className={`bg-[#3DCBB1] text-white p-2 rounded-md ${
-            !editableField ? "hidden" : ""
-          }`}
+          className={`bg-[#3DCBB1] text-white p-2 rounded-md ${!editableField ? "hidden" : ""
+            }`}
         >
           Save
         </button>
