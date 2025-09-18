@@ -2,6 +2,7 @@ import { addDoc, collection } from "firebase/firestore"
 import { db, auth } from "../../Api/Firebase-Config"
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { supabase } from "../../Api/supabase"
+
 export const addUser = async (instructorData) => {
     try {
         let imageUrl = "";
