@@ -13,6 +13,7 @@ import Checkout from "./Pages/Checkout";
 import { MainDashboard } from "./Dashboard/MainDashboard";
 import UserProfile from "./Components/UserProfile";
 import MainProfile from "./profile/MainProfile";
+import WishList from "./Components/WishList";
 
 function App() {
   const location = useLocation();
@@ -34,6 +35,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/wishlist" element={WishList} />
       </Routes>
       {!shouldHideNavbarAndFooter && <Footer />}
     </>

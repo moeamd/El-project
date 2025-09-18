@@ -9,7 +9,6 @@ import MyCourses from "./myCourses";
 const MainProfile = () => {
   return (
     <div className="text-center mt-20 flex flex-col">
-      <h1>My Profile</h1>
       <ProfileNav />
       <Routes>
         <Route path="/Profile" element={<Profile />} />

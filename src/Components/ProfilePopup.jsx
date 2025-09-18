@@ -1,15 +1,35 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../features/auth/auth";
+import { clearAuthState } from "../features/auth/currentUserSlice";
+import ConfirmModal from "./confirmModal";
+import { useDispatch } from "react-redux";
+
 
 function ProfilePopup({ show, userName, userEmail }) {
   if (!show) return null;
+
+  const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      dispatch(clearAuthState());
+      navigate("/login");
+    } catch (error) {
+      // Optionally show error
+      console.error("Logout failed", error);
+    }
+  };
+
 
   return (
     <div className="absolute right-0 mt-2  bg-white rounded shadow-lg border border-gray-200 z-50">
       {/* Name & Email */}
       <Link
-        to="/MainProfile"
+        to="/MainProfile/Profile"
         className="block text-blue-500 hover:underline text-center font-semibold"
       >
         <div className="p-2 border-b border-gray-200 cursor-pointer hover:bg-gray-100">
@@ -45,10 +65,16 @@ function ProfilePopup({ show, userName, userEmail }) {
       <Link
         to="/"
         className="block p-2 text-red-500 hover:underline "
-        onClick={logOut}
+        onClick={() => { setShowModal(true) }}
       >
         Logout
       </Link>
+      <ConfirmModal
+        show={showModal}
+        message="Are you sure you want to logout?"
+        onConfirm={handleLogout}
+        onCancel={() => setShowModal(false)}
+      />
     </div>
   );
 }

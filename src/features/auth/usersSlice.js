@@ -12,8 +12,12 @@ export const getUsers = createAsyncThunk("users/getUsers", async () => {
   let AllUsers = [];
 
   querySnapShot.forEach((user) => {
-    const data = user.data()
-    AllUsers.push(data );
+    const data = user.data();
+
+    if (data.createdAt && typeof data.createdAt.toDate === "function") {
+      data.createdAt = data.createdAt.toDate().toISOString();
+    }
+    AllUsers.push(data);
   });
 
   return AllUsers;
