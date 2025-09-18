@@ -18,7 +18,7 @@ import CourseDetails from "./Pages/CourseDetails";
 function App() {
   const location = useLocation();
 
-  const hiddenRoutes = ["/login", "/signup"];
+  const hiddenRoutes = ["/login", "/signup", "/instructorsignup"];
   const shouldHideNavbarAndFooter = hiddenRoutes.includes(location.pathname);
 
   return (

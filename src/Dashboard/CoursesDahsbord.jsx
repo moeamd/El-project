@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourses } from "../features/courses/coursesSlice";
-import { BookOpen, Clock, DollarSign, Tag } from "lucide-react";
+import { BookOpen, Check, Clock, DollarSign, Tag, X } from "lucide-react";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../Api/Firebase-Config";
 export const CoursesDahsbord = () => {
   const dispatch = useDispatch();
   const { course, isLoading, error } = useSelector((state) => state.course);
@@ -9,6 +11,25 @@ export const CoursesDahsbord = () => {
   useEffect(() => {
     dispatch(getCourses());
   }, [dispatch]);
+  const handleApprove = async (id) => {
+    try {
+      const ref = doc(db, "courses", id);
+      await updateDoc(ref, { status: "Publish" });
+      dispatch(getCourses());
+    } catch (err) {
+      console.error("Error approving:", err.message);
+    }
+  };
+  
+  const handleReject = async (id) => {
+    try {
+      const ref = doc(db, "courses", id);
+      await updateDoc(ref, { status: "Draft" });
+      dispatch(getCourses());
+    } catch (err) {
+      console.error("Error rejecting:", err.message);
+    }
+  };
 
   if (isLoading)
     return (
@@ -80,6 +101,18 @@ export const CoursesDahsbord = () => {
               <button className="mt-auto bg-indigo-600 text-white py-2 px-4 rounded-xl font-semibold hover:bg-indigo-700 transition-all">
                 View Details
               </button>
+
+              
+              <div className="mt-4 flex justify-center gap-3">
+                  <button className="flex items-center gap-1 px-3 py-1 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600" onClick={()=> {handleApprove(c.id);
+                  }}>
+                    <Check className="w-4 h-4" /> Publish
+                  </button>
+                  <button className="flex items-center gap-1 px-3 py-1 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600"  onClick={()=> {handleReject(c.id);
+                  }}>
+                    <X className="w-4 h-4" /> Unpublish
+                  </button>
+                </div>
             </div>
           ))}
         </div>

@@ -36,14 +36,16 @@ function ProfilePopup({ show, userName, userEmail }) {
         <Link to="/notifications" className="p-2 hover:underline">
           Notifications
         </Link>
-        <Link to="/account-settings" className="p-2 hover:underline">
+        <Link to="/MainProfile/Profile" className="p-2 hover:underline">
           Account Setting
         </Link>
       </div>
 
       {/* Logout */}
-      <Link to="/" className="block p-2 text-red-500 hover:underline " 
-      onClick={logOut}
+      <Link
+        to="/"
+        className="block p-2 text-red-500 hover:underline "
+        onClick={logOut}
       >
         Logout
       </Link>

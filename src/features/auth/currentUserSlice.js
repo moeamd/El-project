@@ -2,27 +2,28 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getCurrentUser } from "./auth";
 
 const initialState = {
-  user: null,
+  currentUser: null,
   isLoading: false,
   error: null,
-  isAuthenticated: false,
 };
 
 export const fetchCurrentUser = createAsyncThunk(
   "auth/fetchCurrentUser",
-  async (_, { rejectWithValue }) => {
+  async () => {
     try {
       const user = await getCurrentUser();
+
       if (!user) return null;
       return {
         uid: user.uid,
         email: user.email,
         displayName: user.displayName || "",
         photoURL: user.photoURL || "",
+        phoneNamber: user.phoneNamber ||'',
         emailVerified: !!user.emailVerified,
       };
     } catch (error) {
-      return rejectWithValue(error?.message || "AUTH_ERROR");
+      throw error
     }
   }
 );
@@ -32,8 +33,7 @@ const currentUserSlice = createSlice({
   initialState,
   reducers: {
     clearAuthState(state) {
-      state.user = null;
-      state.isAuthenticated = false;
+      state.currentUser = null; 
       state.error = null;
     },
   },
@@ -46,14 +46,12 @@ const currentUserSlice = createSlice({
       })
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload;
-        state.isAuthenticated = !!action.payload;
+        state.currentUser = action.payload;
       })
       .addCase(fetchCurrentUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload || action.error.message;
-        state.user = null;
-        state.isAuthenticated = false;
+        state.currentUser = null;
       });
   },
 });
