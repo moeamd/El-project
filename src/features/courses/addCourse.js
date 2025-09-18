@@ -44,7 +44,7 @@ export const addCourse = async (courseData) => {
     console.log("Course added with ID:", docRef.id);
 
     
-    return { id: docRef.id, ...newCourse };
+    return { id: docRef.id, ...newCourse }; 
   } catch (error) {
     console.error("Error adding course:", error);
     throw error;
