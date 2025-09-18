@@ -13,6 +13,7 @@ import Checkout from "./Pages/Checkout";
 import { MainDashboard } from "./Dashboard/MainDashboard";
 import UserProfile from "./Components/UserProfile";
 import MainProfile from "./profile/MainProfile";
+import CourseDetails from "./Pages/CourseDetails";
 import WishList from "./Components/WishList";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
         <Route path="/MainDashboard/*" element={<MainDashboard />} />
         <Route path="/instructorsignup" element={<InstructorSignUp />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/CourseDetails" element={<CourseDetails />} />
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/wishlist" element={WishList} />

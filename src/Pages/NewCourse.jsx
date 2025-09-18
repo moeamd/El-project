@@ -19,6 +19,12 @@ export const NewCourse = () => {
     hours: "",
     category: "",
     video: null,
+    poster: null,
+    status: "draft",
+    description: "",
+    instructor: "",
+    createdAt: new Date(),
+    rejectReason: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -67,6 +73,10 @@ export const NewCourse = () => {
       newErrors.video = "Course video is required";
     }
 
+    if (!data.poster) {
+      newErrors.poster = "Course poster is required";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -75,19 +85,18 @@ export const NewCourse = () => {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
 
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setData((prev) => ({ ...prev, video: file }));
+    const { name, files } = e.target;
+    const file = files[0];
+    setData((prev) => ({ ...prev, [name]: file }));
 
-    // Clear error when file is selected
-    if (errors.video) {
-      setErrors((prev) => ({ ...prev, video: "" }));
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
@@ -111,10 +120,17 @@ export const NewCourse = () => {
         category: "",
         video: null,
         poster: null,
+        status: "draft",
+        description: "",
+        instructor: "",
+        createdAt: new Date(),
+        rejectReason: "",
       });
-      // Reset file input
-      const fileInput = document.getElementById("video-upload");
-      if (fileInput) fileInput.value = "";
+      // Reset file inputs
+      const videoInput = document.getElementById("video-upload");
+      const posterInput = document.getElementById("poster-upload");
+      if (videoInput) videoInput.value = "";
+      if (posterInput) posterInput.value = "";
     } catch (error) {
       console.error("Error adding course:", error);
       setSubmitStatus("error");
@@ -165,6 +181,35 @@ export const NewCourse = () => {
                 <p className="mt-2 text-sm text-red-600 flex items-center">
                   <ExclamationTriangleIcon className="w-4 h-4 mr-1" />
                   {errors.name}
+                </p>
+              )}
+            </div>
+            {/* Course Description */}
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-sm font-semibold text-gray-700 mb-2"
+              >
+                <BookOpenIcon className="w-5 h-5 inline mr-2" />
+                Course Description
+              </label>
+              <input
+                id="description"
+                name="description"
+                type="text"
+                placeholder="Enter course description"
+                value={data.description}
+                onChange={handleChange}
+                className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${
+                  errors.description
+                    ? "border-red-300 bg-red-50"
+                    : "border-gray-200 hover:border-gray-300 focus:border-blue-500"
+                }`}
+              />
+              {errors.description && (
+                <p className="mt-2 text-sm text-red-600 flex items-center">
+                  <ExclamationTriangleIcon className="w-4 h-4 mr-1" />
+                  {errors.description}
                 </p>
               )}
             </div>
@@ -322,55 +367,68 @@ export const NewCourse = () => {
                 </p>
               )}
             </div>
-{/* Poster Upload */}
-<div>
-  <label
-    htmlFor="poster-upload"
-    className="block text-sm font-semibold text-gray-700 mb-2"
-  >
-    <PhoneOutgoingIcon className="w-5 h-5 inline mr-2" />
-    Course Poster
-  </label>
-  <div className="relative">
-    <input
-      id="poster-upload"
-      type="file"
-      name="poster"
-      onChange={handleFileChange}
-      accept="image/png,image/jpeg,image/jpg,image/webp"
-      className="hidden"
-    />
-    <label
-      htmlFor="poster-upload"
-      className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-xl cursor-pointer transition-all duration-200 ${
-        errors.poster
-          ? "border-red-300 bg-red-50 hover:bg-red-100"
-          : "border-gray-300 bg-gray-50 hover:bg-gray-100 hover:border-gray-400"
-      }`}
-    >
-      <CloudArrowUpIcon className="w-8 h-8 text-gray-400 mb-2" />
-      <p className="text-sm text-gray-500">
-        <span className="font-semibold text-blue-600 hover:text-blue-500">
-          Click to upload
-        </span>{" "}
-        or drag and drop
-      </p>
-      <p className="text-xs text-gray-400">PNG, JPG, JPEG, WEBP (MAX. 5MB)</p>
-    </label>
-  </div>
-  {data.poster && (
-    <p className="mt-2 text-sm text-green-600 flex items-center">
-      <CheckCircle2Icon className="w-4 h-4 mr-1" />
-      Selected: {data.poster.name}
-    </p>
-  )}
-  {errors.poster && (
-    <p className="mt-2 text-sm text-red-600 flex items-center">
-      <ExclamationTriangleIcon className="w-4 h-4 mr-1" />
-      {errors.poster}
-    </p>
-  )}
-</div>
+
+            {/* Poster Upload */}
+            <div>
+              <label
+                htmlFor="poster-upload"
+                className="block text-sm font-semibold text-gray-700 mb-2"
+              >
+                <PhoneOutgoingIcon className="w-5 h-5 inline mr-2" />
+                Course Poster
+              </label>
+              <div className="relative">
+                <input
+                  id="poster-upload"
+                  type="file"
+                  name="poster"
+                  onChange={handleFileChange}
+                  accept="image/png,image/jpeg,image/jpg,image/webp"
+                  className="hidden"
+                />
+                <label
+                  htmlFor="poster-upload"
+                  className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-xl cursor-pointer transition-all duration-200 ${
+                    errors.poster
+                      ? "border-red-300 bg-red-50 hover:bg-red-100"
+                      : "border-gray-300 bg-gray-50 hover:bg-gray-100 hover:border-gray-400"
+                  }`}
+                >
+                  <CloudArrowUpIcon className="w-8 h-8 text-gray-400 mb-2" />
+                  <p className="text-sm text-gray-500">
+                    <span className="font-semibold text-blue-600 hover:text-blue-500">
+                      Click to upload
+                    </span>{" "}
+                    or drag and drop
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    PNG, JPG, JPEG, WEBP (MAX. 5MB)
+                  </p>
+                </label>
+              </div>
+              {data.poster && (
+                <>
+                  <p className="mt-2 text-sm text-green-600 flex items-center">
+                    <CheckCircle2Icon className="w-4 h-4 mr-1" />
+                    Selected: {data.poster.name}
+                  </p>
+                  {/* Preview */}
+                  <div className="mt-3">
+                    <img
+                      src={URL.createObjectURL(data.poster)}
+                      alt="Course Poster"
+                      className="h-32 rounded-lg shadow"
+                    />
+                  </div>
+                </>
+              )}
+              {errors.poster && (
+                <p className="mt-2 text-sm text-red-600 flex items-center">
+                  <ExclamationTriangleIcon className="w-4 h-4 mr-1" />
+                  {errors.poster}
+                </p>
+              )}
+            </div>
 
             {/* Submit Button */}
             <div className="pt-4">
