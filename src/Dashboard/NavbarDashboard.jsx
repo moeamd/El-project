@@ -7,7 +7,7 @@ const NavbarDashboard = () => {
   console.log(close);
 
   return (
-    <div className="bg-blue-950 w-[300px] h-[100vh] flex flex-col gap-5 text-2xl px-5 text-white pt-[100px] relative transition-all"
+    <div className="bg-blue-950 w-[400px] min-h-screen flex flex-col gap-5 text-2xl px-5 text-white pt-[100px] relative transition-all"
     style={{
       width: close ? "30px" : "300px",
       overflow: "hidden",

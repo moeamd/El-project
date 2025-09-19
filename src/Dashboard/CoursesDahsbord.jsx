@@ -134,6 +134,17 @@ export const CoursesDahsbord = () => {
                   {t("common.by")} {c.instructorName || t("common.unknown")}
                 </span>
               </div>
+              <div
+                className={`text-lg mb-4 ${
+                  c.status === "Publish"
+                    ? "text-green-500"
+                    : c.status === "Draft"
+                    ? "text-red-500"
+                    : "text-gray-600"
+                } dark:text-dark-textSecondary`}
+              >
+                {c.status || t("common.unknown")}
+              </div>
 
               {/* Action */}
               <button className="mt-auto bg-indigo-600 dark:bg-indigo-700 text-white py-2 px-4 rounded-xl font-semibold hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all">

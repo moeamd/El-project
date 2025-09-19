@@ -42,23 +42,23 @@ function ProfilePopup({ show, userName, userEmail }) {
 
       {/* Courses, Favorites & Wishlist */}
       <div className="flex flex-col p-2 border-b border-gray-200 dark:border-gray-700">
-        <Link to="/MainProfile/MyCourses" className="p-2 hover:underline text-gray-700 dark:text-gray-300 transition-colors">
+        <Link to="/MainProfile/MyCourses" className="p-2 hover:underline text-gray-900 dark:text-gray-900 transition-colors">
           {t("common.myCourses")}
         </Link>
-        <Link to="/MainProfile/Favorites" className="p-2 hover:underline text-gray-700 dark:text-gray-300 transition-colors">
+        <Link to="/MainProfile/Favorites" className="p-2 hover:underline text-gray-700 dark:text-gray-900 transition-colors">
           {t("common.favorites")}
         </Link>
-        <Link to="/MainProfile/Wishlist" className="p-2 hover:underline text-gray-700 dark:text-gray-300 transition-colors">
+        <Link to="/MainProfile/Wishlist" className="p-2 hover:underline text-gray-700 dark:text-gray-900 transition-colors">
           {t("common.wishlist")}
         </Link>
       </div>
 
       {/* Notifications & Account Settings */}
       <div className="flex flex-col p-2 border-b border-gray-200 dark:border-gray-700">
-        <Link to="/notifications" className="p-2 hover:underline text-gray-700 dark:text-gray-300 transition-colors">
+        <Link to="/notifications" className="p-2 hover:underline text-gray-700 dark:text-gray-900 transition-colors">
           {t("common.notifications")}
         </Link>
-        <Link to="/MainProfile/Profile" className="p-2 hover:underline text-gray-700 dark:text-gray-300 transition-colors">
+        <Link to="/MainProfile/Profile" className="p-2 hover:underline text-gray-700 dark:text-gray-900 transition-colors">
           {t("common.accountSetting")}
         </Link>
       </div>
