@@ -28,7 +28,8 @@ export default function InstructorSignUp({ isOpen, onClose }) {
             try {
                 const userCredential = await createUser(values.email, values.password);
                 const user = userCredential.user;
-                await addUser({ ...values, creatAt: new Date() });
+                  const { password, ...userData } = values;
+                 await addUser({ ...userData, createdAt: new Date() });
                 setSuccess(true);
                 formik.resetForm();
             } catch (err) {

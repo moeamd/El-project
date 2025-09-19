@@ -1,0 +1,7 @@
+
+.searchHero{
+    background-image: url("../../Assets/Images/search_bar.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 20%;
+}

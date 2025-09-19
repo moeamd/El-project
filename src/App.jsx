@@ -14,6 +14,7 @@ import { MainDashboard } from "./Dashboard/MainDashboard";
 import UserProfile from "./Components/UserProfile";
 import MainProfile from "./profile/MainProfile";
 import CourseDetails from "./Pages/CourseDetails";
+import SearchPage from "./Pages/search/search-page";
 
 function App() {
   const location = useLocation();
@@ -35,6 +36,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/CourseDetails" element={<CourseDetails />} />
         <Route path="/userProfile" element={<UserProfile />} />
+        <Route path = "/SearchPage" element={<SearchPage/>}/>
         <Route path="*" element={<NotFound />} />
       </Routes>
       {!shouldHideNavbarAndFooter && <Footer />}
