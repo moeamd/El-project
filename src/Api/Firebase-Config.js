@@ -10,6 +10,7 @@ import {
   updateDoc,
   deleteDoc,
   doc,
+  getDoc,
   arrayUnion,
 } from "firebase/firestore";
 import {
@@ -60,7 +61,7 @@ export {
   auth,
   storage,
   // Firestore
-  collection, getDocs, addDoc, setDoc, updateDoc, deleteDoc, doc, arrayUnion,
+  collection, getDocs, getDoc, addDoc, setDoc, updateDoc, deleteDoc, doc, arrayUnion,
   // Auth
   createUserWithEmailAndPassword, signInWithEmailAndPassword,
   sendEmailVerification, updateProfile, signOut, onAuthStateChanged,

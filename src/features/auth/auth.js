@@ -17,6 +17,7 @@ import {
     db,
     doc,
     deleteDoc,
+    getDoc,
     updateDoc,
     arrayUnion
 } from "../../Api/Firebase-Config";
@@ -211,14 +212,24 @@ async function updateUser(updates) {
     }
 }
 
+
 async function updateWishList(course, userId) {
     const userRef = doc(db, "users", userId)
     console.log("users" + userRef)
     await updateDoc(userRef, { wishList: arrayUnion(course) });
 }
 
+async function removeFromWishList(courseId, userId) {
+    const userRef = doc(db, "users", userId);
+    const userSnap = await getDoc(userRef);
+    const userData = userSnap.data();
+
+    const currentWishList = userData?.wishList || [];
+    const updatedWishList = currentWishList.filter((course) => course.id !== courseId);
+    await updateDoc(userRef, { wishList: updatedWishList });
+}
 
 export {
-    signUp, logIn, resetPassword, addUser, updateWishList,
+    signUp, logIn, resetPassword, addUser, updateWishList, removeFromWishList,
     updateUser, logOut, getCurrentUser, signInWithGoogle, signInWithGithub
 };
