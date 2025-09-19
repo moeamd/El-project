@@ -5,10 +5,14 @@ import Profile from "./Profile";
 import Favorites from "./Favorites";
 import { Wishlist } from "./Wishlist";
 import MyCourses from "./myCourses";
+import { useTranslation } from "react-i18next";
 
 const MainProfile = () => {
+  const { t, i18n } = useTranslation();
+
   return (
     <div className="text-center mt-20 flex flex-col">
+      <h1>My Profile</h1>
       <ProfileNav />
       <Routes>
         <Route path="/Profile" element={<Profile />} />

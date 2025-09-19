@@ -4,13 +4,16 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./Store/store.js";
-import { MainDashboard } from "./Dashboard/MainDashboard.jsx";
+import { ThemeProvider } from "./context/ThemeContext.jsx";
+import "./i18n/i18n.js";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />  
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </BrowserRouter>
     </Provider>
   </StrictMode>
