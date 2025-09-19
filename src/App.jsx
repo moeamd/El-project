@@ -14,12 +14,16 @@ import { MainDashboard } from "./Dashboard/MainDashboard";
 import UserProfile from "./Components/UserProfile";
 import MainProfile from "./profile/MainProfile";
 import CourseDetails from "./Pages/CourseDetails";
+
 import SearchPage from "./Pages/search/search-page";
+
+import WishList from "./Components/WishList";
+
 
 function App() {
   const location = useLocation();
 
-  const hiddenRoutes = ["/login", "/signup", "/instructorsignup"];
+  const hiddenRoutes = ["/login", "/signup", "/instructorsignup","/MainDashboard",'/MainDashboard/CoursesDahsbord',"/MainDashboard/InstructorDashboard"];
   const shouldHideNavbarAndFooter = hiddenRoutes.includes(location.pathname);
 
   return (
@@ -38,6 +42,7 @@ function App() {
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path = "/SearchPage" element={<SearchPage/>}/>
         <Route path="*" element={<NotFound />} />
+        <Route path="/wishlist" element={WishList} />
       </Routes>
       {!shouldHideNavbarAndFooter && <Footer />}
     </>

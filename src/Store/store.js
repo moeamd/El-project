@@ -12,4 +12,8 @@ export const store = configureStore({
     instructors:instructorsReducer,
     users:usersReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });

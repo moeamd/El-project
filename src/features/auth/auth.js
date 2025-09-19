@@ -1,4 +1,4 @@
-import { use } from "react";
+
 import {
     auth,
     createUserWithEmailAndPassword,
@@ -13,11 +13,13 @@ import {
     GithubAuthProvider,
     signOut,
     collection,
-    addDoc,
-    db,
     setDoc,
+    db,
     doc,
     deleteDoc,
+    getDoc,
+    updateDoc,
+    arrayUnion
 } from "../../Api/Firebase-Config";
 import { supabase } from "../../Api/supabase";
 
@@ -38,6 +40,7 @@ async function signUp(user) {
         await addUser(account, 'Email');
 
     } catch (error) {
+        console.log(error)
         throw error;
     }
 }
@@ -49,9 +52,11 @@ async function logIn(user) {
     }
     try {
         const userCredential = await signInWithEmailAndPassword(auth, user.email, user.password);
+        const account = userCredential.user;
+        if (!account.emailVerified) {
+            sendEmailVerification(account);
+            await addUser(account, 'Email');
 
-        if (!userCredential.user.emailVerified) {
-            sendEmailVerification(userCredential.user);
             throw new Error("EMAIL_NOT_VERIFIED");
         }
     } catch (error) {
@@ -139,7 +144,8 @@ async function addUser(user, createdWith) {
             myCourses: user.myCourses || [],
             block: user.block || false
         };
-        await addDoc(collection(db, 'users'), cleanedUser);
+        const userRef = doc(db, 'users', user.uid);
+        await setDoc(userRef, cleanedUser, { merge: true });
     }
     catch (error) {
         throw error;
@@ -181,25 +187,25 @@ async function updateUser(updates) {
         }
 
         await updateProfile(currentUser, {
-            displayName: updates.displayName,h
+            displayName: updates.displayName,
+            photoURL: photoUrl,
+            phoneNamber: updates.phone,
         });
 
 
         const { photoFile, ...restUpdates } = updates;
         const payload = {
-            ...restUpdates,
-            uid: userId,
             email: updates.email || "",
             displayName: updates.displayName || "",
             phone: updates.phone || "",
             bio: updates.bio || "",
             photoURL: photoUrl,
         };
-        const createdWith = updates.createdWith || "Email";
-        await addUser(payload, createdWith);
-        (userId && await deleteDoc(doc(db, "users", userId)));
 
-        return payload;
+        const userRef = doc(db, "users", userId)
+        console.log("users" + userRef)
+        await updateDoc(userRef, payload, { merge: true });
+
     } catch (error) {
         console.error("Failed to update user:", error.message);
         throw error;
@@ -207,5 +213,40 @@ async function updateUser(updates) {
 }
 
 
+async function addToWishList(course, userId) {
+    const userRef = doc(db, "users", userId)
+    console.log("users" + userRef)
+    await updateDoc(userRef, { wishList: arrayUnion(course) });
+}
 
-export { signUp, logIn, resetPassword, addUser, updateUser, logOut, getCurrentUser, signInWithGoogle, signInWithGithub };
+async function removeFromWishList(courseId, userId) {
+    const userRef = doc(db, "users", userId);
+    const userSnap = await getDoc(userRef);
+    const userData = userSnap.data();
+
+    const currentWishList = userData?.wishList || [];
+    const updatedWishList = currentWishList.filter((course) => course.id !== courseId);
+    await updateDoc(userRef, { wishList: updatedWishList });
+}
+
+async function addToFavorites(course, userId) {
+    const userRef = doc(db, "users", userId)
+    console.log("users" + userRef)
+    await updateDoc(userRef, { favorites: arrayUnion(course) });
+}
+
+async function removeFromFavorites(courseId, userId) {
+    const userRef = doc(db, "users", userId);
+    const userSnap = await getDoc(userRef);
+    const userData = userSnap.data();
+
+    const currentFavorites = userData?.favorites || [];
+    const updatedFavorites = currentFavorites.filter((course) => course.id !== courseId);
+    await updateDoc(userRef, { favorites: updatedFavorites });
+}
+
+export {
+    signUp, logIn, resetPassword, addUser, addToWishList, removeFromWishList,
+    removeFromFavorites, addToFavorites,
+    updateUser, logOut, getCurrentUser, signInWithGoogle, signInWithGithub
+};

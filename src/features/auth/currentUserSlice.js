@@ -20,7 +20,7 @@ export const fetchCurrentUser = createAsyncThunk(
         displayName: user.displayName || "",
         photoURL: user.photoURL || "",
         phoneNamber: user.phoneNamber ||'',
-        emailVerified: !!user.emailVerified,
+        emailVerified: user.emailVerified,
       };
     } catch (error) {
       throw error
@@ -58,4 +58,6 @@ const currentUserSlice = createSlice({
 
 export const { clearAuthState } = currentUserSlice.actions;
 export const currentUserReducer = currentUserSlice.reducer;
-export const selectCurrentUser = (state) => state.currentUser;
+export const selectCurrentUser = (state) => state.currentUser.currentUser;
+export const selectCurrentUserLoading = (state) => state.currentUser.isLoading;
+export const selectCurrentUserError = (state) => state.currentUser.error;
