@@ -80,6 +80,9 @@
     "settings": "Settings",
     "logout": "Logout"
   },
+  "app": {
+    "name": "MyCourse.io"
+  },
   "courseCategories": {
     "webProgramming": "Web Programming",
     "mobileProgramming": "Mobile Programming",

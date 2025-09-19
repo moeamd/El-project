@@ -8,7 +8,7 @@ function CourseDetails() {
   if (!course) {
     return (
       <div
-        className={`min-h-screen flex items-center justify-center bg-white dark:bg-gray-900 transition-colors duration-300 ${
+        className={`min-h-screen flex items-center justify-center bg-white dark:bg-surface-dark transition-colors duration-300 ${
           i18n.language === "ar" ? "rtl" : "ltr"
         }`}
       >
@@ -21,7 +21,7 @@ function CourseDetails() {
 
   return (
     <div
-      className={`p-6 bg-white dark:bg-gray-900 min-h-screen transition-colors duration-300 ${
+      className={`p-6 bg-white dark:bg-surface-dark min-h-screen transition-colors duration-300 ${
         i18n.language === "ar" ? "rtl" : "ltr"
       }`}
     >

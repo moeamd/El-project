@@ -12,7 +12,7 @@ const MainProfile = () => {
 
   return (
     <div
-      className={`text-center mt-20 flex flex-col bg-white dark:bg-gray-900 min-h-screen transition-colors duration-300 ${
+      className={`text-center mt-20 flex flex-col bg-white dark:bg-surface-dark min-h-screen transition-colors duration-300 ${
         i18n.language === "ar" ? "rtl" : "ltr"
       }`}
     >

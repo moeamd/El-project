@@ -5,14 +5,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Custom colors for better dark mode support
-        dark: {
-          bg: "#0f172a",
-          surface: "#1e293b",
-          card: "#334155",
-          text: "#f1f5f9",
-          textSecondary: "#cbd5e1",
+        // Semantic colors for light/dark themes
+        primary: {
+          DEFAULT: "#3DCBB1",
+          dark: "#19a88e",
         },
+        surface: "#ffffff",
+        "surface-dark": "#0f172a",
+        card: "#f8fafc",
+        "card-dark": "#1e293b",
+        text: "#0f172a",
+        "text-dark": "#e6eef6",
+        muted: "#6b7280",
+        "muted-dark": "#9ca3af",
       },
       animation: {
         "fade-in": "fadeIn 0.5s ease-in-out",

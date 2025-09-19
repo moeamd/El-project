@@ -13,18 +13,31 @@ import { useNavigate, Link } from "react-router-dom";
 import LanguageToggle from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
 import { useTranslation } from "react-i18next";
+import { getInstructors } from "../features/users/getinstructors-aprove";
 
 function Navbar() {
   const [showPopup, setShowPopup] = useState(false);
+  let result ;
 
   const { currentUser, isLoading, error } = useSelector(selectCurrentUser);
+  const { instructors } = useSelector((state)=> state.instructors);
   const { t, i18n } = useTranslation();
+  console.log(instructors);
+  
+  if (currentUser && instructors.includes(currentUser.uid)) {
+      result=true
+  }else {
+      result=false
 
+  }
+  console.log(result);
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCurrentUser());
+    dispatch(getInstructors());
   }, [dispatch]);
 
   if (isLoading) {
@@ -35,24 +48,31 @@ function Navbar() {
 
   return (
     <nav
-      className={`bg-transparent text-black dark:text-white px-6 md:px-12 py-4 flex justify-between items-center shadow-md mb-9 absolute top-0 z-20 w-full transition-colors duration-300 ${
+      className={`bg-white dark:bg-surface-dark text-text dark:text-text-dark px-6 md:px-12 py-4 flex justify-between items-center shadow-md mb-9 absolute top-0 z-20 w-full transition-colors duration-300 ${
         i18n.language === "ar" ? "rtl" : "ltr"
       }`}
     >
       {/* Logo */}
       <Link to="/">
-        <div className="flex items-center gap-2 font-bold text-xl">
-          <img src={logoImg} alt="Logo" className="w-10 h-10 object-cover" />
-          <span>MyCourse.io</span>
+        <div className="flex items-center gap-2 text-xl font-bold">
+          <img src={logoImg} alt="Logo" className="object-cover w-10 h-10" />
+          <span className="text-text dark:text-text-dark">{t("app.name")}</span>
         </div>
       </Link>
 
       {/* Items */}
-      <div className="flex items-center gap-6 relative rtl:gap-reverse">
+      <div className="relative flex items-center gap-6 rtl:gap-reverse">
         {!currentUser && (
           <Link to="instructorsignup">
-            <span className="cursor-pointer font-medium hover:underline hidden sm:inline">
+            <span className="hidden font-medium cursor-pointer hover:underline sm:inline">
               {t("common.becomeInstructor")}
+            </span>
+          </Link>
+        )}
+        {!currentUser &&  (
+          <Link to="newCourse">
+            <span className="hidden font-medium cursor-pointer hover:underline sm:inline">
+              {t("common.Add New Course")}
             </span>
           </Link>
         )}
@@ -60,14 +80,14 @@ function Navbar() {
         <div className="flex items-center sm:gap-1.5 md:gap-4 relative rtl:gap-reverse">
           {currentUser && (
             <>
-              <ShoppingCartIcon className="w-6 h-6 cursor-pointer hover:scale-110 transition-transform" />
-              <BellIcon className="w-6 h-6 cursor-pointer hover:scale-110 transition-transform" />
+              <ShoppingCartIcon className="w-6 h-6 transition-transform cursor-pointer hover:scale-110" />
+              <BellIcon className="w-6 h-6 transition-transform cursor-pointer hover:scale-110" />
 
               <div className="relative">
                 <img
                   src={currentUser.photoURL ? currentUser.photoURL : profileImg}
                   alt="Profile"
-                  className="w-8 h-8 rounded-full cursor-pointer hover:scale-110 transition-transform ml-2 rtl:mr-2 rtl:ml-0"
+                  className="w-8 h-8 ml-2 transition-transform rounded-full cursor-pointer hover:scale-110 rtl:mr-2 rtl:ml-0"
                   onClick={togglePopup}
                 />
 
@@ -110,10 +130,10 @@ function Navbar() {
             </>
           )}
         </div>
-      </div>
-      <div className="flex items-center gap-4 rtl:gap-reverse">
-        <LanguageToggle />
-        <ThemeToggle />
+        <div className="flex items-center gap-4 rtl:gap-reverse">
+          <LanguageToggle />
+          <ThemeToggle />
+        </div>
       </div>
     </nav>
   );

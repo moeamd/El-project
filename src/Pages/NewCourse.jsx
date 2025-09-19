@@ -153,7 +153,7 @@ export const NewCourse = () => {
         </div>
 
         {/* Form Container */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+        <div className="bg-white dark:bg-card rounded-2xl shadow-xl p-8 border border-gray-100 transition-colors duration-300">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Course Name */}
             <div>

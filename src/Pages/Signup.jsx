@@ -204,12 +204,12 @@ function Signup() {
   return (
     <main
       id="signup"
-      className={`w-full h-screen inset-0 bg-[rgba(27,27,27,0.6)] dark:bg-[rgba(15,23,42,0.8)] z-50 transition-colors duration-300 ${
+      className={`w-full h-screen inset-0 bg-black/40 dark:bg-surface-dark/80 z-50 transition-colors duration-300 ${
         i18n.language === "ar" ? "rtl" : "ltr"
       }`}
     >
       <div className="w-full h-full flex justify-center items-center">
-        <div className="w-full h-full max-w-[800px] md:max-h-[550px] sm:h-auto flex flex-col sm:flex-row shadow-[0_4px_30px_rgba(0,0,0,0.1)] sm:rounded-[8px]">
+        <div className="w-full h-full max-w-[800px] md:max-h-[550px] sm:h-auto flex flex-col sm:flex-row shadow-lg sm:rounded-lg overflow-hidden bg-transparent">
           <div
             className={`hidden sm:block w-full md:w-1/2 h-full md:h-auto ${
               i18n.language === "ar"
@@ -228,7 +228,7 @@ function Signup() {
             />
           </div>
           <div
-            className={`relative w-full md:w-1/2 h-full md:h-auto flex flex-col justify-stretch md:justify-between bg-[#FFFFFF] dark:bg-gray-800 p-5 ${
+            className={`relative w-full md:w-1/2 h-full md:h-auto flex flex-col justify-stretch md:justify-between bg-white dark:bg-card p-5 ${
               i18n.language === "ar"
                 ? "sm:rounded-tl-[8px] sm:rounded-bl-[6px]"
                 : "sm:rounded-tr-[8px] sm:rounded-br-[6px]"
@@ -251,7 +251,7 @@ function Signup() {
 
             <MyCoursesIo />
 
-            <p className="loading-[24px] my-4 md:my-1 text-[#1B1B1B]/60 dark:text-gray-300">
+            <p className="loading-[24px] my-4 md:my-1 text-muted dark:text-muted-dark">
               {t("common.joinUs")}
             </p>
 
@@ -288,7 +288,7 @@ function Signup() {
                 onChange={formik.handleChange}
                 value={formik.values.username}
                 onBlur={formik.handleBlur}
-                className="w-full p-2 bg-[#F9F9F9E5] dark:bg-gray-700 dark:text-white rounded-[3px] transition-colors"
+                className="w-full p-2 bg-gray-100 dark:bg-card dark:text-text-dark rounded-sm transition-colors"
               />
               {displayError(formik.errors.username, formik.touched.username)}
               <input
@@ -298,7 +298,7 @@ function Signup() {
                 onChange={formik.handleChange}
                 value={formik.values.email}
                 onBlur={formik.handleBlur}
-                className="w-full p-2 bg-[#F9F9F9E5] dark:bg-gray-700 dark:text-white rounded-[3px] transition-colors"
+                className="w-full p-2 bg-gray-100 dark:bg-card dark:text-text-dark rounded-sm transition-colors"
               />
               {displayError(formik.errors.email, formik.touched.email)}
 
@@ -309,7 +309,7 @@ function Signup() {
                 onChange={formik.handleChange}
                 value={formik.values.password}
                 onBlur={formik.handleBlur}
-                className="w-full p-2 bg-[#F9F9F9E5] dark:bg-gray-700 dark:text-white rounded-[3px] transition-colors"
+                className="w-full p-2 bg-gray-100 dark:bg-card dark:text-text-dark rounded-sm transition-colors"
               />
               {displayError(formik.errors.password, formik.touched.password)}
 
@@ -331,7 +331,7 @@ function Signup() {
                 type="submit"
                 value={t("common.createAccount")}
                 name="submit"
-                className="bg-[#3DCBB1] hover:bg-[#19a88e] dark:bg-[#3DCBB1] dark:hover:bg-[#19a88e] w-full text-white font-semibold py-[10px] px-[18px] rounded-[14px] items-center border transition-colors"
+                className="bg-primary hover:bg-primary-dark dark:bg-primary dark:hover:bg-primary-dark w-full text-white font-semibold py-2 px-4 rounded-lg transition-colors"
               />
             </form>
 
