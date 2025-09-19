@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { createUser, addUser } from "../features/users/addUser";
 import { useState } from "react";
 import LoadingSpinner from "../Components/loading-spinner";
+import { getCurrentUser } from "../features/auth/auth";
 
 export default function InstructorSignUp({ isOpen, onClose }) {
   const [error, setError] = useState("");
@@ -19,6 +20,7 @@ export default function InstructorSignUp({ isOpen, onClose }) {
       image: null,
       status: false,
       courses: [],
+      id: "",
     },
     onSubmit: async (values) => {
       setError("");
@@ -28,7 +30,7 @@ export default function InstructorSignUp({ isOpen, onClose }) {
       try {
         const userCredential = await createUser(values.email, values.password);
         const user = userCredential.user;
-        await addUser({ ...values, creatAt: new Date() });
+        await addUser({ ...values, id: user.uid, createdAt: new Date() });
         setSuccess(true);
         formik.resetForm();
       } catch (err) {
