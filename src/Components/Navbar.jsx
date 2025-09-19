@@ -30,7 +30,8 @@ function Navbar() {
   const dispatch = useDispatch();
 
   const isInstructor =
-    currentUser?.uid && instructors?.some((inst) => inst.id === currentUser.uid  );
+  currentUser?.uid && instructors?.some((inst) => inst.uid === currentUser.uid && inst.status === true);
+
   
   useEffect(() => {
     dispatch(fetchCurrentUser());

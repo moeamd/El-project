@@ -20,7 +20,7 @@ export default function InstructorSignUp({ isOpen, onClose }) {
       image: null,
       status: false,
       courses: [],
-      id: "",
+      uid: "",
     },
     onSubmit: async (values) => {
       setError("");
@@ -30,7 +30,10 @@ export default function InstructorSignUp({ isOpen, onClose }) {
       try {
         const userCredential = await createUser(values.email, values.password);
         const user = userCredential.user;
-        await addUser({ ...values, id: user.uid, createdAt: new Date() });
+        await addUser({
+          ...values,
+          status: "pending",
+        }, user.uid);
         setSuccess(true);
         formik.resetForm();
       } catch (err) {
