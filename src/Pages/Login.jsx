@@ -288,7 +288,7 @@ function Login() {
               <input
                 type="submit"
                 value={t("common.logIn")}
-                className="w-full px-4 py-2 mt-6 font-semibold text-white transition-colors rounded-lg bg-primary hover:bg-primary-dark dark:bg-primary dark:hover:bg-primary-dark"
+                className="w-full px-4 py-2 mt-6 font-semibold text-black transition-colors rounded-lg bg-primary hover:bg-primary-dark dark:bg-primary dark:hover:bg-primary-dark"
               />
             </form>
 

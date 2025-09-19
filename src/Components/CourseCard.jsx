@@ -56,9 +56,19 @@ export default function CourseCard({ course, onCardClick }) {
           {course.description}
         </p>
 
-        <p className="text-xs text-gray-500 dark:text-gray-400">
-          {t("common.by")} {course.instructor || t("common.unknown")}
-        </p>
+        {/* ✅ Instructor Info */}
+        <div className="flex items-center gap-2">
+          {course.instructorImage && (
+            <img
+              src={course.instructorImage}
+              alt={course.instructorName}
+              className="w-6 h-6 rounded-full object-cover"
+            />
+          )}
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            {t("common.by")} {course.instructorName || t("common.unknown")}
+          </p>
+        </div>
 
         <p className="text-xs text-gray-400 dark:text-gray-500">
           {t("common.createdAt")}: {createdAt}

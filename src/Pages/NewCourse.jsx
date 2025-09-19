@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import { addCourse } from "../features/courses/addCourse";
 import {
   BookOpenIcon,
@@ -10,9 +10,20 @@ import {
   CheckCircleIcon,
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
-import { CheckCircle2Icon, PhoneOutgoingIcon } from "lucide-react";
+import { CheckCircle2Icon, Link, PhoneOutgoingIcon } from "lucide-react";
+import { selectCurrentUser } from "../features/auth/currentUserSlice";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 export const NewCourse = () => {
+
+  const currentUser = useSelector(selectCurrentUser);
+  const { instructors } = useSelector((state) => state.instructors);
+  const isInstructor =
+  currentUser?.uid && instructors?.some((inst) => inst.id === currentUser.uid  );
+
+
+
   const [data, setData] = useState({
     name: "",
     price: "",
@@ -22,14 +33,27 @@ export const NewCourse = () => {
     poster: null,
     status: "draft",
     description: "",
-    instructor: "",
+    instructorId: "",
+    instructorName: "Unknown",
+    instructorImage: "",
     createdAt: new Date(),
     rejectReason: "",
   });
 
+  useEffect(() => {
+    if (currentUser) {
+      setData(prev => ({
+        ...prev,
+        instructorId: currentUser.uid || "",
+        instructorName: currentUser.name || currentUser.email || "Unknown",
+        instructorImage: currentUser.image || "/default-avatar.png",
+      }));
+    }
+  }, [currentUser]);
+
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', null
+  const [submitStatus, setSubmitStatus] = useState(null); 
 
   const categories = [
     "Web Development",
@@ -122,7 +146,9 @@ export const NewCourse = () => {
         poster: null,
         status: "draft",
         description: "",
-        instructor: "",
+        instructorId: "",
+        instructorName: "",
+        instructorImage: "",
         createdAt: new Date(),
         rejectReason: "",
       });
@@ -138,6 +164,10 @@ export const NewCourse = () => {
       setIsSubmitting(false);
     }
   };
+
+  if (!isInstructor) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
