@@ -1,13 +1,42 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <title>MyCourse.io</title>
   </head>
   <body>
     <div id="root"></div>
+    <!-- Inline script to set initial theme and language direction to avoid FOUC -->
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem("theme");
+          if (!theme) {
+            theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+          }
+          document.documentElement.classList.remove("light", "dark");
+          document.documentElement.classList.add(theme);
+
+          var lang =
+            localStorage.getItem("i18nextLng") ||
+            document.documentElement.lang ||
+            "en";
+          document.documentElement.lang = lang;
+          document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+          try {
+            // set initial document title to the app name (keeps simple fallback)
+            var appName = "MyCourse.io";
+            document.title = appName;
+          } catch (e) {}
+        } catch (e) {
+          console.error("Error applying initial theme/lang", e);
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
