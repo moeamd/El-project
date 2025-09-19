@@ -14,8 +14,11 @@ import { MainDashboard } from "./Dashboard/MainDashboard";
 import UserProfile from "./Components/UserProfile";
 import MainProfile from "./profile/MainProfile";
 import CourseDetails from "./Pages/CourseDetails";
+
 import WishList from "./Components/WishList";
 import SearchPage from "./Pages/search/search-page";
+
+
 
 function App() {
   const location = useLocation();

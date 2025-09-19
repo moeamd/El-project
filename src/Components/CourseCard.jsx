@@ -89,14 +89,14 @@ export default function CourseCard({ course, onCardClick }) {
 
   return (
     <div
-      className={`w-[420px] bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-pointer ${i18n.language === "ar" ? "rtl" : "ltr"}`}
+      className={` bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-pointer ${i18n.language === "ar" ? "rtl" : "ltr"}`}
       onClick={() => onCardClick(course)}
     >
       {showAlert && <Alert type={alertType} message={alertMessage} onClose={() => setShowAlert(false)} />}
 
       {/* Poster */}
       <div className="relative">
-        <img src={course.poster} alt={course.name} className="w-full h-44 object-cover" />
+        <img src={course.poster} alt={course.name} className="w-full h-88 object-cover rounded-3xl" />
 
         {/* Rating */}
         {course.rating && (
