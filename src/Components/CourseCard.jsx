@@ -8,7 +8,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { getUsers, selectUsers } from '../features/auth/usersSlice';
 import { fetchCurrentUser, selectCurrentUser } from '../features/auth/currentUserSlice';
-import { updateWishList, removeFromWishList } from '../features/auth/auth'
+import { addToWishList, removeFromWishList, addToFavorites, removeFromFavorites } from '../features/auth/auth'
 
 export default function CourseCard({ course, onCardClick }) {
 
@@ -16,7 +16,6 @@ export default function CourseCard({ course, onCardClick }) {
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("info");
 
-  const [isFavorited, setIsFavorited] = useState(false)
   const { users, isloading, error } = useSelector(selectUsers);
   const { currentUser } = useSelector(selectCurrentUser);
 
@@ -36,19 +35,20 @@ export default function CourseCard({ course, onCardClick }) {
   }, [users, currentUser]);
 
   const userId = currentUserInfo?.uid;
-  const [localWishList, setLocalWishList] = useState(currentUserInfo?.wishList || []);
 
-  useEffect(() => {
-    setLocalWishList(currentUserInfo?.wishList || []);
-  }, [currentUserInfo]);
+//wishlist
+    const [localWishList, setLocalWishList] = useState(currentUserInfo?.wishList || []);
 
-  const isWishListed = useMemo(() => {
-    if (!course.id || !Array.isArray(localWishList)) return false;
-    return localWishList.some((w) => w?.id === course.id);
-  }, [localWishList, course]);
+    useEffect(() => {
+      setLocalWishList(currentUserInfo?.wishList || []);
+    }, [currentUserInfo]);
 
-  (isWishListed);
-
+    const isWishListed = useMemo(() => {
+      if (!course.id || !Array.isArray(localWishList)) return false;
+      return localWishList.some((w) => w?.id === course.id);
+    }, [localWishList, course]);
+    
+  
   const handleAddToWishlist = async (e) => {
     e.stopPropagation();
     try {
@@ -59,7 +59,7 @@ export default function CourseCard({ course, onCardClick }) {
         setAlertMessage("Removed from WishList");
       }
       else {
-        await updateWishList(course, userId);
+        await addToWishList(course, userId);
         setLocalWishList((prev) => [...prev, course]);
         setAlertMessage("Added to WishList");
       }
@@ -91,6 +91,63 @@ export default function CourseCard({ course, onCardClick }) {
       setShowAlert(true);
     }
   }
+  //wishlist
+
+//favorites
+    const [localFavorites, setLocalFavorites] = useState(currentUserInfo?.favorites || []);
+
+    useEffect(() => {
+      setLocalFavorites(currentUserInfo?.favorites || []);
+    }, [currentUserInfo]);
+
+    const isFavoritesed = useMemo(() => {
+      if (!course.id || !Array.isArray(localFavorites)) return false;
+      return localFavorites.some((w) => w?.id === course.id);
+    }, [localFavorites, course]);
+
+
+  const handleAddToFavorites = async (e) => {
+    e.stopPropagation();
+    try {
+      if (isFavoritesed) {
+        await removeFromFavorites(course.id, userId);
+        setLocalFavorites((prev) => prev.filter((w) => w.id !== course.id));
+        setAlertMessage("Removed from Favorites");
+      }
+      else {
+        await addToFavorites(course, userId);
+        setLocalFavorites((prev) => [...prev, course]);
+        setAlertMessage("Added to Favorites");
+      }
+
+      setAlertType("success");
+      setShowAlert(true);
+    } catch (error) {
+      let message = "Failed to update Favorites. Please try again.";
+      if (!userId) {
+        message = "User not found. please Login";
+      }
+      else if (error?.code === "permission-denied") {
+        message = "You do not have permission to update the Favorites.";
+      } else if (error?.code === "unavailable" || error?.message?.includes("Network")) {
+        message = "Network error. Please check your connection.";
+      } else if (error?.code === "not-found") {
+        message = "Course or user not found.";
+      } else if (error?.code === "invalid-argument") {
+        message = "Invalid data provided. Please contact support.";
+      } else if (error?.code) {
+        message = `Error: ${error.code}`;
+      } else if (typeof error === "string") {
+        message = error;
+      } else if (error?.message) {
+        message = error.message;
+      }
+      setAlertMessage(message);
+      setAlertType("error");
+      setShowAlert(true);
+    }
+  }
+  //favorites
 
   return (
     <div
@@ -134,21 +191,17 @@ export default function CourseCard({ course, onCardClick }) {
 
         <div className="flex flex-wrap gap-2 mt-2 text-xs text-gray-600">
           <div className="flex items-center  gap-1 bg-gray-100  rounded-full">
-            {(isFavorited ?
+            {(isFavoritesed ?
               <MdOutlineFavorite
                 onClick={(e) => {
-                  e.stopPropagation();
-                  setIsFavorited(!isFavorited);
-                  ("Favorite removed");
+                  handleAddToFavorites(e);
                 }}
                 className="w-10 h-10 cursor-pointer text-red-500 px-2 py-1 "
               />
               :
               <MdFavoriteBorder
                 onClick={(e) => {
-                  e.stopPropagation();
-                  setIsFavorited(!isFavorited);
-                  ("Favorite added");
+                  handleAddToFavorites(e);
                 }}
                 className="w-10 h-10 cursor-pointer px-2 py-1"
               />
