@@ -14,8 +14,12 @@ import LoginImage from "../Assets/Images/RegisterImages/login.png";
 import RegisterButton from "../Components/RegisterUser/RegisterButton";
 import MyCoursesIo from "../Components/RegisterUser/MyCourses.io";
 import Alert from "../Components/Alert";
+import { useTranslation } from "react-i18next";
+import LanguageToggle from "../Components/LanguageToggle";
+import ThemeToggle from "../Components/ThemeToggle";
 function Login() {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("info");
@@ -29,16 +33,16 @@ function Login() {
       let errors = {};
 
       if (!values.email) {
-        errors.email = "Required";
+        errors.email = t("common.required");
       } else if (
         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
       ) {
-        errors.email = "Invalid email address";
+        errors.email = t("common.invalidEmail");
       }
       if (!values.password) {
-        errors.password = "Required";
+        errors.password = t("common.required");
       } else if (values.password.length < 8) {
-        errors.password = "Password must be at least 8 characters long";
+        errors.password = t("common.passwordTooShort");
       }
 
       return errors;
@@ -171,28 +175,47 @@ function Login() {
   };
 
   return (
-    <main className={" w-full  h-screen bg-[#1B1B1B]/60"}>
+    <main
+      className={`w-full h-screen bg-[#1B1B1B]/60 dark:bg-[#0f172a]/80 transition-colors duration-300 ${
+        i18n.language === "ar" ? "rtl" : "ltr"
+      }`}
+    >
       <div className="w-full h-full flex justify-center items-center">
-        <div className="w-full h-full max-w-[800px] md:max-h-[550px] sm:h-auto flex flex-col sm:flex-row shadow-[0_4px_30px_rgba(0,0,0,0.1)] sm:rounded-[8px] ">
+        <div className="w-full h-full max-w-[800px] md:max-h-[550px] sm:h-auto flex flex-col sm:flex-row shadow-[0_4px_30px_rgba(0,0,0,0.1)] sm:rounded-[8px]">
           <div
-            className={
-              "hidden sm:block w-full md:w-1/2 h-full md:h-auto rounded-tl-[8px] rounded-bl-[6px]"
-            }
+            className={`hidden sm:block w-full md:w-1/2 h-full md:h-auto ${
+              i18n.language === "ar"
+                ? "rounded-tr-[8px] rounded-br-[6px]"
+                : "rounded-tl-[8px] rounded-bl-[6px]"
+            }`}
           >
             <img
               src={LoginImage}
-              className={"w-full h-full rounded-tl-[8px] rounded-bl-[6px]"}
+              className={`w-full h-full ${
+                i18n.language === "ar"
+                  ? "rounded-tr-[8px] rounded-br-[6px]"
+                  : "rounded-tl-[8px] rounded-bl-[6px]"
+              }`}
               alt="loading"
             />
           </div>
           <div
-            className={
-              " relative w-full md:w-1/2 h-full md:h-auto flex flex-col justify-stretch  md:justify-between  bg-[#FFFFFF] p-5 sm:rounded-tr-[8px] sm:rounded-br-[6px]"
-            }
+            className={`relative w-full md:w-1/2 h-full md:h-auto flex flex-col justify-stretch md:justify-between bg-[#FFFFFF] dark:bg-gray-800 p-5 ${
+              i18n.language === "ar"
+                ? "sm:rounded-tl-[8px] sm:rounded-bl-[6px]"
+                : "sm:rounded-tr-[8px] sm:rounded-br-[6px]"
+            } transition-colors duration-300`}
           >
+            <div className="absolute top-2 right-2 flex items-center gap-2">
+              <LanguageToggle />
+              <ThemeToggle />
+            </div>
+
             <X
               size={20}
-              className="cursor-pointer absolute top-2 right-2"
+              className={`cursor-pointer absolute ${
+                i18n.language === "ar" ? "top-2 left-2" : "top-2 right-2"
+              } z-10`}
               onClick={() => {
                 navigate(-1);
               }}
@@ -200,43 +223,41 @@ function Login() {
 
             <MyCoursesIo />
 
-            <p className={"loading-[24px] my-5 md:my-1 text-[#1B1B1B]/60"}>
-              Join us and get more benefits.
+            <p className="loading-[24px] my-5 md:my-1 text-[#1B1B1B]/60 dark:text-gray-300">
+              {t("common.joinUs")}
             </p>
 
-            <div className={"gap-3 flex flex-col"}>
+            <div className="gap-3 flex flex-col">
               <RegisterButton
                 image={GitHubIcon}
-                text="Sign up with GitHub"
+                text={t("common.signUpWithGitHub")}
                 onClick={handleSignInWithGithub}
-                bgColor="bg-[#1B1B1B]"
-                hover=" hover:bg-[#000000]"
+                bgColor="bg-[#1B1B1B] dark:bg-gray-700"
+                hover="hover:bg-[#000000] dark:hover:bg-gray-800"
               />
               <RegisterButton
                 image={GoogleIcon}
-                text="Sign up with Google"
+                text={t("common.signUpWithGoogle")}
                 onClick={handleSignInWithGoogle}
-                bgColor="border-[#1B1B1B1A]"
-                textColor="text-black"
-                hover=" hover:bg-amber-300"
+                bgColor="border-[#1B1B1B1A] dark:border-gray-600"
+                textColor="text-black dark:text-white"
+                hover="hover:bg-amber-300 dark:hover:bg-amber-400"
               />
             </div>
 
-            <div
-              className={" flex justify-center  items-center my-[30px] md:my-0"}
-            >
-              or you can
+            <div className="flex justify-center items-center my-[30px] md:my-0">
+              {t("common.orYouCan")}
             </div>
 
             <form
-              className={"flex flex-col gap-3"}
+              className="flex flex-col gap-3"
               onSubmit={formik.handleSubmit}
             >
               <input
                 type="email"
                 name="email"
-                placeholder="Email Address"
-                className={"w-full p-2 bg-[#F9F9F9E5] rounded-[3px]"}
+                placeholder={t("common.emailAddress") || "Email Address"}
+                className="w-full p-2 bg-[#F9F9F9E5] dark:bg-gray-700 dark:text-white rounded-[3px] transition-colors"
                 onChange={formik.handleChange}
                 value={formik.values.email}
                 onBlur={formik.handleBlur}
@@ -245,45 +266,41 @@ function Login() {
               <input
                 type="text"
                 name="password"
-                placeholder="Password"
-                className={"w-full p-2 bg-[#F9F9F9E5] rounded-[3px]"}
+                placeholder={t("common.password") || "Password"}
+                className="w-full p-2 bg-[#F9F9F9E5] dark:bg-gray-700 dark:text-white rounded-[3px] transition-colors"
                 onChange={formik.handleChange}
                 value={formik.values.password}
                 onBlur={formik.handleBlur}
               />
               {displayError(formik.errors.password, formik.touched.password)}
 
-              <div className={" flex justify-end my-0"}>
+              <div className="flex justify-end my-0">
                 <span
                   onClick={() => {
                     resetPassword(formik.values.email);
                   }}
-                  className={
-                    "text-xs  hover:underline cursor-pointer hover:text-[#3DCBB1]"
-                  }
+                  className="text-xs hover:underline cursor-pointer hover:text-[#3DCBB1] dark:text-gray-400 dark:hover:text-[#3DCBB1] transition-colors"
                 >
-                  Forget Password?
+                  {t("common.forgetPassword")}
                 </span>
               </div>
 
               <input
                 type="submit"
-                value="Log In"
-                className={
-                  ' bg-[#3DCBB1] hover:bg-[#19a88e] w-full text-white font-semibold mt-[25px] md:mt-1 py-[10px] px-[18px] rounded-[14px] items-center border"'
-                }
+                value={t("common.logIn")}
+                className="bg-[#3DCBB1] hover:bg-[#19a88e] dark:bg-[#3DCBB1] dark:hover:bg-[#19a88e] w-full text-white font-semibold mt-[25px] md:mt-1 py-[10px] px-[18px] rounded-[14px] items-center border transition-colors"
               />
             </form>
 
-            <div className={"text-center mt-[50px] md:mt-4"}>
-              Need an account?{" "}
+            <div className="text-center mt-[50px] md:mt-4">
+              {t("common.needAccount")}{" "}
               <span
                 onClick={() => {
                   navigate("/signup");
                 }}
-                className={"text-[#3DCBB1] hover:underline cursor-pointer "}
+                className="text-[#3DCBB1] hover:underline cursor-pointer dark:text-[#3DCBB1] transition-colors"
               >
-                Sign Up
+                {t("common.signUp")}
               </span>
             </div>
           </div>

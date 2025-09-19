@@ -1,53 +1,77 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { logOut } from "../features/auth/auth";
+import { useTranslation } from "react-i18next";
 
 function ProfilePopup({ show, userName, userEmail }) {
+  const { t, i18n } = useTranslation();
+
   if (!show) return null;
 
   return (
-    <div className="absolute right-0 mt-2  bg-white rounded shadow-lg border border-gray-200 z-50">
+    <div
+      className={`absolute mt-2 bg-white dark:bg-gray-800 rounded shadow-lg border border-gray-200 dark:border-gray-700 z-50 transition-colors duration-300 ${
+        i18n.language === "ar" ? "left-0" : "right-0"
+      } ${i18n.language === "ar" ? "rtl" : "ltr"}`}
+    >
       {/* Name & Email */}
       <Link
         to="/MainProfile"
-        className="block text-blue-500 hover:underline text-center font-semibold"
+        className="block text-blue-500 dark:text-blue-400 hover:underline text-center font-semibold transition-colors"
       >
-        <div className="p-2 border-b border-gray-200 cursor-pointer hover:bg-gray-100">
-          <p className="font-bold">{userName}</p>
-          <p className="text-sm text-gray-500">{userEmail}</p>
+        <div className="p-2 border-b border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+          <p className="font-bold text-gray-900 dark:text-white">{userName}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            {userEmail}
+          </p>
         </div>
       </Link>
 
       {/*Courses & Cart & Wishlist */}
-      <div className="flex flex-col p-2 border-b border-gray-200">
-        <Link to="/MainProfile/MyCourses" className="p-2 hover:underline">
-          My Courses
+      <div className="flex flex-col p-2 border-b border-gray-200 dark:border-gray-700">
+        <Link
+          to="/MainProfile/MyCourses"
+          className="p-2 hover:underline text-gray-700 dark:text-gray-300 transition-colors"
+        >
+          {t("common.myCourses")}
         </Link>
-        <Link to="/MainProfile/Favorites" className="p-2 hover:underline">
-          Favorites
+        <Link
+          to="/MainProfile/Favorites"
+          className="p-2 hover:underline text-gray-700 dark:text-gray-300 transition-colors"
+        >
+          {t("common.favorites")}
         </Link>
-        <Link to="/MainProfile/Wishlist" className="p-2 hover:underline">
-          My Wishlist
+        <Link
+          to="/MainProfile/Wishlist"
+          className="p-2 hover:underline text-gray-700 dark:text-gray-300 transition-colors"
+        >
+          {t("common.wishlist")}
         </Link>
       </div>
 
       {/* Notifications & Account Settings */}
-      <div className="flex flex-col p-2 border-b border-gray-200">
-        <Link to="/notifications" className="p-2 hover:underline">
-          Notifications
+      <div className="flex flex-col p-2 border-b border-gray-200 dark:border-gray-700">
+        <Link
+          to="/notifications"
+          className="p-2 hover:underline text-gray-700 dark:text-gray-300 transition-colors"
+        >
+          {t("common.notifications")}
         </Link>
-        <Link to="/MainProfile/Profile" className="p-2 hover:underline">
-          Account Setting
+        <Link
+          to="/MainProfile/Profile"
+          className="p-2 hover:underline text-gray-700 dark:text-gray-300 transition-colors"
+        >
+          {t("common.accountSetting")}
         </Link>
       </div>
 
       {/* Logout */}
       <Link
         to="/"
-        className="block p-2 text-red-500 hover:underline "
+        className="block p-2 text-red-500 dark:text-red-400 hover:underline transition-colors"
         onClick={logOut}
       >
-        Logout
+        {t("common.logout")}
       </Link>
     </div>
   );

@@ -14,9 +14,13 @@ import {
   getCurrentUser,
 } from "../features/auth/auth";
 import Alert from "../Components/Alert";
+import { useTranslation } from "react-i18next";
+import LanguageToggle from "../Components/LanguageToggle";
+import ThemeToggle from "../Components/ThemeToggle";
 
 function Signup() {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("info");
@@ -32,15 +36,15 @@ function Signup() {
       let errors = {};
 
       if (!values.username) {
-        errors.username = "Required";
+        errors.username = t("common.required");
       }
 
       const validateEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
       if (!values.email) {
-        errors.email = "Required";
+        errors.email = t("common.required");
       } else if (!validateEmail.test(values.email)) {
-        errors.email = "Invalid email address";
+        errors.email = t("common.invalidEmail");
       }
 
       const minLength = 8;
@@ -50,24 +54,23 @@ function Signup() {
       const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(values.password);
 
       if (!values.password) {
-        errors.password = "Required";
+        errors.password = t("common.required");
       } else if (values.password.length < minLength) {
-        errors.password = "Password must be at least 8 characters long";
+        errors.password = t("common.passwordTooShort");
       } else if (!hasUpper) {
-        errors.password = "Password must contain at least one uppercase letter";
+        errors.password = t("common.passwordMustContainUppercase");
       } else if (!hasLower) {
-        errors.password = "Password must contain at least one lowercase letter";
+        errors.password = t("common.passwordMustContainLowercase");
       } else if (!hasNumber) {
-        errors.password = "Password must contain at least one number";
+        errors.password = t("common.passwordMustContainNumber");
       } else if (!hasSpecial) {
-        errors.password =
-          "Password must contain at least one special character";
+        errors.password = t("common.passwordMustContainSpecial");
       }
 
       if (!values.confirmPassword) {
-        errors.confirmPassword = "Required";
+        errors.confirmPassword = t("common.required");
       } else if (values.password !== values.confirmPassword) {
-        errors.confirmPassword = "Passwords do not match";
+        errors.confirmPassword = t("common.passwordsNotMatch");
       }
 
       return errors;
@@ -199,32 +202,48 @@ function Signup() {
   };
 
   return (
-
     <main
       id="signup"
-      className={" w-full  h-screen inset-0 bg-[rgba(27,27,27,0.6)] z-50"}
+      className={`w-full h-screen inset-0 bg-[rgba(27,27,27,0.6)] dark:bg-[rgba(15,23,42,0.8)] z-50 transition-colors duration-300 ${
+        i18n.language === "ar" ? "rtl" : "ltr"
+      }`}
     >
       <div className="w-full h-full flex justify-center items-center">
-        <div className="w-full h-full max-w-[800px] md:max-h-[550px] sm:h-auto flex flex-col sm:flex-row shadow-[0_4px_30px_rgba(0,0,0,0.1)] sm:rounded-[8px] ">
+        <div className="w-full h-full max-w-[800px] md:max-h-[550px] sm:h-auto flex flex-col sm:flex-row shadow-[0_4px_30px_rgba(0,0,0,0.1)] sm:rounded-[8px]">
           <div
-            className={
-              "hidden sm:block w-full md:w-1/2 h-full md:h-auto rounded-tl-[8px] rounded-bl-[6px]"
-            }
+            className={`hidden sm:block w-full md:w-1/2 h-full md:h-auto ${
+              i18n.language === "ar"
+                ? "rounded-tr-[8px] rounded-br-[6px]"
+                : "rounded-tl-[8px] rounded-bl-[6px]"
+            }`}
           >
             <img
               src={RegisterImage}
-              className={"w-full h-full rounded-tl-[8px] rounded-bl-[6px]"}
+              className={`w-full h-full ${
+                i18n.language === "ar"
+                  ? "rounded-tr-[8px] rounded-br-[6px]"
+                  : "rounded-tl-[8px] rounded-bl-[6px]"
+              }`}
               alt="loading"
             />
           </div>
           <div
-            className={
-              " relative w-full md:w-1/2 h-full md:h-auto flex flex-col justify-stretch  md:justify-between  bg-[#FFFFFF] p-5 sm:rounded-tr-[8px] sm:rounded-br-[6px]"
-            }
+            className={`relative w-full md:w-1/2 h-full md:h-auto flex flex-col justify-stretch md:justify-between bg-[#FFFFFF] dark:bg-gray-800 p-5 ${
+              i18n.language === "ar"
+                ? "sm:rounded-tl-[8px] sm:rounded-bl-[6px]"
+                : "sm:rounded-tr-[8px] sm:rounded-br-[6px]"
+            } transition-colors duration-300`}
           >
+            <div className="absolute top-2 right-2 flex items-center gap-2">
+              <LanguageToggle />
+              <ThemeToggle />
+            </div>
+
             <X
               size={20}
-              className="cursor-pointer absolute top-2 right-2"
+              className={`cursor-pointer absolute ${
+                i18n.language === "ar" ? "top-2 left-2" : "top-2 right-2"
+              } z-10`}
               onClick={() => {
                 navigate(-1);
               }}
@@ -232,76 +251,76 @@ function Signup() {
 
             <MyCoursesIo />
 
-            <p className={"loading-[24px] my-4 md:my-1 text-[#1B1B1B]/60"}>
-              Join us and get more benefits.
+            <p className="loading-[24px] my-4 md:my-1 text-[#1B1B1B]/60 dark:text-gray-300">
+              {t("common.joinUs")}
             </p>
 
-            <div className={"gap-3 flex flex-col"}>
+            <div className="gap-3 flex flex-col">
               <RegisterButton
                 image={GitHubIcon}
-                text="Sign up with GitHub"
+                text={t("common.signUpWithGitHub")}
                 onClick={handleSignInWithGithub}
-                bgColor="bg-[#1B1B1B]"
-                hover=" hover:bg-[#000000]"
+                bgColor="bg-[#1B1B1B] dark:bg-gray-700"
+                hover="hover:bg-[#000000] dark:hover:bg-gray-800"
               />
               <RegisterButton
                 image={GoogleIcon}
-                text="Sign up with Google"
+                text={t("common.signUpWithGoogle")}
                 onClick={handleSignInWithGoogle}
-                bgColor="border-[#1B1B1B1A]"
-                textColor="text-black"
-                hover=" hover:bg-amber-300"
+                bgColor="border-[#1B1B1B1A] dark:border-gray-600"
+                textColor="text-black dark:text-white"
+                hover="hover:bg-amber-300 dark:hover:bg-amber-400"
               />
             </div>
 
-            <div className={" flex justify-center items-center my-4 md:my-0"}>
-              or you can
+            <div className="flex justify-center items-center my-4 md:my-0">
+              {t("common.orYouCan")}
             </div>
 
             <form
-              className={"flex flex-col gap-2"}
+              className="flex flex-col gap-2"
               onSubmit={formik.handleSubmit}
             >
               <input
                 type="text"
                 name="username"
-                placeholder="Username"
+                placeholder={t("common.username")}
                 onChange={formik.handleChange}
                 value={formik.values.username}
                 onBlur={formik.handleBlur}
-                className={"w-full p-2 bg-[#F9F9F9E5] rounded-[3px]"}
+                className="w-full p-2 bg-[#F9F9F9E5] dark:bg-gray-700 dark:text-white rounded-[3px] transition-colors"
               />
               {displayError(formik.errors.username, formik.touched.username)}
               <input
                 type="email"
                 name="email"
-                placeholder="Email Address"
+                placeholder={t("common.emailAddress")}
                 onChange={formik.handleChange}
                 value={formik.values.email}
                 onBlur={formik.handleBlur}
-                className={"w-full p-2 bg-[#F9F9F9E5] rounded-[3px]"}
+                className="w-full p-2 bg-[#F9F9F9E5] dark:bg-gray-700 dark:text-white rounded-[3px] transition-colors"
               />
               {displayError(formik.errors.email, formik.touched.email)}
 
               <input
                 type="text"
                 name="password"
-                placeholder="Password"
+                placeholder={t("common.password")}
                 onChange={formik.handleChange}
                 value={formik.values.password}
                 onBlur={formik.handleBlur}
-                className={"w-full p-2 bg-[#F9F9F9E5] rounded-[3px]"}
+                className="w-full p-2 bg-[#F9F9F9E5] dark:bg-gray-700 dark:text-white rounded-[3px] transition-colors"
               />
               {displayError(formik.errors.password, formik.touched.password)}
 
               <input
                 type="text"
                 name="confirmPassword"
-                placeholder="Confirm Password"
+                placeholder={t("common.confirmPassword")}
                 onChange={formik.handleChange}
                 value={formik.values.confirmPassword}
                 onBlur={formik.handleBlur}
-                className={"w-full p-2 bg-[#F9F9F9E5] rounded-[3px]"}
+                className="w-full p-2 bg-[#F9F9F9E5] dark:bg-gray-700 dark:text-white rounded-[3px] transition-colors"
               />
               {displayError(
                 formik.errors.confirmPassword,
@@ -310,23 +329,21 @@ function Signup() {
 
               <input
                 type="submit"
-                value="Create Account"
+                value={t("common.createAccount")}
                 name="submit"
-                className={
-                  ' bg-[#3DCBB1] hover:bg-[#19a88e] w-full text-white font-semibold py-[10px] px-[18px] rounded-[14px] items-center border"'
-                }
+                className="bg-[#3DCBB1] hover:bg-[#19a88e] dark:bg-[#3DCBB1] dark:hover:bg-[#19a88e] w-full text-white font-semibold py-[10px] px-[18px] rounded-[14px] items-center border transition-colors"
               />
             </form>
 
-            <div className={"text-center mt-[50px] md:mt-1"}>
-              Already have an account?{" "}
+            <div className="text-center mt-[50px] md:mt-1">
+              {t("common.alreadyHaveAccount")}{" "}
               <span
                 onClick={() => {
                   navigate("/login");
                 }}
-                className={"text-[#3DCBB1] hover:underline cursor-pointer"}
+                className="text-[#3DCBB1] hover:underline cursor-pointer dark:text-[#3DCBB1] transition-colors"
               >
-                Log In
+                {t("common.logIn")}
               </span>
             </div>
           </div>
