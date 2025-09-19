@@ -47,4 +47,47 @@ export default function CourseCard({ course, onCardClick }) {
       </div>
 
       {/* Content */}
-      <div className="p-4 space-
+      <div className="p-4 space-y-2">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          {course.name}
+        </h3>
+
+        <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+          {course.description}
+        </p>
+
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+          {t("common.by")} {course.instructor || t("common.unknown")}
+        </p>
+
+        <p className="text-xs text-gray-400 dark:text-gray-500">
+          {t("common.createdAt")}: {createdAt}
+        </p>
+
+        {/* Footer */}
+        <div
+          className={`flex justify-between items-center mt-3 ${
+            i18n.language === "ar" ? "flex-row-reverse" : ""
+          }`}
+        >
+          <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
+            ${course.price}
+            <span className="text-sm font-normal text-gray-500 dark:text-gray-400 ml-1">
+              /{t("common.lifetime")}
+            </span>
+          </p>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              console.log("Enroll clicked for:", course.name);
+            }}
+            className="bg-primary text-white px-4 py-2 rounded-full text-sm hover:bg-primary-dark transition-colors"
+          >
+            {t("common.enrollNow")}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

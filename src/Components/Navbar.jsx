@@ -4,7 +4,12 @@ import { ShoppingCartIcon, BellIcon } from "@heroicons/react/24/solid";
 import profileImg from "../assets/images/profileImage.png";
 import logoImg from "../assets/images/logo.png";
 import ProfilePopup from "./ProfilePopup";
-import { fetchCurrentUser, selectCurrentUser } from "../features/auth/currentUserSlice";
+import {
+  fetchCurrentUser,
+  selectCurrentUser,
+  selectCurrentUserError,
+  selectCurrentUserLoading,
+} from "../features/auth/currentUserSlice";
 import LoadingSpinner from "./loading-spinner";
 import { useNavigate, Link } from "react-router-dom";
 import LanguageToggle from "./LanguageToggle";
@@ -14,32 +19,25 @@ import { getInstructors } from "../features/users/getinstructors-aprove";
 
 function Navbar() {
   const [showPopup, setShowPopup] = useState(false);
-  let result ;
 
-  const { currentUser, isLoading, error } = useSelector(selectCurrentUser);
-  const { instructors } = useSelector((state)=> state.instructors);
+  const currentUser = useSelector(selectCurrentUser);
+  const isLoading = useSelector(selectCurrentUserLoading);
+  const error = useSelector(selectCurrentUserError);
+  const { instructors } = useSelector((state) => state.instructors);
   const { t, i18n } = useTranslation();
-  console.log(instructors);
-  
-  if (currentUser && instructors.includes(currentUser.uid)) {
-      result=true
-  }else {
-      result=false
 
-  }
-  console.log(result);
-  
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const isInstructor =
+    currentUser?.uid && instructors?.some((inst) => inst.id === currentUser.uid  );
+  
   useEffect(() => {
     dispatch(fetchCurrentUser());
     dispatch(getInstructors());
   }, [dispatch]);
 
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
+  if (isLoading) return <LoadingSpinner />;
 
   const togglePopup = () => setShowPopup((prev) => !prev);
 
@@ -66,29 +64,29 @@ function Navbar() {
             </span>
           </Link>
         )}
-        {!currentUser &&  (
+
+        {isInstructor && (
           <Link to="newCourse">
             <span className="hidden font-medium cursor-pointer hover:underline sm:inline">
-              {t("common.Add New Course")}
+              {t("  addNewCourse")}
             </span>
           </Link>
         )}
 
         <div className="flex items-center sm:gap-1.5 md:gap-4 relative rtl:gap-reverse">
-          {currentUser && (
+          {currentUser?.uid ? (
             <>
               <ShoppingCartIcon className="w-6 h-6 transition-transform cursor-pointer hover:scale-110" />
               <BellIcon className="w-6 h-6 transition-transform cursor-pointer hover:scale-110" />
 
               <div className="relative">
                 <img
-                  src={currentUser.photoURL ? currentUser.photoURL : profileImg}
+                  src={currentUser.photoURL || profileImg}
                   alt="Profile"
                   className="w-8 h-8 ml-2 transition-transform rounded-full cursor-pointer hover:scale-110 rtl:mr-2 rtl:ml-0"
                   onClick={togglePopup}
                 />
 
-                {/* Popup */}
                 {showPopup && (
                   <div
                     className={`absolute top-full mt-1 ${
@@ -104,29 +102,24 @@ function Navbar() {
                 )}
               </div>
             </>
-          )}
-
-          {!currentUser && (
+          ) : (
             <>
-              <div>
-                <button
-                  onClick={() => navigate("/login")}
-                  className="border-1 rounded-xl py-1.5 px-3 font-bold hover:bg-[#3DCBB1] focus:bg-[#48a392] dark:border-gray-600 dark:text-white dark:hover:bg-[#3DCBB1] transition-colors"
-                >
-                  {t("common.logIn")}
-                </button>
-              </div>
-              <div>
-                <button
-                  onClick={() => navigate("/signup")}
-                  className="rounded-xl py-2 px-3 font-bold bg-[#3DCBB1] hover:bg-[#7bc5b7] focus:bg-[#48a392] dark:bg-[#3DCBB1] dark:hover:bg-[#7bc5b7] transition-colors"
-                >
-                  {t("common.signUp")}
-                </button>
-              </div>
+              <button
+                onClick={() => navigate("/login")}
+                className="rounded-xl py-1.5 px-3 font-bold border border-gray-300 hover:bg-primary/10 dark:border-gray-600 dark:text-white transition-colors"
+              >
+                {t("common.logIn")}
+              </button>
+              <button
+                onClick={() => navigate("/signup")}
+                className="rounded-xl py-2 px-3 font-bold bg-primary text-white hover:bg-primary/80 dark:bg-primary dark:hover:bg-primary/70 transition-colors"
+              >
+                {t("common.signUp")}
+              </button>
             </>
           )}
         </div>
+
         <div className="flex items-center gap-4 rtl:gap-reverse">
           <LanguageToggle />
           <ThemeToggle />

@@ -58,4 +58,6 @@ const currentUserSlice = createSlice({
 
 export const { clearAuthState } = currentUserSlice.actions;
 export const currentUserReducer = currentUserSlice.reducer;
-export const selectCurrentUser = (state) => state.currentUser;
+export const selectCurrentUser = (state) => state.currentUser.currentUser;
+export const selectCurrentUserLoading = (state) => state.currentUser.isLoading;
+export const selectCurrentUserError = (state) => state.currentUser.error;
