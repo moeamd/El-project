@@ -20,7 +20,7 @@ export const fetchCurrentUser = createAsyncThunk(
         displayName: user.displayName || "",
         photoURL: user.photoURL || "",
         phoneNamber: user.phoneNamber ||'',
-        emailVerified: !!user.emailVerified,
+        emailVerified: user.emailVerified,
       };
     } catch (error) {
       throw error

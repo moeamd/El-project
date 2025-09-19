@@ -4,10 +4,7 @@ import { ShoppingCartIcon, BellIcon } from "@heroicons/react/24/solid";
 import profileImg from "../assets/images/profileImage.png";
 import logoImg from "../assets/images/logo.png";
 import ProfilePopup from "./ProfilePopup";
-import {
-  fetchCurrentUser,
-  selectCurrentUser,
-} from "../features/auth/currentUserSlice";
+import { fetchCurrentUser, selectCurrentUser } from "../features/auth/currentUserSlice";
 import LoadingSpinner from "./loading-spinner";
 import { useNavigate, Link } from "react-router-dom";
 import LanguageToggle from "./LanguageToggle";

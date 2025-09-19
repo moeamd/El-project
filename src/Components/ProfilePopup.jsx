@@ -1,12 +1,27 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../features/auth/auth";
-import { useTranslation } from "react-i18next";
 
 function ProfilePopup({ show, userName, userEmail }) {
   const { t, i18n } = useTranslation();
 
   if (!show) return null;
+
+  const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      dispatch(clearAuthState());
+      navigate("/login");
+    } catch (error) {
+      // Optionally show error
+      console.error("Logout failed", error);
+    }
+  };
+
 
   return (
     <div
@@ -17,7 +32,8 @@ function ProfilePopup({ show, userName, userEmail }) {
       {/* Name & Email */}
       <Link
         to="/MainProfile"
-        className="block text-primary dark:text-primary hover:underline text-center font-semibold transition-colors"
+className="block text-primary dark:text-primary hover:underline text-center font-semibold transition-colors"
+
       >
         <div className="p-2 border-b border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-card transition-colors">
           <p className="font-bold text-text dark:text-text-dark">{userName}</p>
@@ -66,11 +82,17 @@ function ProfilePopup({ show, userName, userEmail }) {
       {/* Logout */}
       <Link
         to="/"
-        className="block p-2 text-red-500 dark:text-red-400 hover:underline transition-colors"
+        className="block p-2 text-red-500 hover:underline "
         onClick={logOut}
       >
         {t("common.logout")}
       </Link>
+      <ConfirmModal
+        show={showModal}
+        message="Are you sure you want to logout?"
+        onConfirm={handleLogout}
+        onCancel={() => setShowModal(false)}
+      />
     </div>
   );
 }

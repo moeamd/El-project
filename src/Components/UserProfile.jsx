@@ -1,13 +1,9 @@
-import React from "react";
 import { useEffect, useRef, useState, useMemo } from "react";
 import { CameraIcon, Edit } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import defaultProfile from "../assets/images/RegisterImages/defaultProfile.jpg";
 import { updateUser } from "../features/auth/auth";
-import {
-  fetchCurrentUser,
-  selectCurrentUser,
-} from "../features/auth/currentUserSlice";
+import { fetchCurrentUser, selectCurrentUser } from "../features/auth/currentUserSlice";
 import { getUsers, selectUsers } from "../features/auth/usersSlice";
 
 function UserProfile() {
@@ -99,35 +95,24 @@ function UserProfile() {
     }
   };
 
-
   return (
-    <div className="flex flex-col items-center w-[50%] m-auto justify-center min-h-screen p-10 gap-10 shadow-2xl mb-4">
+    <div className="flex flex-col items-center w-[75%] m-auto justify-center min-h-screen p-10 gap-10 shadow-2xl mb-4">
       <div className="flex flex-col items-center justify-center  rounded-full w-30 h-30">
-        {!currentUser.photoURL ? (
-          <label className="cursor-pointer w-30 h-30  text-gray-400 bg-gray-300 rounded-full ">
-            <img
-              src={defaultProfile}
-              alt="defaultProfile"
-              className="w-30 h-30 rounded-full"
-            />
-            <CameraIcon />
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="hidden"
-              onClick={() => setEditableField("photo")}
-            />
-          </label>
-        ) : (
-          <div>
-            <img
-              src={currentUser.photoURL}
-              alt="Preview"
-              className="w-30 h-30 rounded-full object-cover shadow-lg "
-            />
-          </div>
-        )}
+
+        <label className="cursor-pointer w-30 h-30  text-gray-400 bg-gray-300 rounded-full ">
+          <img
+            src={currentUser?.photoURL ? currentUser?.photoURL : defaultProfile}
+            alt="defaultProfile"
+            className="w-30 h-30 rounded-full"
+          />
+          <CameraIcon />
+          <input
+            type="file"
+            accept="image/"
+            onChange={handleImageChange}
+            onClick={() => setEditableField("photo")}
+          />
+        </label>
       </div>
       <div className="flex flex-col w-full">
         <div className="flex justify-between text-gray-400 hover:text-black ">

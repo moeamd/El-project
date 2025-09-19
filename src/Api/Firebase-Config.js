@@ -9,7 +9,9 @@ import {
   setDoc,
   updateDoc,
   deleteDoc,
-  doc
+  doc,
+  getDoc,
+  arrayUnion,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -59,7 +61,7 @@ export {
   auth,
   storage,
   // Firestore
-  collection, getDocs, addDoc, setDoc, updateDoc, deleteDoc, doc,
+  collection, getDocs, getDoc, addDoc, setDoc, updateDoc, deleteDoc, doc, arrayUnion,
   // Auth
   createUserWithEmailAndPassword, signInWithEmailAndPassword,
   sendEmailVerification, updateProfile, signOut, onAuthStateChanged,

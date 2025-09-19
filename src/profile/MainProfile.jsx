@@ -11,22 +11,24 @@ const MainProfile = () => {
   const { t, i18n } = useTranslation();
 
   return (
-    <div
-      className={`text-center mt-20 flex flex-col bg-white dark:bg-surface-dark min-h-screen transition-colors duration-300 ${
-        i18n.language === "ar" ? "rtl" : "ltr"
-      }`}
-    >
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
-        {t("common.myProfile")}
-      </h1>
-      <ProfileNav />
-      <Routes>
-        <Route path="/Profile" element={<Profile />} />
-        <Route path="/Favorites" element={<Favorites />} />
-        <Route path="/Wishlist" element={<Wishlist />} />
-        <Route path="/MyCourses" element={<MyCourses />} />
-      </Routes>
-    </div>
+
+<div
+  className={`text-center mt-20 flex flex-col bg-white dark:bg-surface-dark min-h-screen transition-colors duration-300 ${
+    i18n.language === "ar" ? "rtl" : "ltr"
+  }`}
+>
+  <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+    {t("common.myProfile")}
+  </h1>
+  <ProfileNav />
+  <Routes>
+    <Route path="/Profile" element={<Profile />} />
+    <Route path="/Favorites" element={<Favorites />} />
+    <Route path="/Wishlist" element={<Wishlist />} />
+    <Route path="/MyCourses" element={<MyCourses />} />
+  </Routes>
+</div>
+
   );
 };
 
