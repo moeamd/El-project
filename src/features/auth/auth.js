@@ -213,7 +213,7 @@ async function updateUser(updates) {
 }
 
 
-async function updateWishList(course, userId) {
+async function addToWishList(course, userId) {
     const userRef = doc(db, "users", userId)
     console.log("users" + userRef)
     await updateDoc(userRef, { wishList: arrayUnion(course) });
@@ -229,7 +229,24 @@ async function removeFromWishList(courseId, userId) {
     await updateDoc(userRef, { wishList: updatedWishList });
 }
 
+async function addToFavorites(course, userId) {
+    const userRef = doc(db, "users", userId)
+    console.log("users" + userRef)
+    await updateDoc(userRef, { favorites: arrayUnion(course) });
+}
+
+async function removeFromFavorites(courseId, userId) {
+    const userRef = doc(db, "users", userId);
+    const userSnap = await getDoc(userRef);
+    const userData = userSnap.data();
+
+    const currentFavorites = userData?.favorites || [];
+    const updatedFavorites = currentFavorites.filter((course) => course.id !== courseId);
+    await updateDoc(userRef, { favorites: updatedFavorites });
+}
+
 export {
-    signUp, logIn, resetPassword, addUser, updateWishList, removeFromWishList,
+    signUp, logIn, resetPassword, addUser, addToWishList, removeFromWishList,
+    removeFromFavorites, addToFavorites,
     updateUser, logOut, getCurrentUser, signInWithGoogle, signInWithGithub
 };

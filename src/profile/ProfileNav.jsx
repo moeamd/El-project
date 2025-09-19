@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const ProfileNav = () => {
   const { t, i18n } = useTranslation();
+
+  const activeClass = "text-[#21ac92] font-bold text-2xl";
 
   return (
     <div
@@ -10,30 +12,33 @@ const ProfileNav = () => {
         i18n.language === "ar" ? "rtl" : "ltr"
       }`}
     >
-      <Link
+      <NavLink
         to="/MainProfile/Profile"
-        className="text-gray-700 dark:text-gray-300 hover:text-[#3DCBB1] dark:hover:text-[#3DCBB1] transition-colors"
+        className={({ isActive }) => (isActive ? activeClass : "text-gray-700 dark:text-gray-300")}
       >
         {t("common.myProfile")}
-      </Link>
-      <Link
+      </NavLink>
+
+      <NavLink
         to="/MainProfile/Wishlist"
-        className="text-gray-700 dark:text-gray-300 hover:text-[#3DCBB1] dark:hover:text-[#3DCBB1] transition-colors"
+        className={({ isActive }) => (isActive ? activeClass : "text-gray-700 dark:text-gray-300")}
       >
         {t("common.wishlist")}
-      </Link>
-      <Link
+      </NavLink>
+
+      <NavLink
         to="/MainProfile/Favorites"
-        className="text-gray-700 dark:text-gray-300 hover:text-[#3DCBB1] dark:hover:text-[#3DCBB1] transition-colors"
+        className={({ isActive }) => (isActive ? activeClass : "text-gray-700 dark:text-gray-300")}
       >
         {t("common.favorites")}
-      </Link>
-      <Link
+      </NavLink>
+
+      <NavLink
         to="/MainProfile/MyCourses"
-        className="text-gray-700 dark:text-gray-300 hover:text-[#3DCBB1] dark:hover:text-[#3DCBB1] transition-colors"
+        className={({ isActive }) => (isActive ? activeClass : "text-gray-700 dark:text-gray-300")}
       >
         {t("common.myCourses")}
-      </Link>
+      </NavLink>
     </div>
   );
 };

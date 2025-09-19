@@ -1,25 +1,24 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../features/auth/auth";
-import { clearAuthState } from "../features/auth/currentUserSlice"; // لازم تضيف الاستيراد
+import { clearAuthState } from "../features/auth/currentUserSlice";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import ConfirmModal from "./confirmModal";
-// import ConfirmModal from "./ConfirmModal"; // لو عندك كومبوننت جاهز
+import ConfirmModal from "./ConfirmModal";
 
 function ProfilePopup({ show, userName, userEmail }) {
   const { t, i18n } = useTranslation();
-  if (!show) return null;
-
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  if (!show) return null;
 
   const handleLogout = async () => {
     try {
       await logOut();
       dispatch(clearAuthState());
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error("Logout failed", error);
     }
@@ -27,14 +26,13 @@ function ProfilePopup({ show, userName, userEmail }) {
 
   return (
     <div
-      className={`absolute mt-2 bg-white dark:bg-card rounded shadow-lg border border-gray-200 dark:border-gray-700 z-50 transition-colors duration-300 ${
-        i18n.language === "ar" ? "left-0" : "right-0"
-      } ${i18n.language === "ar" ? "rtl" : "ltr"}`}
+      className={`absolute mt-2 bg-white dark:bg-card rounded shadow-lg border border-gray-200 dark:border-gray-700 z-50 transition-colors duration-300 
+        ${i18n.language === "ar" ? "left-0 rtl" : "right-0 ltr"}`}
     >
       {/* Name & Email */}
       <Link
         to="/MainProfile"
-        className="block text-primary dark:text-primary hover:underline text-center font-semibold transition-colors"
+        className="block text-center font-semibold transition-colors"
       >
         <div className="p-2 border-b border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-card transition-colors">
           <p className="font-bold text-text dark:text-text-dark">{userName}</p>
@@ -42,7 +40,7 @@ function ProfilePopup({ show, userName, userEmail }) {
         </div>
       </Link>
 
-      {/* Courses & Cart & Wishlist */}
+      {/* Courses, Favorites & Wishlist */}
       <div className="flex flex-col p-2 border-b border-gray-200 dark:border-gray-700">
         <Link to="/MainProfile/MyCourses" className="p-2 hover:underline text-gray-700 dark:text-gray-300 transition-colors">
           {t("common.myCourses")}
@@ -73,7 +71,7 @@ function ProfilePopup({ show, userName, userEmail }) {
         {t("common.logout")}
       </button>
 
-      {/* Modal */}
+      {/* Confirm Logout Modal */}
       {showModal && (
         <ConfirmModal
           show={showModal}
