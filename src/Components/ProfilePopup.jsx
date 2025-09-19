@@ -25,20 +25,19 @@ function ProfilePopup({ show, userName, userEmail }) {
 
   return (
     <div
-      className={`absolute mt-2 bg-white dark:bg-gray-800 rounded shadow-lg border border-gray-200 dark:border-gray-700 z-50 transition-colors duration-300 ${
+      className={`absolute mt-2 bg-white dark:bg-card rounded shadow-lg border border-gray-200 dark:border-gray-700 z-50 transition-colors duration-300 ${
         i18n.language === "ar" ? "left-0" : "right-0"
       } ${i18n.language === "ar" ? "rtl" : "ltr"}`}
     >
       {/* Name & Email */}
       <Link
         to="/MainProfile"
-        className="block text-blue-500 hover:underline text-center font-semibold"
+className="block text-primary dark:text-primary hover:underline text-center font-semibold transition-colors"
+
       >
-        <div className="p-2 border-b border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-          <p className="font-bold text-gray-900 dark:text-white">{userName}</p>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            {userEmail}
-          </p>
+        <div className="p-2 border-b border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-card transition-colors">
+          <p className="font-bold text-text dark:text-text-dark">{userName}</p>
+          <p className="text-sm text-muted dark:text-muted-dark">{userEmail}</p>
         </div>
       </Link>
 

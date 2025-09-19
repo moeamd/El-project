@@ -20,7 +20,7 @@ const InstructorDashboard = () => {
       console.error("Error approving:", err.message);
     }
   };
-  
+
   const handleReject = async (id) => {
     try {
       const ref = doc(db, "Instructors", id);
@@ -33,7 +33,6 @@ const InstructorDashboard = () => {
 
   useEffect(() => {
     dispatch(getInstructors());
-    
   }, [dispatch]);
 
   if (isLoading) return <p className="text-center text-gray-500">Loading...</p>;
@@ -48,11 +47,11 @@ const InstructorDashboard = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {instructors
-            .filter((inst) => inst.status === "pending") 
+            .filter((inst) => inst.status === "pending")
             .map((instructor) => (
               <div
                 key={instructor.id}
-                className="bg-white shadow-md rounded-xl p-5 flex flex-col hover:shadow-lg transition"
+                className="bg-white dark:bg-card shadow-md rounded-xl p-5 flex flex-col hover:shadow-lg transition-colors duration-300"
               >
                 <div className="flex flex-col items-center">
                   <img
@@ -67,12 +66,20 @@ const InstructorDashboard = () => {
                 </div>
 
                 <div className="mt-4 flex justify-center gap-3">
-                  <button className="flex items-center gap-1 px-3 py-1 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600" onClick={()=> {handleApprove(instructor.id);
-                  }}>
+                  <button
+                    className="flex items-center gap-1 px-3 py-1 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600"
+                    onClick={() => {
+                      handleApprove(instructor.id);
+                    }}
+                  >
                     <Check className="w-4 h-4" /> Approve
                   </button>
-                  <button className="flex items-center gap-1 px-3 py-1 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600"  onClick={()=> {handleReject(instructor.id);
-                  }}>
+                  <button
+                    className="flex items-center gap-1 px-3 py-1 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600"
+                    onClick={() => {
+                      handleReject(instructor.id);
+                    }}
+                  >
                     <X className="w-4 h-4" /> Reject
                   </button>
                 </div>
@@ -83,8 +90,10 @@ const InstructorDashboard = () => {
 
       {/* Section 2: All Instructors */}
       <div>
-        <h2 className="text-xl font-bold mb-4 text-gray-800">All Instructors</h2>
-        <div className="divide-y divide-gray-200 bg-white shadow rounded-xl">
+        <h2 className="text-xl font-bold mb-4 text-gray-800">
+          All Instructors
+        </h2>
+        <div className="divide-y divide-gray-200 bg-white dark:bg-card shadow rounded-xl transition-colors duration-300">
           {instructors.map((instructor) => (
             <div
               key={instructor.id}

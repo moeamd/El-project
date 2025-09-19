@@ -37,7 +37,7 @@ export const CoursesDahsbord = () => {
 
   if (isLoading)
     return (
-      <div className="flex justify-center items-center min-h-screen bg-white dark:bg-dark-bg transition-colors duration-300">
+      <div className="flex justify-center items-center min-h-screen bg-white dark:bg-surface-dark transition-colors duration-300">
         <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -75,7 +75,7 @@ export const CoursesDahsbord = () => {
           {course.map((c) => (
             <div
               key={c.id}
-              className="bg-white dark:bg-dark-card rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 flex flex-col animate-slide-in"
+              className="bg-white dark:bg-card rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 flex flex-col animate-slide-in"
             >
               {/* Poster / Video */}
               <div className="mb-4 relative">

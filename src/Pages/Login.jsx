@@ -176,12 +176,12 @@ function Login() {
 
   return (
     <main
-      className={`w-full h-screen bg-[#1B1B1B]/60 dark:bg-[#0f172a]/80 transition-colors duration-300 ${
+      className={`w-full h-screen bg-black/40 dark:bg-surface-dark/80 transition-colors duration-300 ${
         i18n.language === "ar" ? "rtl" : "ltr"
       }`}
     >
-      <div className="w-full h-full flex justify-center items-center">
-        <div className="w-full h-full max-w-[800px] md:max-h-[550px] sm:h-auto flex flex-col sm:flex-row shadow-[0_4px_30px_rgba(0,0,0,0.1)] sm:rounded-[8px]">
+      <div className="flex items-center justify-center w-full h-full">
+        <div className="w-full h-full max-w-[800px] md:max-h-[550px] sm:h-auto flex flex-col sm:flex-row shadow-lg sm:rounded-lg overflow-hidden bg-transparent">
           <div
             className={`hidden sm:block w-full md:w-1/2 h-full md:h-auto ${
               i18n.language === "ar"
@@ -200,13 +200,13 @@ function Login() {
             />
           </div>
           <div
-            className={`relative w-full md:w-1/2 h-full md:h-auto flex flex-col justify-stretch md:justify-between bg-[#FFFFFF] dark:bg-gray-800 p-5 ${
+            className={`relative w-full md:w-1/2 h-full md:h-auto flex flex-col justify-stretch md:justify-between bg-white dark:bg-card p-5 ${
               i18n.language === "ar"
                 ? "sm:rounded-tl-[8px] sm:rounded-bl-[6px]"
                 : "sm:rounded-tr-[8px] sm:rounded-br-[6px]"
             } transition-colors duration-300`}
           >
-            <div className="absolute top-2 right-2 flex items-center gap-2">
+            <div className="absolute flex items-center gap-2 top-2 right-2">
               <LanguageToggle />
               <ThemeToggle />
             </div>
@@ -223,11 +223,11 @@ function Login() {
 
             <MyCoursesIo />
 
-            <p className="loading-[24px] my-5 md:my-1 text-[#1B1B1B]/60 dark:text-gray-300">
+            <p className="loading-[24px] my-5 md:my-1 text-muted dark:text-muted-dark">
               {t("common.joinUs")}
             </p>
 
-            <div className="gap-3 flex flex-col">
+            <div className="flex flex-col gap-3">
               <RegisterButton
                 image={GitHubIcon}
                 text={t("common.signUpWithGitHub")}
@@ -257,7 +257,7 @@ function Login() {
                 type="email"
                 name="email"
                 placeholder={t("common.emailAddress") || "Email Address"}
-                className="w-full p-2 bg-[#F9F9F9E5] dark:bg-gray-700 dark:text-white rounded-[3px] transition-colors"
+                className="w-full p-2 transition-colors bg-gray-100 rounded-sm dark:bg-card dark:text-text-dark"
                 onChange={formik.handleChange}
                 value={formik.values.email}
                 onBlur={formik.handleBlur}
@@ -267,7 +267,7 @@ function Login() {
                 type="text"
                 name="password"
                 placeholder={t("common.password") || "Password"}
-                className="w-full p-2 bg-[#F9F9F9E5] dark:bg-gray-700 dark:text-white rounded-[3px] transition-colors"
+                className="w-full p-2 transition-colors bg-gray-100 rounded-sm dark:bg-card dark:text-text-dark"
                 onChange={formik.handleChange}
                 value={formik.values.password}
                 onBlur={formik.handleBlur}
@@ -288,7 +288,7 @@ function Login() {
               <input
                 type="submit"
                 value={t("common.logIn")}
-                className="bg-[#3DCBB1] hover:bg-[#19a88e] dark:bg-[#3DCBB1] dark:hover:bg-[#19a88e] w-full text-white font-semibold mt-[25px] md:mt-1 py-[10px] px-[18px] rounded-[14px] items-center border transition-colors"
+                className="w-full px-4 py-2 mt-6 font-semibold text-white transition-colors rounded-lg bg-primary hover:bg-primary-dark dark:bg-primary dark:hover:bg-primary-dark"
               />
             </form>
 

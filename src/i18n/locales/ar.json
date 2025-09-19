@@ -80,6 +80,9 @@
     "settings": "الإعدادات",
     "logout": "تسجيل الخروج"
   },
+  "app": {
+    "name": "MyCourse.io"
+  },
   "courseCategories": {
     "webProgramming": "برمجة الويب",
     "mobileProgramming": "برمجة الهاتف المحمول",

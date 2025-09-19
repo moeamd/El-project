@@ -1,20 +1,13 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Globe } from "lucide-react";
+import { useLanguage } from "../context/LanguageContext";
 
 const LanguageToggle = () => {
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
+  const { language, toggleLanguage } = useLanguage();
 
-  const toggleLanguage = () => {
-    const newLang = i18n.language === "en" ? "ar" : "en";
-    i18n.changeLanguage(newLang);
-
-    // Update document direction for Arabic
-    document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
-    document.documentElement.lang = newLang;
-  };
-
-  const isArabic = i18n.language === "ar";
+  const isArabic = language === "ar";
 
   return (
     <button

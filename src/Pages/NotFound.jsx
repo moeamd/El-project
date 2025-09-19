@@ -6,7 +6,7 @@ function NotFound() {
 
   return (
     <div
-      className={`min-h-screen flex flex-col items-center justify-center bg-white dark:bg-gray-900 transition-colors duration-300 ${
+      className={`min-h-screen flex flex-col items-center justify-center bg-white dark:bg-surface-dark transition-colors duration-300 ${
         i18n.language === "ar" ? "rtl" : "ltr"
       }`}
     >

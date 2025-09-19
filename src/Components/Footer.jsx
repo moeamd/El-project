@@ -8,7 +8,7 @@ function Footer() {
   const { t, i18n } = useTranslation();
 
   return (
-    <footer className="bg-black dark:bg-gray-900 text-white pt-10 transition-colors duration-300">
+    <footer className="bg-gray-50 dark:bg-surface-dark text-text dark:text-text-dark pt-10 transition-colors duration-300">
       <div
         className={`max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 items-start ${
           i18n.language === "ar" ? "rtl" : "ltr"
@@ -16,7 +16,9 @@ function Footer() {
       >
         <div className="flex items-start space-x-3 rtl:space-x-reverse">
           <img src={logoImg} alt="Logo" className="h-10 w-10" />
-          <span className="text-2xl font-bold">MyCourse.io</span>
+          <span className="text-2xl font-bold text-text dark:text-text-dark">
+            {t("app.name")}
+          </span>
         </div>
 
         <div>
@@ -109,7 +111,7 @@ function Footer() {
             i18n.language === "ar" ? "rtl" : "ltr"
           }`}
         >
-          <p className="text-sm text-gray-400 dark:text-gray-500">
+          <p className="text-sm text-muted dark:text-muted-dark">
             {t("common.copyright")}
           </p>
 
