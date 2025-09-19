@@ -17,7 +17,7 @@ function ProfilePopup({ show, userName, userEmail }) {
     try {
       await logOut();
       dispatch(clearAuthState());
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       // Optionally show error
       console.error("Logout failed", error);

@@ -36,19 +36,19 @@ export default function CourseCard({ course, onCardClick }) {
 
   const userId = currentUserInfo?.uid;
 
-//wishlist
-    const [localWishList, setLocalWishList] = useState(currentUserInfo?.wishList || []);
+  //wishlist
+  const [localWishList, setLocalWishList] = useState(currentUserInfo?.wishList || []);
 
-    useEffect(() => {
-      setLocalWishList(currentUserInfo?.wishList || []);
-    }, [currentUserInfo]);
+  useEffect(() => {
+    setLocalWishList(currentUserInfo?.wishList || []);
+  }, [currentUserInfo]);
 
-    const isWishListed = useMemo(() => {
-      if (!course.id || !Array.isArray(localWishList)) return false;
-      return localWishList.some((w) => w?.id === course.id);
-    }, [localWishList, course]);
-    
-  
+  const isWishListed = useMemo(() => {
+    if (!course.id || !Array.isArray(localWishList)) return false;
+    return localWishList.some((w) => w?.id === course.id);
+  }, [localWishList, course]);
+
+
   const handleAddToWishlist = async (e) => {
     e.stopPropagation();
     try {
@@ -93,17 +93,17 @@ export default function CourseCard({ course, onCardClick }) {
   }
   //wishlist
 
-//favorites
-    const [localFavorites, setLocalFavorites] = useState(currentUserInfo?.favorites || []);
+  //favorites
+  const [localFavorites, setLocalFavorites] = useState(currentUserInfo?.favorites || []);
 
-    useEffect(() => {
-      setLocalFavorites(currentUserInfo?.favorites || []);
-    }, [currentUserInfo]);
+  useEffect(() => {
+    setLocalFavorites(currentUserInfo?.favorites || []);
+  }, [currentUserInfo]);
 
-    const isFavoritesed = useMemo(() => {
-      if (!course.id || !Array.isArray(localFavorites)) return false;
-      return localFavorites.some((w) => w?.id === course.id);
-    }, [localFavorites, course]);
+  const isFavoritesed = useMemo(() => {
+    if (!course.id || !Array.isArray(localFavorites)) return false;
+    return localFavorites.some((w) => w?.id === course.id);
+  }, [localFavorites, course]);
 
 
   const handleAddToFavorites = async (e) => {
@@ -151,7 +151,8 @@ export default function CourseCard({ course, onCardClick }) {
 
   return (
     <div
-      className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition cursor-pointer"
+      className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105 hover:z-10"
+      style={{ maxWidth: '400px' }}
       onClick={() => onCardClick(course)}
     >
       <div className="relative">
