@@ -38,6 +38,16 @@ export default function InstructorSignUp({ isOpen, onClose }) {
         formik.resetForm();
       } catch (err) {
         console.error("Signup Error:", err);
+      }
+            try {
+                const userCredential = await createUser(values.email, values.password);
+                const user = userCredential.user;
+                  const { password, ...userData } = values;
+                 await addUser({ ...userData, createdAt: new Date() });
+                setSuccess(true);
+                formik.resetForm();
+            } catch (err) {
+                console.error("Signup Error:", err);
 
         if (err.code) {
           switch (err.code) {
