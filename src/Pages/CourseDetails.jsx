@@ -67,11 +67,10 @@ function CourseDetails() {
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`pb-3 capitalize font-semibold ${
-                    activeTab === tab
-                      ? "border-b-4 border-blue-600 text-blue-600"
-                      : "text-gray-600 dark:text-gray-400 hover:text-blue-500 transition"
-                  }`}
+                  className={`pb-3 capitalize font-semibold ${activeTab === tab
+                    ? "border-b-4 border-blue-600 text-blue-600"
+                    : "text-gray-600 dark:text-gray-400 hover:text-blue-500 transition"
+                    }`}
                 >
                   {tab}
                 </button>
@@ -148,7 +147,7 @@ function CourseDetails() {
         </div>
 
         {/* ================= RIGHT SIDE ================= */}
-  <div className="flex flex-col gap-6 p-6 bg-white border shadow-lg h h-fit rounded-2xl dark:bg-card-dark">
+        <div className="flex flex-col gap-6 p-6 bg-white border shadow-lg h h-fit rounded-2xl dark:bg-card-dark">
           <img
             src={course.poster}
             alt={course.name}
@@ -167,11 +166,12 @@ function CourseDetails() {
           </div>
 
           {/* Buttons */}
-          <button className="w-full py-4 text-lg font-bold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700">
-            Buy Now
-          </button>
-          <button className="w-full py-4 text-lg font-bold text-gray-700 transition bg-gray-100 rounded-lg hover:bg-gray-200 dark:text-gray-900">
-            Add to Cart
+          <button
+            onClick={(e) => {
+            }}
+            className="bg-[#149981] text-white px-4 py-2 rounded-full text-sm hover:bg-gray-800 transition"
+          >
+            Enroll Now
           </button>
 
           {/* Share Icons */}

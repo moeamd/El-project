@@ -27,19 +27,15 @@ function Favorites() {
   const userId = currentUserInfo;
   const favorites = userId?.favorites || [];
 
-  const handleCourseClick = (course) => {
-    localStorage.setItem("selectedCourse", JSON.stringify(course));
-    navigate("/CourseDetails");
-  };
+
 
   return (
     <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {favorites.length ?
-        favorites.map((course) => (
+        favorites.map((course,index) => (
           <CourseCard
-            key={course.id}
+            key={course.id || index}
             course={course}
-            onCardClick={handleCourseClick}
           />
         )) : <div>
           favorites Is Empty

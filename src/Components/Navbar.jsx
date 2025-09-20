@@ -37,7 +37,6 @@ function Navbar() {
   if (isLoading) return <LoadingSpinner />;
 
   const togglePopup = () => setShowPopup((prev) => !prev);
-  const darkAndLight = localStorage.getItem("theme")
 
   return (
     <nav
@@ -74,7 +73,6 @@ function Navbar() {
         <div className="relative flex items-center gap-4 rtl:gap-reverse">
           {currentUser?.uid ? (
             <>
-              <ShoppingCartIcon className="w-6 h-6 text-gray-700 transition-transform cursor-pointer hover:scale-110 dark:text-gray-200" />
               <BellIcon className="w-6 h-6 text-gray-700 transition-transform cursor-pointer hover:scale-110 dark:text-gray-200" />
 
               <div className="relative">
@@ -102,13 +100,13 @@ function Navbar() {
             <>
               <button
                 onClick={() => navigate("/login")}
-                className="py-1.5 px-4 rounded-xl font-semibold border border-gray-300 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800 transition-colors duration-300"
+                className="py-1.5 px-4 rounded-xl font-semibold border border-gray-300 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800 transition-colors duration-300 "
               >
                 {t("common.logIn")}
               </button>
               <button
                 onClick={() => navigate("/signup")}
-                className="px-4 py-2 font-semibold text-white transition-colors duration-300 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 dark:from-blue-700 dark:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-500"
+                  className="px-4 py-2 font-semibold text-white transition-colors duration-300 rounded-xl bg-[#21ac92] hover:bg-[#0c8b74]"
               >
                 {t("common.signUp")}
               </button>
@@ -118,7 +116,6 @@ function Navbar() {
 
         <div className="flex items-center gap-4 rtl:gap-reverse">
           <LanguageToggle />
-          <ThemeToggle />
         </div>
       </div>
     </nav>

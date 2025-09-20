@@ -7,17 +7,23 @@ import { useState, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUsers, selectUsers } from '../features/auth/usersSlice';
 import { fetchCurrentUser, selectCurrentUser } from '../features/auth/currentUserSlice';
-import { addToWishList, removeFromWishList, addToFavorites, removeFromFavorites } from '../features/auth/auth';
+import {
+  addToWishList, removeFromWishList,
+  addToFavorites, removeFromFavorites,
+  unEnrollCourse, enrollCourse,
+} from '../features/auth/auth';
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 export default function CourseCard({ course, onCardClick }) {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
-
+const navigate = useNavigate();
   // Alerts
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("info");
+  const [isVisible, setIsVisible] = useState(true);
 
   // Users
   const currentUser = useSelector(selectCurrentUser) ?? null;
@@ -62,12 +68,14 @@ export default function CourseCard({ course, onCardClick }) {
   // Favorites
   const [localFavorites, setLocalFavorites] = useState(currentUserInfo?.favorites || []);
   useEffect(() => setLocalFavorites(currentUserInfo?.favorites || []), [currentUserInfo]);
-  const isFavoritesed = useMemo(() => localFavorites.some(w => w.id === course.id), [localFavorites, course]);
+  const isFavoritesed = useMemo(() => localFavorites.some(w => w.id === course.id),
+    [localFavorites, course]);
 
   const handleAddToFavorites = async (e) => {
     e.stopPropagation();
     try {
       if (isFavoritesed) {
+        console.log(isFavoritesed)
         await removeFromFavorites(course.id, userId);
         setLocalFavorites(prev => prev.filter(w => w.id !== course.id));
         setAlertMessage(t("common.removedFromFavorites"));
@@ -85,71 +93,134 @@ export default function CourseCard({ course, onCardClick }) {
     }
   };
 
-  const createdAt = course.createdAt?.toDate?.()?.toLocaleDateString() || course.createdAt;
 
+  //MyCourses
+  const [localMyCourses, setLocalMyCourses] = useState(currentUserInfo?.myCourses || []);
+  useEffect(() => {
+    setLocalMyCourses(currentUserInfo?.myCourses || []
+    )
+  }, [currentUserInfo]);
+  const isMyCoursesed = useMemo(() => localMyCourses.some(w => w.id === course.id),
+    [localMyCourses, course]);
+    
+  const handleAddToMyCourses = async (e) => {
+    e.stopPropagation();
+    try {
+      if (isMyCoursesed) {
+        await unEnrollCourse(course.id, userId);
+        setLocalMyCourses(prev => prev.filter(w => w.id !== course.id));
+        setAlertMessage("Removed to My Courses");
+      } else {
+        await enrollCourse(course, userId);
+        setLocalMyCourses(prev => [...prev, course.id]);
+        setAlertMessage("Added form My Courses");
+      }
+      setAlertType("success");
+      setShowAlert(true);
+    } catch (error) {
+      setAlertMessage(error?.message);
+      console.log(error)
+      setAlertType("error");
+      setShowAlert(true);
+    }
+  };
+
+  const createdAt = course.createdAt?.toDate?.()?.toLocaleDateString() || course.createdAt;
+  const handleCourseClick = (course) => {
+    localStorage.setItem("selectedCourse", JSON.stringify(course));
+    navigate("/CourseDetails");
+  };
   return (
     <div
-      className={` bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-pointer ${i18n.language === "ar" ? "rtl" : "ltr"}`}
-      onClick={() => onCardClick(course)}
+      className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105 hover:z-10"
+      style={{ maxWidth: '400px' }}
+      onClick={() => handleCourseClick(course)}
     >
-      {showAlert && <Alert type={alertType} message={alertMessage} onClose={() => setShowAlert(false)} />}
+      {showAlert && <Alert type={alertType} message={alertMessage} />}
 
-      {/* Poster */}
       <div className="relative">
-        <img src={course.poster} alt={course.name} className="w-full h-88 object-cover rounded-3xl" />
+        <img
+          src={course.poster}
+          alt={course.name}
+          className="w-full h-44 object-cover"
+        />
 
-        {/* Rating */}
-        {course.rating && (
-          <div className="absolute top-3 left-3 flex items-center bg-white px-2 py-1 rounded-full text-xs font-medium shadow">
-            <FaStar className="text-yellow-400 mr-1" /> {course.rating}
-          </div>
-        )}
+        <div className="absolute top-3 left-3 flex items-center bg-white px-2 py-1 rounded-full text-xs font-medium shadow">
+          <FaStar className="text-yellow-400 mr-1" /> {course.rating}
+        </div>
 
-        {/* Category */}
-        <div className={`absolute top-3 ${i18n.language === "ar" ? "right-3" : "left-3"}`}>
-          <span className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 text-xs font-medium px-2 py-1 rounded-full">
-            {course.category || course.level}
+        <div className="absolute top-3 right-3">
+          <span className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-1 rounded-full">
+            {course.level}
           </span>
         </div>
       </div>
 
-      {/* Content */}
       <div className="p-4 space-y-2">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{course.name}</h3>
-        <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{course.description}</p>
+        <h3 className="text-lg font-semibold">{course.title}</h3>
+        <p className="text-sm text-gray-500">by {course.author}</p>
 
-        {/* Instructor Info */}
-        <div className="flex items-center gap-2">
-          {course.instructorImage && <img src={course.instructorImage} alt={course.instructorName} className="w-6 h-6 rounded-full object-cover" />}
-          <p className="text-xs text-gray-500 dark:text-gray-400">{t("common.by")} {course.instructorName || t("common.unknown")}</p>
+
+        <div className="flex flex-wrap gap-2 mt-2 text-xs text-gray-600">
+          <div className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full">
+            <FaBookOpen /> {course.lessons} Lessons
+          </div>
+          <div className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full">
+            <FaClock /> {createdAt}
+          </div>
+          <div className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full">
+            <FaUser /> {course.students}+ Enrolled
+          </div>
         </div>
 
-        <p className="text-xs text-gray-400 dark:text-gray-500">{t("common.createdAt")}: {createdAt}</p>
+        <div className="flex flex-wrap gap-2 mt-2 text-xs text-gray-600">
+          <div className="flex items-center  gap-1 bg-gray-100  rounded-full">
+            {(isFavoritesed ?
+              <MdOutlineFavorite
+                onClick={(e) => {
+                  handleAddToFavorites(e);
+                }}
+                className="w-10 h-10 cursor-pointer text-red-500 px-2 py-1 "
+              />
+              :
+              <MdFavoriteBorder
+                onClick={(e) => {
+                  handleAddToFavorites(e);
+                }}
+                className="w-10 h-10 cursor-pointer px-2 py-1"
+              />
+            )}
+          </div>
 
-        {/* Favorites & Wishlist */}
-        <div className="flex items-center gap-2 mt-2">
-          <button onClick={handleAddToFavorites}>
-            {isFavoritesed ? <MdOutlineFavorite className="text-red-500 w-6 h-6" /> : <MdFavoriteBorder className="w-6 h-6" />}
-          </button>
-          <button onClick={handleAddToWishlist}>
-            <img src={isWishListed ? WishlistImage : noWishlistImage} alt="wishlist" className="w-6 h-6" />
-          </button>
+          <div className="flex items-center gap-1 bg-gray-100 rounded-full">
+            <img src={isWishListed ? WishlistImage : noWishlistImage} alt="nowishlist"
+              className=" w-8 h-8 text-red-500 px-1 py-1"
+              onClick={(e) => {
+                handleAddToWishlist(e);
+              }}
+
+            />
+          </div>
         </div>
 
-        {/* Footer */}
-        <div className={`flex justify-between items-center mt-3 ${i18n.language === "ar" ? "flex-row-reverse" : ""}`}>
-          <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
-            ${course.price}
-            <span className="text-sm font-normal text-gray-500 dark:text-gray-400 ml-1">/{t("common.lifetime")}</span>
+        <div className="flex justify-between items-center mt-3">
+          <p className="text-lg font-bold text-gray-800">
+            ${course.price}.00{" "}
+            <span className="text-sm font-normal text-gray-500">/lifetime</span>
           </p>
           <button
-            onClick={(e) => { e.stopPropagation(); console.log("Enroll clicked:", course.name); }}
-            className="bg-primary text-white px-4 py-2 rounded-full text-sm hover:bg-primary-dark transition-colors"
+            onClick={(e) => {
+              handleAddToMyCourses(e);
+            }}
+            className="bg-[#149981] text-white px-4 py-2 rounded-full text-sm hover:bg-gray-800 transition"
           >
-            {t("common.enrollNow")}
+            {isMyCoursesed ? "UnEnroll" : "Enroll Now"}
           </button>
         </div>
       </div>
+
+
+      {showAlert && <Alert message={alertMessage} type={alertType} />}
     </div>
   );
 }
