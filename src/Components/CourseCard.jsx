@@ -132,13 +132,16 @@ const navigate = useNavigate();
   };
   return (
     <div
+
       className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105 hover:z-10"
       style={{ maxWidth: '400px' }}
       onClick={() => handleCourseClick(course)}
+
     >
       {showAlert && <Alert type={alertType} message={alertMessage} />}
 
       <div className="relative">
+
         <img
           src={course.poster}
           alt={course.name}
@@ -152,6 +155,7 @@ const navigate = useNavigate();
         <div className="absolute top-3 right-3">
           <span className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-1 rounded-full">
             {course.level}
+
           </span>
         </div>
       </div>
@@ -159,6 +163,7 @@ const navigate = useNavigate();
       <div className="p-4 space-y-2">
         <h3 className="text-lg font-semibold">{course.title}</h3>
         <p className="text-sm text-gray-500">by {course.author}</p>
+
 
 
         <div className="flex flex-wrap gap-2 mt-2 text-xs text-gray-600">
@@ -171,6 +176,7 @@ const navigate = useNavigate();
           <div className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full">
             <FaUser /> {course.students}+ Enrolled
           </div>
+
         </div>
 
         <div className="flex flex-wrap gap-2 mt-2 text-xs text-gray-600">
@@ -191,6 +197,7 @@ const navigate = useNavigate();
               />
             )}
           </div>
+
 
           <div className="flex items-center gap-1 bg-gray-100 rounded-full">
             <img src={isWishListed ? WishlistImage : noWishlistImage} alt="nowishlist"
@@ -213,6 +220,7 @@ const navigate = useNavigate();
               handleAddToMyCourses(e);
             }}
             className="bg-[#149981] text-white px-4 py-2 rounded-full text-sm hover:bg-gray-800 transition"
+
           >
             {isMyCoursesed ? "UnEnroll" : "Enroll Now"}
           </button>

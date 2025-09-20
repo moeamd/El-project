@@ -8,6 +8,7 @@ import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { LanguageProvider } from "./context/LanguageContext.jsx";
 import "./i18n/i18n.js";
 
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
