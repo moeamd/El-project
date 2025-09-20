@@ -1,4 +1,4 @@
-import { useState ,useEffect} from "react";
+import { useState } from "react";
 import { addCourse } from "../features/courses/addCourse";
 import {
   BookOpenIcon,
@@ -10,20 +10,9 @@ import {
   CheckCircleIcon,
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
-import { CheckCircle2Icon, Link, PhoneOutgoingIcon } from "lucide-react";
-import { selectCurrentUser } from "../features/auth/currentUserSlice";
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { CheckCircle2Icon, PhoneOutgoingIcon } from "lucide-react";
 
 export const NewCourse = () => {
-
-  const currentUser = useSelector(selectCurrentUser);
-  const { instructors } = useSelector((state) => state.instructors);
-  const isInstructor =
-  currentUser?.uid && instructors?.some((inst) => inst.id === currentUser.uid  );
-
-
-
   const [data, setData] = useState({
     name: "",
     price: "",
@@ -33,27 +22,14 @@ export const NewCourse = () => {
     poster: null,
     status: "draft",
     description: "",
-    instructorId: "",
-    instructorName: "Unknown",
-    instructorImage: "",
+    instructor: "",
     createdAt: new Date(),
     rejectReason: "",
   });
 
-  useEffect(() => {
-    if (currentUser) {
-      setData(prev => ({
-        ...prev,
-        instructorId: currentUser.uid || "",
-        instructorName: currentUser.name || currentUser.email || "Unknown",
-        instructorImage: currentUser.image || "/default-avatar.png",
-      }));
-    }
-  }, [currentUser]);
-
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); 
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', null
 
   const categories = [
     "Web Development",
@@ -146,9 +122,7 @@ export const NewCourse = () => {
         poster: null,
         status: "draft",
         description: "",
-        instructorId: "",
-        instructorName: "",
-        instructorImage: "",
+        instructor: "",
         createdAt: new Date(),
         rejectReason: "",
       });
@@ -165,14 +139,6 @@ export const NewCourse = () => {
     }
   };
 
-  const instructorStatus = instructors?.some(
-    (inst) => inst.uid === currentUser.uid && inst.status === true
-  );
-  
-  if (!currentUser?.uid || !instructorStatus) {
-    return <Navigate to="/" replace />;
-  }
-  
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">

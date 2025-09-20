@@ -8,14 +8,15 @@ function Footer() {
   const { t, i18n } = useTranslation();
 
   return (
-    <footer className="bg-gray-50 dark:bg-surface-dark text-text dark:text-text-dark pt-10 transition-colors duration-300">
+   <footer className="pt-10 transition-colors duration-300 bg-gray-200 text-text dark:text-text-dark">
+
       <div
         className={`max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 items-start ${
           i18n.language === "ar" ? "rtl" : "ltr"
         }`}
       >
         <div className="flex items-start space-x-3 rtl:space-x-reverse">
-          <img src={logoImg} alt="Logo" className="h-10 w-10" />
+          <img src={logoImg} alt="Logo" className="w-10 h-10" />
           <span className="text-2xl font-bold text-text dark:text-text-dark">
             {t("app.name")}
           </span>
@@ -26,7 +27,7 @@ function Footer() {
             <li>
               <Link
                 to="/web-development"
-                className="hover:underline transition-colors"
+                className="transition-colors hover:underline"
               >
                 {t("courseCategories.webProgramming")}
               </Link>
@@ -34,20 +35,20 @@ function Footer() {
             <li>
               <Link
                 to="/data-science"
-                className="hover:underline transition-colors"
+                className="transition-colors hover:underline"
               >
                 {t("courseCategories.mobileProgramming")}
               </Link>
             </li>
             <li>
-              <Link to="/ui-ux" className="hover:underline transition-colors">
+              <Link to="/ui-ux" className="transition-colors hover:underline">
                 {t("courseCategories.javaBeginner")}
               </Link>
             </li>
             <li>
               <Link
                 to="/marketing"
-                className="hover:underline transition-colors"
+                className="transition-colors hover:underline"
               >
                 {t("courseCategories.phpBeginner")}
               </Link>
@@ -60,7 +61,7 @@ function Footer() {
             <li>
               <Link
                 to="/business"
-                className="hover:underline transition-colors"
+                className="transition-colors hover:underline"
               >
                 {t("courseCategories.adobeIllustrator")}
               </Link>
@@ -68,7 +69,7 @@ function Footer() {
             <li>
               <Link
                 to="/photography"
-                className="hover:underline transition-colors"
+                className="transition-colors hover:underline"
               >
                 {t("courseCategories.adobePhotoshop")}
               </Link>
@@ -76,7 +77,7 @@ function Footer() {
             <li>
               <Link
                 to="/health-fitness"
-                className="hover:underline transition-colors"
+                className="transition-colors hover:underline"
               >
                 {t("courseCategories.designLogo")}
               </Link>
@@ -87,17 +88,17 @@ function Footer() {
         <div>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link to="/finance" className="hover:underline transition-colors">
+              <Link to="/finance" className="transition-colors hover:underline">
                 {t("courseCategories.writingCourse")}
               </Link>
             </li>
             <li>
-              <Link to="/design" className="hover:underline transition-colors">
+              <Link to="/design" className="transition-colors hover:underline">
                 {t("courseCategories.photography")}
               </Link>
             </li>
             <li>
-              <Link to="/music" className="hover:underline transition-colors">
+              <Link to="/music" className="transition-colors hover:underline">
                 {t("courseCategories.videoMaking")}
               </Link>
             </li>
@@ -105,7 +106,7 @@ function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-gray-600 dark:border-gray-700 mx-6 py-4">
+      <div className="py-4 mx-6 border-t border-gray-600 dark:border-gray-700">
         <div
           className={`max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between ${
             i18n.language === "ar" ? "rtl" : "ltr"
@@ -115,15 +116,15 @@ function Footer() {
             {t("common.copyright")}
           </p>
 
-          <div className="flex space-x-4 rtl:space-x-reverse mt-4 md:mt-0">
+          <div className="flex mt-4 space-x-4 rtl:space-x-reverse md:mt-0">
             <Link to="/facebook">
-              <FaFacebookF className="h-6 w-6 hover:text-gray-300 dark:hover:text-gray-400 transition-colors" />
+              <FaFacebookF className="w-6 h-6 transition-colors hover:text-gray-300 dark:hover:text-gray-400" />
             </Link>
             <Link to="/twitter">
-              <FaTwitter className="h-6 w-6 hover:text-gray-300 dark:hover:text-gray-400 transition-colors" />
+              <FaTwitter className="w-6 h-6 transition-colors hover:text-gray-300 dark:hover:text-gray-400" />
             </Link>
             <Link to="/instagram">
-              <FaInstagram className="h-6 w-6 hover:text-gray-300 dark:hover:text-gray-400 transition-colors" />
+              <FaInstagram className="w-6 h-6 transition-colors hover:text-gray-300 dark:hover:text-gray-400" />
             </Link>
           </div>
         </div>

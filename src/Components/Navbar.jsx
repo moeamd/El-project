@@ -7,7 +7,6 @@ import ProfilePopup from "./ProfilePopup";
 import {
   fetchCurrentUser,
   selectCurrentUser,
-  selectCurrentUserError,
   selectCurrentUserLoading,
 } from "../features/auth/currentUserSlice";
 import LoadingSpinner from "./loading-spinner";
@@ -19,20 +18,17 @@ import { getInstructors } from "../features/users/getinstructors-aprove";
 
 function Navbar() {
   const [showPopup, setShowPopup] = useState(false);
-
   const currentUser = useSelector(selectCurrentUser);
   const isLoading = useSelector(selectCurrentUserLoading);
-  const error = useSelector(selectCurrentUserError);
   const { instructors } = useSelector((state) => state.instructors);
   const { t, i18n } = useTranslation();
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const isInstructor =
-  currentUser?.uid && instructors?.some((inst) => inst.uid === currentUser.uid && inst.status === true);
+    currentUser?.uid &&
+    instructors?.some((inst) => inst.uid === currentUser.uid && inst.status === true);
 
-  
   useEffect(() => {
     dispatch(fetchCurrentUser());
     dispatch(getInstructors());
@@ -41,58 +37,61 @@ function Navbar() {
   if (isLoading) return <LoadingSpinner />;
 
   const togglePopup = () => setShowPopup((prev) => !prev);
-
+  const darkAndLight = localStorage.getItem("theme")
+  console.log(darkAndLight);
+  
   return (
     <nav
-      className={`bg-white dark:bg-surface-dark text-text dark:text-text-dark px-6 md:px-12 py-4 flex justify-between items-center shadow-md mb-9 absolute top-0 z-20 w-full transition-colors duration-300 ${
+      className={`bg-white dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-800 dark:text-gray-100 px-6 md:px-12 py-4 flex justify-between items-center shadow-md mb-9 fixed top-0 z-20 w-full transition-colors duration-500 ${
         i18n.language === "ar" ? "rtl" : "ltr"
       }`}
     >
+      <h1 style={{ color: darkAndLight === "dark" ? "white" : "black" }}>test</h1>
       {/* Logo */}
-      <Link to="/">
-        <div className="flex items-center gap-2 text-xl font-bold">
-          <img src={logoImg} alt="Logo" className="object-cover w-10 h-10" />
-          <span className="text-text dark:text-text-dark">{t("app.name")}</span>
-        </div>
+      <Link
+        to="/"
+        className="flex items-center gap-3 text-xl font-bold transition-transform cursor-pointer hover:scale-105"
+      >
+        <img src={logoImg} alt="Logo" className="object-cover w-10 h-10" />
+        <span>{t("app.name")}</span>
       </Link>
 
-      {/* Items */}
-      <div className="relative flex items-center gap-6 rtl:gap-reverse">
+      {/* Navbar Items */}
+      <div className="flex items-center gap-6 rtl:gap-reverse">
         {!currentUser && (
-          <Link to="instructorsignup">
-            <span className="hidden font-medium cursor-pointer hover:underline sm:inline">
+          <Link to="/instructorsignup">
+            <span className="hidden font-medium transition-colors cursor-pointer sm:inline hover:underline">
               {t("common.becomeInstructor")}
             </span>
           </Link>
         )}
 
         {isInstructor && (
-          <Link to="newCourse">
-            <span className="hidden font-medium cursor-pointer hover:underline sm:inline">
-              {t("  addNewCourse")}
+          <Link to="/newCourse">
+            <span className="hidden font-medium transition-colors cursor-pointer sm:inline hover:underline">
+              {t("addNewCourse")}
             </span>
           </Link>
         )}
 
-        <div className="flex items-center sm:gap-1.5 md:gap-4 relative rtl:gap-reverse">
+        <div className="relative flex items-center gap-4 rtl:gap-reverse">
           {currentUser?.uid ? (
             <>
-              <ShoppingCartIcon className="w-6 h-6 transition-transform cursor-pointer hover:scale-110" />
-              <BellIcon className="w-6 h-6 transition-transform cursor-pointer hover:scale-110" />
+              <ShoppingCartIcon className="w-6 h-6 text-gray-700 transition-transform cursor-pointer hover:scale-110 dark:text-gray-200" />
+              <BellIcon className="w-6 h-6 text-gray-700 transition-transform cursor-pointer hover:scale-110 dark:text-gray-200" />
 
               <div className="relative">
                 <img
                   src={currentUser.photoURL || profileImg}
                   alt="Profile"
-                  className="w-8 h-8 ml-2 transition-transform rounded-full cursor-pointer hover:scale-110 rtl:mr-2 rtl:ml-0"
                   onClick={togglePopup}
+                  className="w-8 h-8 ml-2 transition-transform border-2 border-transparent rounded-full cursor-pointer hover:scale-110 rtl:mr-2 rtl:ml-0 hover:border-blue-400 dark:hover:border-blue-300"
                 />
-
                 {showPopup && (
                   <div
                     className={`absolute top-full mt-1 ${
                       i18n.language === "ar" ? "left-0" : "right-0"
-                    }`}
+                    } animate-slide-in`}
                   >
                     <ProfilePopup
                       show={showPopup}
@@ -107,13 +106,13 @@ function Navbar() {
             <>
               <button
                 onClick={() => navigate("/login")}
-                className="rounded-xl py-1.5 px-3 font-bold border border-gray-300 hover:bg-primary/10 dark:border-gray-600 dark:text-white transition-colors"
+                className="py-1.5 px-4 rounded-xl font-semibold border border-gray-300 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800 transition-colors duration-300"
               >
                 {t("common.logIn")}
               </button>
               <button
                 onClick={() => navigate("/signup")}
-                className="rounded-xl py-2 px-3 font-bold bg-primary text-white hover:bg-primary/80 dark:bg-primary dark:hover:bg-primary/70 transition-colors"
+                className="px-4 py-2 font-semibold text-white transition-colors duration-300 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 dark:from-blue-700 dark:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-500"
               >
                 {t("common.signUp")}
               </button>

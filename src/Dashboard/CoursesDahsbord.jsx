@@ -7,7 +7,6 @@ import { db } from "../Api/Firebase-Config";
 import { useTranslation } from "react-i18next";
 import ThemeToggle from "../Components/ThemeToggle";
 import LanguageToggle from "../Components/LanguageToggle";
-
 export const CoursesDahsbord = () => {
   const dispatch = useDispatch();
   const { course, isLoading, error } = useSelector((state) => state.course);
@@ -16,7 +15,6 @@ export const CoursesDahsbord = () => {
   useEffect(() => {
     dispatch(getCourses());
   }, [dispatch]);
-
   const handleApprove = async (id) => {
     try {
       const ref = doc(db, "courses", id);
@@ -119,31 +117,6 @@ export const CoursesDahsbord = () => {
               <div className="flex items-center text-gray-600 dark:text-dark-textSecondary mb-4">
                 <Tag className="w-4 h-4 mr-2 rtl:ml-2 rtl:mr-0 text-pink-500" />
                 {c.category}
-              </div>
-
-              {/* ✅ Instructor Info */}
-              <div className="flex items-center gap-2 mb-4">
-                {c.instructorImage && (
-                  <img
-                    src={c.instructorImage}
-                    alt={c.instructorName}
-                    className="w-6 h-6 rounded-full object-cover"
-                  />
-                )}
-                <span className="text-sm text-gray-600 dark:text-dark-textSecondary">
-                  {t("common.by")} {c.instructorName || t("common.unknown")}
-                </span>
-              </div>
-              <div
-                className={`text-lg mb-4 ${
-                  c.status === "Publish"
-                    ? "text-green-500"
-                    : c.status === "Draft"
-                    ? "text-red-500"
-                    : "text-gray-600"
-                } dark:text-dark-textSecondary`}
-              >
-                {c.status || t("common.unknown")}
               </div>
 
               {/* Action */}

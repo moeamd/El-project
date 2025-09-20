@@ -13,30 +13,30 @@ function CourseDetails() {
   const [activeTab, setActiveTab] = useState("description");
 
   if (!course) {
-    return <p className="text-center text-gray-500 mt-10">No course selected.</p>;
+    return <p className="mt-10 text-center text-gray-500">No course selected.</p>;
   }
 
   return (
     <div className="bg-gray-50 contaa dark:bg-gray-900 min-h-screen flex justify-center p-8 pt-[160px]">
       <div className="w-[80%] max-w-8xl grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* ================= LEFT SIDE ================= */}
-        <div className="lg:col-span-2 flex flex-col items-center lg:items-start space-y-8">
+        <div className="flex flex-col items-center space-y-8 lg:col-span-2 lg:items-start">
           {/* Title */}
-          <h1 className="text-5xl font-extrabold text-center lg:text-left text-gray-900 dark:text-gray-100">
+          <h1 className="text-5xl font-extrabold text-center text-gray-900 lg:text-left dark:text-gray-100">
             {course.name}
           </h1>
 
           {/* Short Description */}
-          <p className="text-lg text-gray-700 dark:text-gray-300 text-center lg:text-left max-w-4xl">
+          <p className="max-w-4xl text-lg text-center text-gray-700 dark:text-gray-300 lg:text-left">
             Learn the skills you need to excel in this course with hands-on
             projects, expert guidance, and lifetime access.
           </p>
 
           {/* Rating + Meta Info */}
-          <div className="flex flex-wrap justify-center lg:justify-start items-center gap-6 text-gray-700 text-base">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-base text-gray-700 lg:justify-start">
             <div className="flex items-center gap-2">
               <Star className="w-6 h-6 text-yellow-400 fill-yellow-400" />
-              <span className="font-semibold text-lg">4.7 (2,350 reviews)</span>
+              <span className="text-lg font-semibold">4.7 (2,350 reviews)</span>
             </div>
             <span>|</span>
             <span className="text-lg">{course.hours || "20"} total hours</span>
@@ -51,18 +51,18 @@ function CourseDetails() {
             <img
               src={course.instructorImg || "./instructorImage.png"}
               alt="Instructor"
-              className="w-20 h-20 rounded-full object-cover border-2 border-gray-300"
+              className="object-cover w-20 h-20 border-2 border-gray-300 rounded-full"
             />
             <div>
-              <p className="text-gray-500 text-base">Created by</p>
-              <p className="font-semibold text-gray-900 dark:text-gray-100 text-lg">{course.author}</p>
+              <p className="text-base text-gray-500">Created by</p>
+              <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">{course.author}</p>
             </div>
           </div>
 
           {/* ================= TABS ================= */}
           <div className="w-full max-w-4xl space-y-6">
             {/* Tab Headers */}
-            <div className="flex justify-center lg:justify-start gap-8 border-b-2 border-gray-200 dark:border-gray-700 mb-6 text-lg">
+            <div className="flex justify-center gap-8 mb-6 text-lg border-b-2 border-gray-200 lg:justify-start dark:border-gray-700">
               {["description", "certification", "instructor", "reviews"].map((tab) => (
                 <button
                   key={tab}
@@ -79,7 +79,7 @@ function CourseDetails() {
             </div>
 
             {/* Tab Content */}
-            <div className="text-gray-700 dark:text-gray-300 leading-relaxed space-y-6 text-center lg:text-left text-lg">
+            <div className="space-y-6 text-lg leading-relaxed text-center text-gray-700 dark:text-gray-300 lg:text-left">
               {activeTab === "description" && (
                 <>
                   <h2 className="text-3xl font-semibold">Course Description</h2>
@@ -103,19 +103,19 @@ function CourseDetails() {
               {activeTab === "instructor" && (
                 <>
                   <h2 className="text-3xl font-semibold">Instructor</h2>
-                  <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 mb-6">
+                  <div className="flex flex-col items-center gap-6 mb-6 lg:flex-row lg:items-start">
                     <img
                       src={course.instructorImg || "https://i.pravatar.cc/100"}
                       alt="Instructor"
-                      className="w-20 h-20 rounded-full object-cover"
+                      className="object-cover w-20 h-20 rounded-full"
                     />
                     <div>
-                      <p className="font-semibold text-gray-900 dark:text-gray-100 text-lg">{course.author}</p>
+                      <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">{course.author}</p>
                       <p className="text-base text-gray-500 dark:text-gray-400">Lead Instructor</p>
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap justify-center lg:justify-start gap-8 text-lg text-gray-700 dark:text-gray-300 mb-6">
+                  <div className="flex flex-wrap justify-center gap-8 mb-6 text-lg text-gray-700 lg:justify-start dark:text-gray-300">
                     <div className="flex items-center gap-3">
                       <MessageSquare className="w-5 h-5 text-blue-600" />
                       <span>{course.reviews || "2,350"} Reviews</span>
@@ -130,7 +130,7 @@ function CourseDetails() {
                     </div>
                   </div>
 
-                  <p className="text-gray-600 dark:text-gray-400 text-base max-w-3xl mx-auto lg:mx-0">
+                  <p className="max-w-3xl mx-auto text-base text-gray-600 dark:text-gray-400 lg:mx-0">
                     {course.instructorBio ||
                       "This instructor has years of experience teaching and mentoring students worldwide. Their courses are highly rated and trusted by thousands of learners."}
                   </p>
@@ -148,11 +148,11 @@ function CourseDetails() {
         </div>
 
         {/* ================= RIGHT SIDE ================= */}
-        <div className="border rounded-2xl shadow-lg p-6 bg-white dark:bg-card flex flex-col gap-6">
+  <div className="flex flex-col gap-6 p-6 bg-white border shadow-lg h h-fit rounded-2xl dark:bg-card-dark">
           <img
             src={course.poster}
             alt={course.name}
-            className="w-full h-64 object-cover rounded-lg"
+            className="object-cover w-full h-64 rounded-lg"
           />
 
           {/* Price */}
@@ -161,25 +161,25 @@ function CourseDetails() {
               ${course.price || 49}
             </span>
             <div className="flex items-center gap-3">
-              <span className="text-red-500 line-through text-lg">${course.oldPrice || 99}</span>
-              <span className="text-green-600 font-semibold text-lg">50% off</span>
+              <span className="text-lg text-red-500 line-through">${course.oldPrice || 99}</span>
+              <span className="text-lg font-semibold text-green-600">50% off</span>
             </div>
           </div>
 
           {/* Buttons */}
-          <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-lg text-lg transition">
+          <button className="w-full py-4 text-lg font-bold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700">
             Buy Now
           </button>
-          <button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 dark:text-gray-900 font-bold py-4 rounded-lg text-lg transition">
+          <button className="w-full py-4 text-lg font-bold text-gray-700 transition bg-gray-100 rounded-lg hover:bg-gray-200 dark:text-gray-900">
             Add to Cart
           </button>
 
           {/* Share Icons */}
-          <div className="flex items-center justify-center gap-6 text-gray-600 dark:text-gray-300 mt-2 text-xl">
-            <FaFacebook className="w-6 h-6 cursor-pointer hover:text-blue-600 transition" />
-            <FaTwitter className="w-6 h-6 cursor-pointer hover:text-sky-500 transition" />
-            <FaLinkedin className="w-6 h-6 cursor-pointer hover:text-blue-700 transition" />
-            <Share2 className="w-6 h-6 cursor-pointer hover:text-gray-800 dark:hover:text-gray-100 transition" />
+          <div className="flex items-center justify-center gap-6 mt-2 text-xl text-gray-600 dark:text-gray-300">
+            <FaFacebook className="w-6 h-6 transition cursor-pointer hover:text-blue-600" />
+            <FaTwitter className="w-6 h-6 transition cursor-pointer hover:text-sky-500" />
+            <FaLinkedin className="w-6 h-6 transition cursor-pointer hover:text-blue-700" />
+            <Share2 className="w-6 h-6 transition cursor-pointer hover:text-gray-800 dark:hover:text-gray-100" />
           </div>
         </div>
       </div>

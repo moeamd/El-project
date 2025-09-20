@@ -1,28 +1,23 @@
 @import "tailwindcss/preflight";
 @import "tailwindcss/utilities";
 
+/* ==============================
+   Global Styles
+============================== */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Dark mode support */
-.dark {
-  color-scheme: dark;
-}
-
 /* Smooth transitions for theme switching */
 * {
   transition-property: color, background-color, border-color,
-    text-decoration-color, fill, stroke;
+    text-decoration-color, fill, stroke, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
 }
@@ -31,32 +26,11 @@
 .rtl {
   direction: rtl;
 }
-
 .ltr {
   direction: ltr;
 }
 
-/* Custom animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* Links */
 a {
   font-weight: 500;
   color: #646cff;
@@ -66,19 +40,28 @@ a:hover {
   color: #535bf2;
 }
 
+/* Headings */
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+/* Body & Background */
 body {
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #ffffff;
+  color: #213547;
+}
+.dark body {
+  background-color: #0f172a;
+  color: #e6eef6;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
+/* Buttons */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -86,9 +69,9 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #f9f9f9;
+  color: #213547;
   cursor: pointer;
-  transition: border-color 0.25s;
 }
 button:hover {
   border-color: #646cff;
@@ -97,16 +80,30 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.dark button {
+  background-color: #1e293b;
+  color: #e6eef6;
+  border-color: transparent;
 }
+.dark button:hover {
+  border-color: #646cff;
+}
+
+/* Dark mode support class */
+.dark {
+  color-scheme: dark;
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Example usage of animations */
+.fade-in { animation: fadeIn 0.5s ease-in-out; }
+.slide-in { animation: slideIn 0.3s ease-out; }

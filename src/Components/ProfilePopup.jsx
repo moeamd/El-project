@@ -26,15 +26,15 @@ function ProfilePopup({ show, userName, userEmail }) {
 
   return (
     <div
-      className={`absolute mt-2 bg-white dark:bg-card rounded shadow-lg border border-gray-200 dark:border-gray-700 z-50 transition-colors duration-300 
+      className={`absolute mt-2 bg-white dark:bg-card-dark rounded shadow-lg border border-gray-200 dark:border-gray-700 z-50 transition-colors duration-300 
         ${i18n.language === "ar" ? "left-0 rtl" : "right-0 ltr"}`}
     >
       {/* Name & Email */}
       <Link
         to="/MainProfile"
-        className="block text-center font-semibold transition-colors"
+        className="block font-semibold text-center transition-colors"
       >
-        <div className="p-2 border-b border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-card transition-colors">
+  <div className="p-2 transition-colors border-b border-gray-200 cursor-pointer dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-card-dark">
           <p className="font-bold text-text dark:text-text-dark">{userName}</p>
           <p className="text-sm text-muted dark:text-muted-dark">{userEmail}</p>
         </div>
@@ -42,30 +42,30 @@ function ProfilePopup({ show, userName, userEmail }) {
 
       {/* Courses, Favorites & Wishlist */}
       <div className="flex flex-col p-2 border-b border-gray-200 dark:border-gray-700">
-        <Link to="/MainProfile/MyCourses" className="p-2 hover:underline text-gray-900 dark:text-gray-900 transition-colors">
+        <Link to="/MainProfile/MyCourses" className="p-2 text-gray-900 transition-colors hover:underline dark:text-gray-900">
           {t("common.myCourses")}
         </Link>
-        <Link to="/MainProfile/Favorites" className="p-2 hover:underline text-gray-700 dark:text-gray-900 transition-colors">
+        <Link to="/MainProfile/Favorites" className="p-2 text-gray-700 transition-colors hover:underline dark:text-gray-900">
           {t("common.favorites")}
         </Link>
-        <Link to="/MainProfile/Wishlist" className="p-2 hover:underline text-gray-700 dark:text-gray-900 transition-colors">
+        <Link to="/MainProfile/Wishlist" className="p-2 text-gray-700 transition-colors hover:underline dark:text-gray-900">
           {t("common.wishlist")}
         </Link>
       </div>
 
       {/* Notifications & Account Settings */}
       <div className="flex flex-col p-2 border-b border-gray-200 dark:border-gray-700">
-        <Link to="/notifications" className="p-2 hover:underline text-gray-700 dark:text-gray-900 transition-colors">
+        <Link to="/notifications" className="p-2 text-gray-700 transition-colors hover:underline dark:text-gray-900">
           {t("common.notifications")}
         </Link>
-        <Link to="/MainProfile/Profile" className="p-2 hover:underline text-gray-700 dark:text-gray-900 transition-colors">
+        <Link to="/MainProfile/Profile" className="p-2 text-gray-700 transition-colors hover:underline dark:text-gray-900">
           {t("common.accountSetting")}
         </Link>
       </div>
 
       {/* Logout */}
       <button
-        className="block w-full text-left p-2 text-red-500 hover:underline"
+        className="block w-full p-2 text-left text-red-500 hover:underline"
         onClick={() => setShowModal(true)}
       >
         {t("common.logout")}
