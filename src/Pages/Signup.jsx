@@ -204,46 +204,41 @@ function Signup() {
   return (
     <main
       id="signup"
-      className={`w-full h-screen inset-0 bg-black/40 dark:bg-surface-dark/80 z-50 transition-colors duration-300 ${
-        i18n.language === "ar" ? "rtl" : "ltr"
-      }`}
+      className={`w-full h-screen inset-0 bg-black/40 dark:bg-surface-dark/80 z-50 transition-colors duration-300 ${i18n.language === "ar" ? "rtl" : "ltr"
+        }`}
     >
       <div className="w-full h-full flex justify-center items-center">
         <div className="w-full h-full max-w-[800px] md:max-h-[550px] sm:h-auto flex flex-col sm:flex-row shadow-lg sm:rounded-lg overflow-hidden bg-transparent">
           <div
-            className={`hidden sm:block w-full md:w-1/2 h-full md:h-auto ${
-              i18n.language === "ar"
+            className={`hidden sm:block w-full md:w-1/2 h-full md:h-auto ${i18n.language === "ar"
                 ? "rounded-tr-[8px] rounded-br-[6px]"
                 : "rounded-tl-[8px] rounded-bl-[6px]"
-            }`}
+              }`}
           >
             <img
               src={RegisterImage}
-              className={`w-full h-full ${
-                i18n.language === "ar"
+              className={`w-full h-full ${i18n.language === "ar"
                   ? "rounded-tr-[8px] rounded-br-[6px]"
                   : "rounded-tl-[8px] rounded-bl-[6px]"
-              }`}
+                }`}
               alt="loading"
             />
           </div>
           <div
-            className={`relative w-full md:w-1/2 h-full md:h-auto flex flex-col justify-stretch md:justify-between bg-white dark:bg-card p-5 ${
-              i18n.language === "ar"
+            className={`relative w-full md:w-1/2 h-full md:h-auto flex flex-col justify-stretch md:justify-between bg-white dark:bg-card p-5 ${i18n.language === "ar"
                 ? "sm:rounded-tl-[8px] sm:rounded-bl-[6px]"
                 : "sm:rounded-tr-[8px] sm:rounded-br-[6px]"
-            } transition-colors duration-300`}
+              } transition-colors duration-300`}
           >
-            <div className="absolute top-2 right-2 flex items-center gap-2">
+            {/* <div className="absolute top-2 right-2 flex items-center gap-2">
               <LanguageToggle />
               <ThemeToggle />
-            </div>
+            </div> */}
 
             <X
               size={20}
-              className={`cursor-pointer absolute ${
-                i18n.language === "ar" ? "top-2 left-2" : "top-2 right-2"
-              } z-10`}
+              className={`cursor-pointer absolute ${i18n.language === "ar" ? "top-2 left-2" : "top-2 right-2"
+                } z-10`}
               onClick={() => {
                 navigate(-1);
               }}
@@ -320,7 +315,7 @@ function Signup() {
                 onChange={formik.handleChange}
                 value={formik.values.confirmPassword}
                 onBlur={formik.handleBlur}
-                className="w-full p-2 bg-[#F9F9F9E5] dark:bg-gray-700 dark:text-white rounded-[3px] transition-colors"
+                className="w-full p-2 bg-gray-100 dark:bg-gray-700 dark:text-white rounded-[3px] transition-colors"
               />
               {displayError(
                 formik.errors.confirmPassword,
@@ -331,7 +326,7 @@ function Signup() {
                 type="submit"
                 value={t("common.createAccount")}
                 name="submit"
-                className="bg-primary hover:bg-primary-dark dark:bg-primary dark:hover:bg-primary-dark w-full text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+                className="bg-[#3DCBB1] hover:bg-[#21b69a] dark:bg-primary dark:hover:bg-primary-dark w-full text-white font-semibold py-2 px-4 rounded-lg "
               />
             </form>
 

@@ -88,7 +88,7 @@ function Login() {
             default:
               msg = "Something went wrong. Please try again.";
           }
-          console.log(error);
+
           setAlertMessage(msg);
           setAlertType("error");
           setShowAlert(true);
@@ -176,46 +176,41 @@ function Login() {
 
   return (
     <main
-      className={`w-full h-screen bg-black/40 dark:bg-surface-dark/80 transition-colors duration-300 ${
-        i18n.language === "ar" ? "rtl" : "ltr"
-      }`}
+      className={`w-full h-screen bg-black/40 dark:bg-surface-dark/80 transition-colors duration-300 ${i18n.language === "ar" ? "rtl" : "ltr"
+        }`}
     >
       <div className="flex items-center justify-center w-full h-full">
         <div className="w-full h-full max-w-[800px] md:max-h-[550px] sm:h-auto flex flex-col sm:flex-row shadow-lg sm:rounded-lg overflow-hidden bg-transparent">
           <div
-            className={`hidden sm:block w-full md:w-1/2 h-full md:h-auto ${
-              i18n.language === "ar"
-                ? "rounded-tr-[8px] rounded-br-[6px]"
-                : "rounded-tl-[8px] rounded-bl-[6px]"
-            }`}
+            className={`hidden sm:block w-full md:w-1/2 h-full md:h-auto ${i18n.language === "ar"
+              ? "rounded-tr-[8px] rounded-br-[6px]"
+              : "rounded-tl-[8px] rounded-bl-[6px]"
+              }`}
           >
             <img
               src={LoginImage}
-              className={`w-full h-full ${
-                i18n.language === "ar"
-                  ? "rounded-tr-[8px] rounded-br-[6px]"
-                  : "rounded-tl-[8px] rounded-bl-[6px]"
-              }`}
+              className={`w-full h-full ${i18n.language === "ar"
+                ? "rounded-tr-[8px] rounded-br-[6px]"
+                : "rounded-tl-[8px] rounded-bl-[6px]"
+                }`}
               alt="loading"
             />
           </div>
           <div
-            className={`relative w-full md:w-1/2 h-full md:h-auto flex flex-col justify-stretch md:justify-between bg-white dark:bg-card p-5 ${
-              i18n.language === "ar"
-                ? "sm:rounded-tl-[8px] sm:rounded-bl-[6px]"
-                : "sm:rounded-tr-[8px] sm:rounded-br-[6px]"
-            } transition-colors duration-300`}
+            className={`relative w-full md:w-1/2 h-full md:h-auto flex flex-col justify-stretch md:justify-between bg-white dark:bg-card p-5 ${i18n.language === "ar"
+              ? "sm:rounded-tl-[8px] sm:rounded-bl-[6px]"
+              : "sm:rounded-tr-[8px] sm:rounded-br-[6px]"
+              } transition-colors duration-300`}
           >
-            <div className="absolute flex items-center gap-2 top-2 right-2">
+            {/* <div className="absolute flex items-center gap-2 top-2 right-2">
               <LanguageToggle />
               <ThemeToggle />
-            </div>
+            </div> */}
 
             <X
               size={20}
-              className={`cursor-pointer absolute ${
-                i18n.language === "ar" ? "top-2 left-2" : "top-2 right-2"
-              } z-10`}
+              className={`cursor-pointer absolute ${i18n.language === "ar" ? "top-2 left-2" : "top-2 right-2"
+                } z-10`}
               onClick={() => {
                 navigate(-1);
               }}
@@ -288,7 +283,7 @@ function Login() {
               <input
                 type="submit"
                 value={t("common.logIn")}
-                className="w-full px-4 py-2 mt-6 font-semibold text-white transition-colors rounded-lg bg-primary hover:bg-primary-dark dark:bg-primary dark:hover:bg-primary-dark"
+                className="w-full px-4 py-2 mt-6 font-semibold text-white  rounded-lg bg-[#3DCBB1] hover:bg-[#21b69a] dark:bg-[#3DCBB1] dark:hover:bg-primary-dark"
               />
             </form>
 
