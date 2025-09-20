@@ -37,7 +37,7 @@ function Courses() {
   return (
     <div
       className={`min-h-screen py-12 px-6
-        bg-white dark:bg-gray-900
+        bg-[#f2f8fc] dark:bg-gray-900
         text-gray-900 dark:text-gray-100
         transition-colors duration-500 
         ${i18n.language === "ar" ? "rtl" : "ltr"}`}
