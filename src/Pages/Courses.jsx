@@ -1,15 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CourseCard from "../Components/CourseCard";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourses } from "../features/courses/coursesSlice";
+import Pagination from "../Components/pagination";
 
 function Courses() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const { course, isLoading, error } = useSelector((state) => state.course);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6; 
+
+  const publishedCourses = course.filter((c) => c.status === "Publish");
+  const totalPages = Math.ceil(publishedCourses.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentCourses = publishedCourses.slice(startIndex, endIndex);
 
   const handleCourseClick = (course) => {
     localStorage.setItem("selectedCourse", JSON.stringify(course));
@@ -46,17 +57,21 @@ function Courses() {
         {t("dashboard.courses")}
       </h2>
 
-      <div className="flex flex-wrap justify-center gap-[60px] align-items-center sm:flex pt-[70px] pb-[70px]">
-        {course
-          .filter((c) => c.status === "Publish")
-          .map((c) => (
-            <CourseCard
-              key={c.id}
-              course={c}
-              onCardClick={handleCourseClick}
-            />
-          ))}
+      <div className="flex flex-wrap justify-center gap-[60px] sm:flex pt-[70px] pb-[70px]">
+        {currentCourses.map((c) => (
+          <CourseCard
+            key={c.id}
+            course={c}
+            onCardClick={handleCourseClick}
+          />
+        ))}
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
     </div>
   );
 }

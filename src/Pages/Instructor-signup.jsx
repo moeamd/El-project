@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 import { createUser, addUser } from "../features/users/addUser";
 import { useState } from "react";
 import LoadingSpinner from "../Components/loading-spinner";
-
-export default function InstructorSignUp({ isOpen, onClose }) {
+import { X, Upload } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+export default function InstructorSignUp() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+const { t, i18n } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -26,12 +30,12 @@ export default function InstructorSignUp({ isOpen, onClose }) {
       setError("");
       setSuccess(false);
       setLoading(true);
-    
+
       try {
         const userCredential = await createUser(values.email, values.password);
         const user = userCredential.user;
         const { password, ...userData } = values;
-    
+
         await addUser(
           {
             ...userData,
@@ -40,7 +44,7 @@ export default function InstructorSignUp({ isOpen, onClose }) {
           },
           user.uid
         );
-    
+
         setSuccess(true);
         formik.resetForm();
       } catch (err) {
@@ -65,7 +69,6 @@ export default function InstructorSignUp({ isOpen, onClose }) {
         setLoading(false);
       }
     },
-    
     validate: (values) => {
       const errors = {};
       if (!values.name) errors.name = "Name is required";
@@ -86,16 +89,23 @@ export default function InstructorSignUp({ isOpen, onClose }) {
   return (
     <div className="min-h-screen flex items-start justify-center bg-gray-100 dark:bg-gray-900 pt-10 px-4">
       <div className="relative bg-white dark:bg-card max-w-md w-full p-8 rounded-2xl shadow-xl transition-colors duration-300">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-red-500 hover:text-gray-700 text-2xl font-bold"
-        >
-          ✕
-        </button>
+        
+        {/* Close Button */}
+       
+          <X size={28} 
+              className={`cursor-pointer absolute ${i18n.language === "ar" ? "top-2 left-2" : "top-2 right-2"
+                } z-10`}
+              onClick={() => {
+                navigate(-1);
+              }}
+          />
+       
+
         <h2 className="text-3xl font-extrabold text-center mb-6 text-gray-900 dark:text-gray-100">
           Instructor Sign Up
         </h2>
 
+        {/* Success Message */}
         {success && (
           <div className="mb-6 p-6 bg-green-50 border border-green-300 rounded-xl shadow-md">
             <h2 className="text-xl font-semibold text-green-700 text-center">
@@ -107,6 +117,7 @@ export default function InstructorSignUp({ isOpen, onClose }) {
           </div>
         )}
 
+        {/* Error Message */}
         {error && (
           <div className="mb-4 p-3 text-red-700 bg-red-100 border border-red-300 rounded-lg text-sm">
             {error}
@@ -129,7 +140,7 @@ export default function InstructorSignUp({ isOpen, onClose }) {
                 type={field.type}
                 name={field.name}
                 placeholder={field.placeholder}
-                className="w-full h-12 border border-gray-300 rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-gray-500 text-lg"
+                className="w-full h-12 border border-gray-300 rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-[#3DCBB1] text-lg"
               />
               {formik.errors[field.name] && formik.touched[field.name] && (
                 <p className="text-red-500 mt-1 text-sm">
@@ -139,6 +150,7 @@ export default function InstructorSignUp({ isOpen, onClose }) {
             </div>
           ))}
 
+          {/* Bio */}
           <div className="text-start">
             <textarea
               onChange={formik.handleChange}
@@ -147,37 +159,45 @@ export default function InstructorSignUp({ isOpen, onClose }) {
               name="bio"
               placeholder="Short Bio"
               rows="5"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-500 text-lg"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3DCBB1] text-lg"
             />
             {formik.errors.bio && formik.touched.bio && (
               <p className="text-red-500 mt-1 text-sm">{formik.errors.bio}</p>
             )}
           </div>
 
+          {/* Image Upload */}
           <div className="text-start">
-            <input
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={(event) =>
-                formik.setFieldValue("image", event.currentTarget.files[0])
-              }
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-500"
-            />
+            <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
+              <Upload size={36} className="text-gray-500 mb-2" />
+              <span className="text-gray-600">Click to upload profile picture</span>
+              <input
+                type="file"
+                name="image"
+                accept="image/*"
+                className="hidden"
+                onChange={(event) =>
+                  formik.setFieldValue("image", event.currentTarget.files[0])
+                }
+              />
+            </label>
+
             {formik.errors.image && formik.touched.image && (
-              <p className="text-red-500 mt-1 text-sm">{formik.errors.image}</p>
+              <p className="text-red-500 mt-2 text-sm">{formik.errors.image}</p>
             )}
+
             {formik.values.image && (
-              <div className="mt-3 flex justify-center">
+              <div className="mt-4 flex justify-center">
                 <img
                   src={URL.createObjectURL(formik.values.image)}
                   alt="Preview"
-                  className="w-28 h-28 object-cover rounded-full border"
+                  className="w-28 h-28 md:w-32 md:h-32 object-cover rounded-full border-4 border-[#3DCBB1] shadow-md"
                 />
               </div>
             )}
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             className="w-full py-4 bg-[#3DCBB1] text-white rounded-xl text-lg font-semibold hover:bg-[#35b3a1] transition"
