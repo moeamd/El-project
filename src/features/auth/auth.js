@@ -241,8 +241,23 @@ async function removeFromFavorites(courseId, userId) {
     await updateDoc(userRef, { favorites: updatedFavorites });
 }
 
+async function enrollCourse(course, userId) {
+    const userRef = doc(db, "users", userId)
+    await updateDoc(userRef, { myCourses: arrayUnion(course) });
+}
+
+async function unEnrollCourse(courseId, userId) {
+    const userRef = doc(db, "users", userId);
+    const userSnap = await getDoc(userRef);
+    const userData = userSnap.data();
+
+    const currentmyCourses = userData?.myCourses || [];
+    const updatedmyCourses = currentmyCourses.filter((course) => course.id !== courseId);
+    await updateDoc(userRef, { myCourses: updatedmyCourses });
+}
+
 export {
     signUp, logIn, resetPassword, addUser, addToWishList, removeFromWishList,
-    removeFromFavorites, addToFavorites,
+    removeFromFavorites, addToFavorites, unEnrollCourse, enrollCourse,
     updateUser, logOut, getCurrentUser, signInWithGoogle, signInWithGithub
 };

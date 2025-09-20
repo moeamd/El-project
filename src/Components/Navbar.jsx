@@ -200,38 +200,49 @@ function Navbar() {
 
         <div className="relative flex items-center gap-4 rtl:gap-reverse">
           {currentUser?.uid ? (
-            <div className="relative">
-              <img
-                src={currentUser.photoURL || profileImg}
-                alt="Profile"
-                onClick={togglePopup}
-                className="w-8 h-8 ml-2 transition-all border-2 border-transparent rounded-full cursor-pointer rtl:mr-2 rtl:ml-0 hover:scale-110 hover:border-blue-400 dark:hover:border-blue-300"
-              />
-              {showPopup && (
-                <div
-                  className={`absolute top-full mt-1 ${
-                    i18n.language === "ar" ? "left-0" : "right-0"
-                  } animate-slide-in`}
-                >
-                  <ProfilePopup
-                    show={showPopup}
-                    userName={currentUser.displayName || "User"}
-                    userEmail={currentUser.email || ""}
-                  />
-                </div>
-              )}
-            </div>
+<>
+  {/* Notification Bell */}
+  <BellIcon className="w-6 h-6 text-gray-700 transition-all cursor-pointer hover:scale-110 dark:text-gray-200" />
+
+  {/* Profile Image + Popup */}
+  <div className="relative">
+    <img
+      src={currentUser.photoURL || profileImg}
+      alt="Profile"
+      onClick={togglePopup}
+      className="w-8 h-8 ml-2 transition-all border-2 border-transparent rounded-full cursor-pointer hover:scale-110 hover:border-blue-400 dark:hover:border-blue-300 rtl:mr-2 rtl:ml-0"
+    />
+    {showPopup && (
+      <div
+        className={`absolute top-full mt-1 ${
+          i18n.language === "ar" ? "left-0" : "right-0"
+        } animate-slide-in`}
+      >
+        <ProfilePopup
+          show={showPopup}
+          userName={currentUser.displayName || "User"}
+          userEmail={currentUser.email || ""}
+        />
+      </div>
+    )}
+  </div>
+</>
+
           ) : (
             <>
               <button
                 onClick={() => navigate("/login")}
-                className="py-1.5 px-4 rounded-xl font-semibold border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"
+
+                className="py-1.5 px-4 rounded-xl font-semibold border border-gray-300 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800 transition-colors duration-300 "
+
               >
                 {t("common.logIn")}
               </button>
               <button
                 onClick={() => navigate("/signup")}
-                className="px-4 py-2 font-semibold text-white transition-colors duration-300 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 dark:from-blue-700 dark:to-blue-600 hover:from-blue-500 hover:to-blue-400 dark:hover:from-blue-600 dark:hover:to-blue-500"
+
+                  className="px-4 py-2 font-semibold text-white transition-colors duration-300 rounded-xl bg-[#21ac92] hover:bg-[#0c8b74]"
+
               >
                 {t("common.signUp")}
               </button>
@@ -241,7 +252,6 @@ function Navbar() {
 
         <div className="flex items-center gap-4 rtl:gap-reverse">
           <LanguageToggle />
-          <ThemeToggle />
         </div>
       </div>
     </nav>

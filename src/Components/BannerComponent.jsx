@@ -1,14 +1,21 @@
+import { useNavigate } from "react-router-dom";
 import bannerImg from "../assets/images/image.png";
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 
 function Banner() {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/SearchPage")
+  };
 
   return (
     <section
-      className={`h-[50vh] relative flex flex-col md:flex-row items-center md:items-center justify-between px-6 md:px-16 py-20 transition-colors duration-300
-        bg-gradient-to-r from-yellow-200 to-yellow-400
-        ${i18n.language === "ar" ? "rtl" : "ltr"}`}
+
+      className={`bg-yellow-200 dark:bg-yellow-300/90 px-6 md:px-12 py-16 relative flex flex-col md:flex-row items-center md:items-start justify-center md:justify-start pt-[200px] transition-colors duration-300 ${i18n.language === "ar" ? "rtl" : "ltr"
+        }`}
+
     >
       {/* LEFT SIDE */}
       <div className="z-10 max-w-xl space-y-6 text-center md:text-left">
@@ -19,11 +26,18 @@ function Banner() {
           {t("common.becomeProfessionals")}
         </p>
 
-        <div className="flex flex-col justify-center gap-4 pt-4 sm:flex-row md:gap-6 md:justify-start">
-          <button className="px-8 py-3 text-lg font-semibold text-white transition shadow-md rounded-2xl bg-primary hover:bg-primary-dark">
+        <div className="flex flex-col gap-4 sm:flex-col md:flex-row sm:gap-4 md:gap-6 justify-center md:justify-start">
+          <button
+            onClick={
+              handleClick
+            }
+            className="bg-primary text-black px-8 py-3 sm:px-10 sm:py-4 rounded-2xl font-medium text-lg hover:bg-[#149981] hover:text-white transition-colors border">
             {t("common.browseCourse")}
           </button>
-          <button className="px-8 py-3 text-lg font-semibold transition bg-white border-2 rounded-2xl border-primary text-primary hover:bg-primary hover:text-white">
+          <button className="bg-white dark:bg-card text-primary border border-primary px-8 py-3 sm:px-10 sm:py-4 rounded-2xl font-medium text-lg hover:text-white hover:bg-[#149981] transition-colors">
+
+
+
             {t("common.startMakeAccount")}
           </button>
         </div>
@@ -31,9 +45,10 @@ function Banner() {
 
       {/* RIGHT SIDE IMAGE */}
       <div
-        className={`mt-10 md:mt-0 md:absolute bottom-0 ${
-          i18n.language === "ar" ? "left-10" : "right-10"
-        }`}
+
+        className={`absolute bottom-0 hidden md:block ${i18n.language === "ar" ? "left-0" : "right-0"
+          }`}
+
       >
         <img
           src={bannerImg}

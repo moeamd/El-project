@@ -27,10 +27,7 @@ function WishList() {
     const userId = currentUserInfo;
     const wishList = userId?.wishList || [];
 
-    const handleCourseClick = (course) => {
-        localStorage.setItem("selectedCourse", JSON.stringify(course));
-        navigate("/CourseDetails");
-    };
+
 
     return (
         <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -39,7 +36,6 @@ function WishList() {
                     <CourseCard
                         key={course.id}
                         course={course}
-                        onCardClick={handleCourseClick}
                     />
                 )) : <div>
                     WishList Is Empty

@@ -64,7 +64,7 @@ function CourseDetails() {
           {/* Tabs */}
           <div className="w-full max-w-4xl space-y-4 md:space-y-6">
             {/* Tab Headers */}
-            <div className="flex flex-wrap justify-center gap-4 mb-4 text-sm border-b-2 border-gray-200 md:text-lg lg:justify-start dark:border-gray-700">
+            <div className="flex flex-wrap justify-center gap-6 mb-6 text-base md:text-lg border-b-2 border-gray-200 lg:justify-start dark:border-gray-700">
               {["description", "certification", "instructor", "reviews"].map(
                 (tab) => (
                   <button
@@ -156,64 +156,63 @@ function CourseDetails() {
           </div>
         </div>
 
-     {/* RIGHT SIDE */}
-<div className="flex flex-col gap-4 p-5 bg-white border border-gray-200 shadow-lg rounded-2xl lg:w-[380px] h-fit">
-  {/* Course Poster */}
-  <div className="overflow-hidden rounded-xl">
-    <img
-      src={course.poster}
-      alt={course.name}
-      className="object-cover w-full h-64 transition-transform duration-300 hover:scale-105"
-    />
-  </div>
+        {/* RIGHT SIDE */}
+        <div className="flex flex-col gap-5 p-5 bg-white border border-gray-200 shadow-lg rounded-2xl lg:w-[380px] h-fit dark:bg-card-dark">
+          {/* Course Poster */}
+          <div className="overflow-hidden rounded-xl">
+            <img
+              src={course.poster}
+              alt={course.name}
+              className="object-cover w-full h-64 transition-transform duration-300 hover:scale-105"
+            />
+          </div>
 
-  {/* Price Section */}
-  <div className="flex flex-col items-center gap-1">
-    <span className="text-3xl font-extrabold text-gray-900">
-      ${course.price || 49}
-    </span>
-    <div className="flex items-center gap-2">
-      <span className="text-lg text-red-500 line-through">
-        ${course.oldPrice || 99}
-      </span>
-      <span className="text-lg font-semibold text-green-600">50% OFF</span>
-    </div>
-  </div>
+          {/* Price Section */}
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-3xl font-extrabold text-gray-900 dark:text-gray-100">
+              ${course.price || 49}
+            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-lg text-red-500 line-through">
+                ${course.oldPrice || 99}
+              </span>
+              <span className="text-lg font-semibold text-green-600">50% OFF</span>
+            </div>
+          </div>
 
-  {/* Buttons */}
-  <div className="flex flex-col w-full gap-2">
-    <button className="w-full py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">
-      Buy Now
-    </button>
-    <button className="w-full py-3 text-lg font-semibold text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200">
-      Add to Cart
-    </button>
-  </div>
+          {/* Buttons */}
+          <div className="flex flex-col w-full gap-2">
+            <button className="w-full py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+              Enroll Now
+            </button>
+            <button className="w-full py-3 text-lg font-semibold text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200">
+              Add to Cart
+            </button>
+          </div>
 
-  {/* Extras */}
-  <div className="flex flex-col items-center gap-2 pt-4 text-sm text-gray-600 border-t">
-    <p>✔ Lifetime access</p>
-    <p>✔ 30-day money-back guarantee</p>
-    <p>✔ Access on mobile and TV</p>
-  </div>
+          {/* Extras */}
+          <div className="flex flex-col items-center gap-2 pt-4 text-sm text-gray-600 border-t dark:text-gray-400">
+            <p>✔ Lifetime access</p>
+            <p>✔ 30-day money-back guarantee</p>
+            <p>✔ Access on mobile and TV</p>
+          </div>
 
-  {/* Share Section */}
-  <div className="flex flex-col items-center gap-2 mt-2">
-    <p className="text-sm font-medium text-gray-500">Share this course</p>
-    <div className="flex items-center justify-center gap-4 text-gray-600">
-      <FaFacebook className="w-6 h-6 cursor-pointer hover:text-blue-600" />
-      <FaTwitter className="w-6 h-6 cursor-pointer hover:text-sky-500" />
-      <FaLinkedin className="w-6 h-6 cursor-pointer hover:text-blue-700" />
-      <Share2 className="w-6 h-6 cursor-pointer hover:text-gray-800" />
-    </div>
-  </div>
-</div>
-
+          {/* Share Section */}
+          <div className="flex flex-col items-center gap-2 mt-2">
+            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+              Share this course
+            </p>
+            <div className="flex items-center justify-center gap-4 text-gray-600 dark:text-gray-300">
+              <FaFacebook className="w-6 h-6 cursor-pointer hover:text-blue-600" />
+              <FaTwitter className="w-6 h-6 cursor-pointer hover:text-sky-500" />
+              <FaLinkedin className="w-6 h-6 cursor-pointer hover:text-blue-700" />
+              <Share2 className="w-6 h-6 cursor-pointer hover:text-gray-800 dark:hover:text-gray-100" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
 export default CourseDetails;
-
-
