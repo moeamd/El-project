@@ -133,7 +133,7 @@ const navigate = useNavigate();
   return (
     <div
 
-      className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105 hover:z-10"
+      className="overflow-hidden transition-all duration-300 transform bg-white shadow-md cursor-pointer rounded-2xl hover:shadow-lg hover:scale-105 hover:z-10"
       style={{ maxWidth: '400px' }}
       onClick={() => handleCourseClick(course)}
 
@@ -145,15 +145,15 @@ const navigate = useNavigate();
         <img
           src={course.poster}
           alt={course.name}
-          className="w-full h-44 object-cover"
+          className="object-cover w-[500px] h-44"
         />
 
-        <div className="absolute top-3 left-3 flex items-center bg-white px-2 py-1 rounded-full text-xs font-medium shadow">
-          <FaStar className="text-yellow-400 mr-1" /> {course.rating}
+        <div className="absolute flex items-center px-2 py-1 text-xs font-medium bg-white rounded-full shadow top-3 left-3">
+          <FaStar className="mr-1 text-yellow-400" /> {course.rating}
         </div>
 
         <div className="absolute top-3 right-3">
-          <span className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-1 rounded-full">
+          <span className="px-2 py-1 text-xs font-medium text-blue-600 bg-blue-100 rounded-full">
             {course.level}
 
           </span>
@@ -167,33 +167,33 @@ const navigate = useNavigate();
 
 
         <div className="flex flex-wrap gap-2 mt-2 text-xs text-gray-600">
-          <div className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full">
+          <div className="flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-full">
             <FaBookOpen /> {course.lessons} Lessons
           </div>
-          <div className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full">
+          <div className="flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-full">
             <FaClock /> {createdAt}
           </div>
-          <div className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full">
+          <div className="flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-full">
             <FaUser /> {course.students}+ Enrolled
           </div>
 
         </div>
 
         <div className="flex flex-wrap gap-2 mt-2 text-xs text-gray-600">
-          <div className="flex items-center  gap-1 bg-gray-100  rounded-full">
+          <div className="flex items-center gap-1 bg-gray-100 rounded-full">
             {(isFavoritesed ?
               <MdOutlineFavorite
                 onClick={(e) => {
                   handleAddToFavorites(e);
                 }}
-                className="w-10 h-10 cursor-pointer text-red-500 px-2 py-1 "
+                className="w-10 h-10 px-2 py-1 text-red-500 cursor-pointer "
               />
               :
               <MdFavoriteBorder
                 onClick={(e) => {
                   handleAddToFavorites(e);
                 }}
-                className="w-10 h-10 cursor-pointer px-2 py-1"
+                className="w-10 h-10 px-2 py-1 cursor-pointer"
               />
             )}
           </div>
@@ -201,7 +201,7 @@ const navigate = useNavigate();
 
           <div className="flex items-center gap-1 bg-gray-100 rounded-full">
             <img src={isWishListed ? WishlistImage : noWishlistImage} alt="nowishlist"
-              className=" w-8 h-8 text-red-500 px-1 py-1"
+              className="w-8 h-8 px-1 py-1 text-red-500 "
               onClick={(e) => {
                 handleAddToWishlist(e);
               }}
@@ -210,7 +210,7 @@ const navigate = useNavigate();
           </div>
         </div>
 
-        <div className="flex justify-between items-center mt-3">
+        <div className="flex items-center justify-between mt-3">
           <p className="text-lg font-bold text-gray-800">
             ${course.price}.00{" "}
             <span className="text-sm font-normal text-gray-500">/lifetime</span>

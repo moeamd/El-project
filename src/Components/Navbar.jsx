@@ -134,6 +134,7 @@ import LanguageToggle from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
 import { useTranslation } from "react-i18next";
 import { getInstructors } from "../features/users/getinstructors-aprove";
+import { BellIcon } from "lucide-react";
 
 function Navbar() {
   const [showPopup, setShowPopup] = useState(false);
