@@ -40,7 +40,6 @@ async function signUp(user) {
         await addUser(account, 'Email');
 
     } catch (error) {
-        console.log(error)
         throw error;
     }
 }
@@ -71,7 +70,6 @@ async function resetPassword(email) {
             url: "http://localhost:5173/login/reset-password",
             handleCodeInApp: true,
         });
-        console.log("soijfsdi")
     } catch (error) {
         throw error;
     }
@@ -158,7 +156,6 @@ async function updateUser(updates) {
 
         const userId = currentUser?.uid;
         if (!userId) {
-            console.log("uerId not found");
             throw new Error("User is not authenticated.");
         }
 
@@ -185,6 +182,9 @@ async function updateUser(updates) {
 
             photoUrl = publicUrlData?.publicUrl || "";
         }
+        else{
+            photoUrl = updates.photoURL
+        }
 
         await updateProfile(currentUser, {
             displayName: updates.displayName,
@@ -203,11 +203,9 @@ async function updateUser(updates) {
         };
 
         const userRef = doc(db, "users", userId)
-        console.log("users" + userRef)
         await updateDoc(userRef, payload, { merge: true });
 
     } catch (error) {
-        console.error("Failed to update user:", error.message);
         throw error;
     }
 }
@@ -215,7 +213,6 @@ async function updateUser(updates) {
 
 async function addToWishList(course, userId) {
     const userRef = doc(db, "users", userId)
-    console.log("users" + userRef)
     await updateDoc(userRef, { wishList: arrayUnion(course) });
 }
 
@@ -231,7 +228,6 @@ async function removeFromWishList(courseId, userId) {
 
 async function addToFavorites(course, userId) {
     const userRef = doc(db, "users", userId)
-    console.log("users" + userRef)
     await updateDoc(userRef, { favorites: arrayUnion(course) });
 }
 

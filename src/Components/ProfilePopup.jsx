@@ -31,7 +31,7 @@ function ProfilePopup({ show, userName, userEmail }) {
     >
       {/* Name & Email */}
       <Link
-        to="/MainProfile"
+        to="/MainProfile/Profile"
         className="block font-semibold text-center transition-colors"
       >
   <div className="p-2 transition-colors border-b border-gray-200 cursor-pointer dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-card-dark">

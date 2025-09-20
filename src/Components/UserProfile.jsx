@@ -11,8 +11,8 @@ function UserProfile() {
   const [imageFile, setImageFile] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
 
-  const { currentUser } = useSelector(selectCurrentUser);
-  const { users, isLoading, error } = useSelector(selectUsers);
+  const currentUser = useSelector(selectCurrentUser) ?? null;
+  const { users } = useSelector(selectUsers) ?? [];
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -86,7 +86,8 @@ function UserProfile() {
         email: form.email,
         phone: form.phone,
         bio: form.bio,
-        photoFile: imageFile,
+        photoFile: imageFile || null,
+        photoURL: imageFile ? null : currentUserInfo.photoURL,
       });
     } catch (error) {
       console.error("Failed to save profile:", error);
@@ -101,7 +102,7 @@ function UserProfile() {
 
         <label className="cursor-pointer w-30 h-30  text-gray-400 bg-gray-300 rounded-full ">
           <img
-            src={currentUser?.photoURL ? currentUser?.photoURL : defaultProfile}
+            src={imagePreviewUrl || currentUser?.photoURL || defaultProfile}
             alt="defaultProfile"
             className="w-30 h-30 rounded-full"
           />
@@ -109,6 +110,7 @@ function UserProfile() {
           <input
             type="file"
             accept="image/"
+            className="hidden"
             onChange={handleImageChange}
             onClick={() => setEditableField("photo")}
           />

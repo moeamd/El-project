@@ -20,8 +20,8 @@ export default function CourseCard({ course, onCardClick }) {
   const [alertType, setAlertType] = useState("info");
 
   // Users
-  const { users } = useSelector(selectUsers);
-  const { currentUser } = useSelector(selectCurrentUser);
+  const currentUser = useSelector(selectCurrentUser) ?? null;
+  const { users } = useSelector(selectUsers) ?? [];
 
   useEffect(() => { dispatch(getUsers()) }, [dispatch]);
   useEffect(() => { dispatch(fetchCurrentUser()) }, [dispatch]);
@@ -120,7 +120,7 @@ export default function CourseCard({ course, onCardClick }) {
 
         {/* Instructor Info */}
         <div className="flex items-center gap-2">
-          {course.instructorImage && <img src={course.instructorImage} alt={course.instructorName} className="w-6 h-6 rounded-full object-cover"/>}
+          {course.instructorImage && <img src={course.instructorImage} alt={course.instructorName} className="w-6 h-6 rounded-full object-cover" />}
           <p className="text-xs text-gray-500 dark:text-gray-400">{t("common.by")} {course.instructorName || t("common.unknown")}</p>
         </div>
 
@@ -129,10 +129,10 @@ export default function CourseCard({ course, onCardClick }) {
         {/* Favorites & Wishlist */}
         <div className="flex items-center gap-2 mt-2">
           <button onClick={handleAddToFavorites}>
-            {isFavoritesed ? <MdOutlineFavorite className="text-red-500 w-6 h-6"/> : <MdFavoriteBorder className="w-6 h-6"/>}
+            {isFavoritesed ? <MdOutlineFavorite className="text-red-500 w-6 h-6" /> : <MdFavoriteBorder className="w-6 h-6" />}
           </button>
           <button onClick={handleAddToWishlist}>
-            <img src={isWishListed ? WishlistImage : noWishlistImage} alt="wishlist" className="w-6 h-6"/>
+            <img src={isWishListed ? WishlistImage : noWishlistImage} alt="wishlist" className="w-6 h-6" />
           </button>
         </div>
 
