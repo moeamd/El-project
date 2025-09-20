@@ -10,7 +10,7 @@ function JoinComponent() {
     <section className="flex justify-center w-full px-6 py-12 transition-colors duration-500">
       <div
         className={`w-full max-w-6xl 
-          bg-white dark:bg-gray-900 
+          bg-gray-900 
           rounded-2xl shadow-lg 
           flex flex-col md:flex-row items-center justify-between 
           p-8 gap-6 transition-colors duration-500 

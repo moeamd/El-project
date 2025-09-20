@@ -45,9 +45,8 @@ const totalPages = Math.ceil(favorites.length / itemsPerPage);
       {currentFavoriteCourses.length ?
         currentFavoriteCourses.map((course) => (
           <CourseCard
-            key={course.id}
+            key={course.id || index}
             course={course}
-            onCardClick={handleCourseClick}
           />
         )) : <div>
           favorites Is Empty

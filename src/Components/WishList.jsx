@@ -34,10 +34,7 @@ function WishList() {
   const endIndex = startIndex + itemsPerPage;
   const currentWishCourses = wishList.slice(startIndex, endIndex);
 
-    const handleCourseClick = (course) => {
-        localStorage.setItem("selectedCourse", JSON.stringify(course));
-        navigate("/CourseDetails");
-    };
+
 
     return (
         <div>
@@ -47,7 +44,6 @@ function WishList() {
                     <CourseCard
                         key={course.id}
                         course={course}
-                        onCardClick={handleCourseClick}
                     />
                 )) : <div>
                     WishList Is Empty

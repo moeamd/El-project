@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 function Alert({ message, type = "info" }) {
-  const [isVisible, setIsVisible] = useState(true);
-  const { i18n } = useTranslation();
+    const [isVisible, setIsVisible] = useState(true);
+    const { i18n } = useTranslation();
 
     const baseStyles = "container fixed top-5 left-1/2 -translate-x-1/2 max-w-xl px-4 py-3 rounded shadow-lg flex items-start justify-between space-x-4";
     const typeStyles = {
@@ -13,13 +13,16 @@ function Alert({ message, type = "info" }) {
         info: "bg-blue-100 text-blue-800 border border-blue-300",
     };
 
-  if (!isVisible) return null;
+    if (!isVisible) return null;
 
     return (
         <div className={`${baseStyles} ${typeStyles[type] || typeStyles.info}`} role="alert">
             <p className="flex-1">{message}</p>
             <button
-                onClick={() => setIsVisible(false)}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setIsVisible(false)
+                }}
                 className="text-xl font-bold leading-none text-gray-500 hover:text-black focus:outline-none"
             >
                 &times;
