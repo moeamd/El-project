@@ -15,8 +15,7 @@ import RegisterButton from "../Components/RegisterUser/RegisterButton";
 import MyCoursesIo from "../Components/RegisterUser/MyCourses.io";
 import Alert from "../Components/Alert";
 import { useTranslation } from "react-i18next";
-import LanguageToggle from "../Components/LanguageToggle";
-import ThemeToggle from "../Components/ThemeToggle";
+
 function Login() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
