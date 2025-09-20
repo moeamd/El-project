@@ -13,64 +13,62 @@ function CourseDetails() {
   const [activeTab, setActiveTab] = useState("description");
 
   if (!course) {
-    return <p className="mt-10 text-center text-gray-500">No course selected.</p>;
+    return <p className="mt-10 text-center text-gray-500 dark:text-gray-400">No course selected.</p>;
   }
 
   return (
-    <div className="bg-gray-50 contaa dark:bg-gray-900 min-h-screen flex justify-center p-8 pt-[160px]">
-      <div className="w-[80%] max-w-8xl grid grid-cols-1 lg:grid-cols-3 gap-12">
-        {/* ================= LEFT SIDE ================= */}
+    <div className="min-h-screen bg-white dark:bg-gray-900 flex justify-center p-6 pt-[160px] transition-colors duration-500">
+      <div className="grid w-full grid-cols-4 gap-12 max-w-8xl lg:grid-cols-3">
+        
+        {/* LEFT SIDE */}
         <div className="flex flex-col items-center space-y-8 lg:col-span-2 lg:items-start">
-          {/* Title */}
-          <h1 className="text-5xl font-extrabold text-center text-gray-900 lg:text-left dark:text-gray-100">
+          <h1 className="text-4xl font-extrabold text-center text-gray-900 md:text-5xl dark:text-gray-100 lg:text-left">
             {course.name}
           </h1>
 
-          {/* Short Description */}
           <p className="max-w-4xl text-lg text-center text-gray-700 dark:text-gray-300 lg:text-left">
-            Learn the skills you need to excel in this course with hands-on
-            projects, expert guidance, and lifetime access.
+            {course.description || "Learn the skills you need to excel in this course with hands-on projects, expert guidance, and lifetime access."}
           </p>
 
-          {/* Rating + Meta Info */}
-          <div className="flex flex-wrap items-center justify-center gap-6 text-base text-gray-700 lg:justify-start">
+          {/* Rating + Meta */}
+          <div className="flex flex-wrap items-center justify-center gap-6 text-base text-gray-700 dark:text-gray-300 lg:justify-start">
             <div className="flex items-center gap-2">
-              <Star className="w-6 h-6 text-yellow-400 fill-yellow-400" />
-              <span className="text-lg font-semibold">4.7 (2,350 reviews)</span>
+              <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+              <span className="font-semibold">4.7 (2,350 reviews)</span>
             </div>
             <span>|</span>
-            <span className="text-lg">{course.hours || "20"} total hours</span>
+            <span>{course.hours || "20"} total hours</span>
             <span>|</span>
-            <span className="text-lg">{course.lessons || "45"} lectures</span>
+            <span>{course.lessons || "45"} lectures</span>
             <span>|</span>
-            <span className="text-lg">All Levels</span>
+            <span>All Levels</span>
           </div>
 
           {/* Instructor Info */}
-          <div className="flex items-center gap-5 mt-8 mb-12">
+          <div className="flex items-center gap-5 mt-6 mb-12">
             <img
-              src={course.instructorImg || "./instructorImage.png"}
+              src={course.instructorImg || "https://i.pravatar.cc/100"}
               alt="Instructor"
-              className="object-cover w-20 h-20 border-2 border-gray-300 rounded-full"
+              className="object-cover w-20 h-20 border-2 border-gray-300 rounded-full dark:border-gray-700"
             />
             <div>
-              <p className="text-base text-gray-500">Created by</p>
+              <p className="text-base text-gray-500 dark:text-gray-400">Created by</p>
               <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">{course.author}</p>
             </div>
           </div>
 
-          {/* ================= TABS ================= */}
+          {/* Tabs */}
           <div className="w-full max-w-4xl space-y-6">
             {/* Tab Headers */}
             <div className="flex justify-center gap-8 mb-6 text-lg border-b-2 border-gray-200 lg:justify-start dark:border-gray-700">
-              {["description", "certification", "instructor", "reviews"].map((tab) => (
+              {["description", "certification", "instructor", "reviews"].map(tab => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={`pb-3 capitalize font-semibold ${
                     activeTab === tab
                       ? "border-b-4 border-blue-600 text-blue-600"
-                      : "text-gray-600 dark:text-gray-400 hover:text-blue-500 transition"
+                      : "text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors"
                   }`}
                 >
                   {tab}
@@ -82,64 +80,37 @@ function CourseDetails() {
             <div className="space-y-6 text-lg leading-relaxed text-center text-gray-700 dark:text-gray-300 lg:text-left">
               {activeTab === "description" && (
                 <>
-                  <h2 className="text-3xl font-semibold">Course Description</h2>
-                  <p>
-                    {course.description ||
-                      "This course covers everything you need to become proficient. You'll start from basics and move to advanced topics with real-world projects."}
-                  </p>
+                  <h2 className="text-2xl font-semibold md:text-3xl">Course Description</h2>
+                  <p>{course.description || "This course covers everything you need to become proficient."}</p>
                 </>
               )}
-
               {activeTab === "certification" && (
                 <>
-                  <h2 className="text-3xl font-semibold">Certification</h2>
-                  <p>
-                    Upon completion, you will receive a certificate of achievement
-                    to showcase your skills.
-                  </p>
+                  <h2 className="text-2xl font-semibold md:text-3xl">Certification</h2>
+                  <p>Upon completion, you will receive a certificate of achievement.</p>
                 </>
               )}
-
               {activeTab === "instructor" && (
                 <>
-                  <h2 className="text-3xl font-semibold">Instructor</h2>
-                  <div className="flex flex-col items-center gap-6 mb-6 lg:flex-row lg:items-start">
-                    <img
-                      src={course.instructorImg || "https://i.pravatar.cc/100"}
-                      alt="Instructor"
-                      className="object-cover w-20 h-20 rounded-full"
-                    />
+                  <h2 className="text-2xl font-semibold md:text-3xl">Instructor</h2>
+                  <div className="flex flex-col items-center gap-4 mb-6 lg:flex-row lg:items-start">
+                    <img src={course.instructorImg || "https://i.pravatar.cc/100"} alt="Instructor" className="object-cover w-20 h-20 rounded-full" />
                     <div>
                       <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">{course.author}</p>
                       <p className="text-base text-gray-500 dark:text-gray-400">Lead Instructor</p>
                     </div>
                   </div>
-
-                  <div className="flex flex-wrap justify-center gap-8 mb-6 text-lg text-gray-700 lg:justify-start dark:text-gray-300">
-                    <div className="flex items-center gap-3">
-                      <MessageSquare className="w-5 h-5 text-blue-600" />
-                      <span>{course.reviews || "2,350"} Reviews</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Users className="w-5 h-5 text-green-600" />
-                      <span>{course.students || "12,000"} Students</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <BookOpen className="w-5 h-5 text-purple-600" />
-                      <span>{course.courses || "25"} Courses</span>
-                    </div>
+                  <div className="flex flex-wrap justify-center gap-8 mb-6 text-gray-700 dark:text-gray-300 lg:justify-start">
+                    <div className="flex items-center gap-2"><MessageSquare className="w-5 h-5 text-blue-600" /> <span>{course.reviews || "2,350"} Reviews</span></div>
+                    <div className="flex items-center gap-2"><Users className="w-5 h-5 text-green-600" /> <span>{course.students || "12,000"} Students</span></div>
+                    <div className="flex items-center gap-2"><BookOpen className="w-5 h-5 text-purple-600" /> <span>{course.courses || "25"} Courses</span></div>
                   </div>
-
-                  <p className="max-w-3xl mx-auto text-base text-gray-600 dark:text-gray-400 lg:mx-0">
-                    {course.instructorBio ||
-                      "This instructor has years of experience teaching and mentoring students worldwide. Their courses are highly rated and trusted by thousands of learners."}
-                  </p>
+                  <p className="max-w-3xl mx-auto text-gray-600 lg:mx-0 dark:text-gray-400">{course.instructorBio || "This instructor has years of experience teaching and mentoring students worldwide."}</p>
                 </>
               )}
-
               {activeTab === "reviews" && (
                 <>
-                  <h2 className="text-3xl font-semibold">Reviews</h2>
+                  <h2 className="text-2xl font-semibold md:text-3xl">Reviews</h2>
                   <p>No reviews yet. Be the first to leave a review!</p>
                 </>
               )}
@@ -147,39 +118,33 @@ function CourseDetails() {
           </div>
         </div>
 
-        {/* ================= RIGHT SIDE ================= */}
-  <div className="flex flex-col gap-6 p-6 bg-white border shadow-lg h h-fit rounded-2xl dark:bg-card-dark">
-          <img
-            src={course.poster}
-            alt={course.name}
-            className="object-cover w-full h-64 rounded-lg"
-          />
+        {/* RIGHT SIDE */}
+        <div className="flex flex-col gap-4 p-6 bg-white border shadow-lg h-fit dark:bg-gray-800 rounded-2xl">
+          <img src={course.poster} alt={course.name} className="object-cover w-full h-48 rounded-lg" />
 
           {/* Price */}
-          <div className="flex flex-col items-center gap-3 text-lg font-medium">
-            <span className="text-3xl text-gray-900 dark:text-gray-100">
-              ${course.price || 49}
-            </span>
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col items-center gap-2 text-lg font-medium">
+            <span className="text-3xl text-gray-900 dark:text-gray-100">${course.price || 49}</span>
+            <div className="flex items-center gap-2">
               <span className="text-lg text-red-500 line-through">${course.oldPrice || 99}</span>
               <span className="text-lg font-semibold text-green-600">50% off</span>
             </div>
           </div>
 
           {/* Buttons */}
-          <button className="w-full py-4 text-lg font-bold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700">
+          <button className="w-full py-3 text-lg font-bold text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
             Buy Now
           </button>
-          <button className="w-full py-4 text-lg font-bold text-gray-700 transition bg-gray-100 rounded-lg hover:bg-gray-200 dark:text-gray-900">
+          <button className="w-full py-3 text-lg font-bold text-gray-700 transition-colors bg-gray-100 rounded-lg dark:text-gray-900 dark:bg-gray-200 hover:bg-gray-200 dark:hover:bg-gray-300">
             Add to Cart
           </button>
 
           {/* Share Icons */}
-          <div className="flex items-center justify-center gap-6 mt-2 text-xl text-gray-600 dark:text-gray-300">
-            <FaFacebook className="w-6 h-6 transition cursor-pointer hover:text-blue-600" />
-            <FaTwitter className="w-6 h-6 transition cursor-pointer hover:text-sky-500" />
-            <FaLinkedin className="w-6 h-6 transition cursor-pointer hover:text-blue-700" />
-            <Share2 className="w-6 h-6 transition cursor-pointer hover:text-gray-800 dark:hover:text-gray-100" />
+          <div className="flex items-center justify-center gap-4 mt-2 text-gray-600 dark:text-gray-300">
+            <FaFacebook className="w-6 h-6 transition-colors cursor-pointer hover:text-blue-600" />
+            <FaTwitter className="w-6 h-6 transition-colors cursor-pointer hover:text-sky-500" />
+            <FaLinkedin className="w-6 h-6 transition-colors cursor-pointer hover:text-blue-700" />
+            <Share2 className="w-6 h-6 transition-colors cursor-pointer hover:text-gray-800 dark:hover:text-gray-100" />
           </div>
         </div>
       </div>

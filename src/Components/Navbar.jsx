@@ -37,12 +37,11 @@ function Navbar() {
   if (isLoading) return <LoadingSpinner />;
 
   const togglePopup = () => setShowPopup((prev) => !prev);
-  const darkAndLight = localStorage.getItem("theme")
 
   return (
     <nav
-      className={`bg-white dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-800 dark:text-gray-100 px-6 md:px-12 py-4 flex justify-between items-center shadow-md mb-9 fixed top-0 z-20 w-full transition-colors duration-500 ${i18n.language === "ar" ? "rtl" : "ltr"
-        }`}
+      className={`fixed top-0 w-full z-20 px-6 md:px-12 py-7 flex justify-between items-center shadow-md mb-9 transition-colors duration-500 
+        bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 ${i18n.language === "ar" ? "rtl" : "ltr"}`}
     >
       {/* Logo */}
       <Link
@@ -57,7 +56,7 @@ function Navbar() {
       <div className="flex items-center gap-6 rtl:gap-reverse">
         {!currentUser && (
           <Link to="/instructorsignup">
-            <span className="hidden font-medium transition-colors cursor-pointer sm:inline hover:underline">
+            <span className="hidden font-medium transition-colors sm:inline hover:underline">
               {t("common.becomeInstructor")}
             </span>
           </Link>
@@ -65,7 +64,7 @@ function Navbar() {
 
         {isInstructor && (
           <Link to="/newCourse">
-            <span className="hidden font-medium transition-colors cursor-pointer sm:inline hover:underline">
+            <span className="hidden font-medium transition-colors sm:inline hover:underline">
               {t("addNewCourse")}
             </span>
           </Link>
@@ -74,20 +73,19 @@ function Navbar() {
         <div className="relative flex items-center gap-4 rtl:gap-reverse">
           {currentUser?.uid ? (
             <>
-              <ShoppingCartIcon className="w-6 h-6 text-gray-700 transition-transform cursor-pointer hover:scale-110 dark:text-gray-200" />
-              <BellIcon className="w-6 h-6 text-gray-700 transition-transform cursor-pointer hover:scale-110 dark:text-gray-200" />
+              <ShoppingCartIcon className="w-6 h-6 text-gray-700 transition-transform cursor-pointer dark:text-gray-200 hover:scale-110" />
+              <BellIcon className="w-6 h-6 text-gray-700 transition-transform cursor-pointer dark:text-gray-200 hover:scale-110" />
 
               <div className="relative">
                 <img
                   src={currentUser.photoURL || profileImg}
                   alt="Profile"
                   onClick={togglePopup}
-                  className="w-8 h-8 ml-2 transition-transform border-2 border-transparent rounded-full cursor-pointer hover:scale-110 rtl:mr-2 rtl:ml-0 hover:border-blue-400 dark:hover:border-blue-300"
+                  className="w-8 h-8 ml-2 transition-all border-2 border-transparent rounded-full cursor-pointer rtl:mr-2 rtl:ml-0 hover:scale-110 hover:border-blue-400 dark:hover:border-blue-300"
                 />
                 {showPopup && (
                   <div
-                    className={`absolute top-full mt-1 ${i18n.language === "ar" ? "left-0" : "right-0"
-                      } animate-slide-in`}
+                    className={`absolute top-full mt-1 ${i18n.language === "ar" ? "left-0" : "right-0"} animate-slide-in`}
                   >
                     <ProfilePopup
                       show={showPopup}
@@ -102,13 +100,13 @@ function Navbar() {
             <>
               <button
                 onClick={() => navigate("/login")}
-                className="py-1.5 px-4 rounded-xl font-semibold border border-gray-300 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800 transition-colors duration-300"
+                className="py-1.5 px-4 rounded-xl font-semibold border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"
               >
                 {t("common.logIn")}
               </button>
               <button
                 onClick={() => navigate("/signup")}
-                className="px-4 py-2 font-semibold text-white transition-colors duration-300 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 dark:from-blue-700 dark:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-500"
+                className="px-4 py-2 font-semibold text-white transition-colors duration-300 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 dark:from-blue-700 dark:to-blue-600 hover:from-blue-500 hover:to-blue-400 dark:hover:from-blue-600 dark:hover:to-blue-500"
               >
                 {t("common.signUp")}
               </button>
