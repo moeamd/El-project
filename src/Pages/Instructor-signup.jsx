@@ -26,11 +26,12 @@ export default function InstructorSignUp({ isOpen, onClose }) {
       setError("");
       setSuccess(false);
       setLoading(true);
+    
       try {
         const userCredential = await createUser(values.email, values.password);
         const user = userCredential.user;
         const { password, ...userData } = values;
-
+    
         await addUser(
           {
             ...userData,
@@ -39,7 +40,7 @@ export default function InstructorSignUp({ isOpen, onClose }) {
           },
           user.uid
         );
-
+    
         setSuccess(true);
         formik.resetForm();
       } catch (err) {
@@ -64,6 +65,7 @@ export default function InstructorSignUp({ isOpen, onClose }) {
         setLoading(false);
       }
     },
+    
     validate: (values) => {
       const errors = {};
       if (!values.name) errors.name = "Name is required";
