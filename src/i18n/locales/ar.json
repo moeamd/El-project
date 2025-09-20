@@ -94,5 +94,42 @@
     "writingCourse": "دورة الكتابة",
     "photography": "التصوير الفوتوغرافي",
     "videoMaking": "صناعة الفيديو"
+  },
+  "courseForm": {
+    "title": "إضافة كورس جديد",
+    "subtitle": "املأ البيانات التالية لإضافة الكورس إلى المنصة",
+    "name": "اسم الكورس",
+    "namePlaceholder": "أدخل اسم الكورس",
+    "description": "وصف الكورس",
+    "descriptionPlaceholder": "أدخل وصف الكورس",
+    "price": "السعر ($)",
+    "pricePlaceholder": "0.00",
+    "hours": "المدة (بالساعات)",
+    "hoursPlaceholder": "0",
+    "category": "الفئة",
+    "categoryPlaceholder": "اختر الفئة",
+    "video": "فيديو الكورس",
+    "videoHint": "اضغط للرفع أو اسحب الملف",
+    "videoTypes": "MP4, MOV, AVI, MKV (بحد أقصى 2 جيجا)",
+    "poster": "بوستر الكورس",
+    "posterHint": "اضغط للرفع أو اسحب الملف",
+    "posterTypes": "PNG, JPG, JPEG, WEBP (بحد أقصى 5 ميجا)",
+    "createButton": "إنشاء الكورس",
+    "creatingButton": "جاري إنشاء الكورس..."
+  },
+  "courseStatus": {
+    "success": "تم إنشاء الكورس بنجاح!",
+    "error": "فشل في إنشاء الكورس. حاول مرة أخرى."
+  },
+  "courseValidation": {
+    "nameRequired": "اسم الكورس مطلوب",
+    "nameMin": "اسم الكورس يجب أن لا يقل عن 3 أحرف",
+    "priceRequired": "السعر مطلوب",
+    "priceInvalid": "من فضلك أدخل سعر صحيح",
+    "hoursRequired": "مدة الكورس مطلوبة",
+    "hoursInvalid": "من فضلك أدخل مدة صحيحة",
+    "categoryRequired": "الفئة مطلوبة",
+    "videoRequired": "فيديو الكورس مطلوب",
+    "posterRequired": "بوستر الكورس مطلوب"
   }
 }

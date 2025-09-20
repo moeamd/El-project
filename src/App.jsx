@@ -17,6 +17,7 @@ import CourseDetails from "./Pages/CourseDetails";
 
 import WishList from "./Components/WishList";
 import SearchPage from "./Pages/search/search-page";
+import InstructorDetials from "./Pages/InstructorDetials";
 
 
 
@@ -41,6 +42,7 @@ function App() {
         <Route path="/CourseDetails" element={<CourseDetails />} />
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path = "/SearchPage" element={<SearchPage/>}/>
+        <Route path = "/instructorDetials" element={<InstructorDetials/>}/>
         <Route path="*" element={<NotFound />} />
         <Route path="/wishlist" element={WishList} />
       </Routes>

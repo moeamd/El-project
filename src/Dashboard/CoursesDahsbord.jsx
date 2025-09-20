@@ -7,8 +7,10 @@ import { db } from "../Api/Firebase-Config";
 import { useTranslation } from "react-i18next";
 import ThemeToggle from "../Components/ThemeToggle";
 import LanguageToggle from "../Components/LanguageToggle";
+import { Navigate, useNavigate } from "react-router-dom";
 export const CoursesDahsbord = () => {
   const dispatch = useDispatch();
+  const Navigate = useNavigate()
   const { course, isLoading, error } = useSelector((state) => state.course);
   const { t, i18n } = useTranslation();
 
@@ -35,16 +37,20 @@ export const CoursesDahsbord = () => {
     }
   };
 
+  const handleCourseClick = (course) => {
+    localStorage.setItem("selectedCourse", JSON.stringify(course));
+    Navigate("/CourseDetails");
+  };
   if (isLoading)
     return (
-      <div className="flex justify-center items-center min-h-screen bg-white dark:bg-surface-dark transition-colors duration-300">
-        <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex items-center justify-center min-h-screen transition-colors duration-300 bg-white dark:bg-surface-dark">
+        <div className="w-12 h-12 border-4 border-indigo-500 rounded-full border-t-transparent animate-spin"></div>
       </div>
     );
 
   if (error)
     return (
-      <p className="text-center text-red-500 text-lg mt-10 dark:text-red-400">
+      <p className="mt-10 text-lg text-center text-red-500 dark:text-red-400">
         {error}
       </p>
     );
@@ -56,7 +62,7 @@ export const CoursesDahsbord = () => {
       }`}
     >
       {/* Header with toggle controls */}
-      <div className="flex justify-between items-center mb-10">
+      <div className="flex items-center justify-between mb-10">
         <h2 className="text-4xl font-extrabold text-indigo-700 dark:text-indigo-400 animate-fade-in">
           📚 {t("dashboard.title")}
         </h2>
@@ -67,55 +73,55 @@ export const CoursesDahsbord = () => {
       </div>
 
       {course.length === 0 ? (
-        <p className="text-center text-gray-500 dark:text-gray-400 text-lg">
+        <p className="text-lg text-center text-gray-500 dark:text-gray-400">
           {t("common.noData")}
         </p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {course.map((c) => (
             <div
               key={c.id}
-              className="bg-white dark:bg-card rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 flex flex-col animate-slide-in"
+              className="flex flex-col p-6 transition-all duration-300 bg-white shadow-lg dark:bg-card rounded-2xl hover:shadow-2xl animate-slide-in"
             >
               {/* Poster / Video */}
-              <div className="mb-4 relative">
+              <div className="relative mb-4">
                 {c.poster ? (
                   <img
                     src={c.poster}
                     alt="Course Poster"
-                    className="w-full h-40 object-cover rounded-xl"
+                    className="object-cover w-full h-40 rounded-xl"
                   />
                 ) : c.video ? (
                   <video
                     src={c.video}
                     controls
-                    className="w-full h-40 rounded-xl object-cover"
+                    className="object-cover w-full h-40 rounded-xl"
                   />
                 ) : (
-                  <div className="w-full h-40 flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 rounded-xl">
+                  <div className="flex items-center justify-center w-full h-40 text-gray-400 bg-gray-100 dark:bg-gray-700 dark:text-gray-500 rounded-xl">
                     {t("common.noMedia")}
                   </div>
                 )}
               </div>
 
               {/* Info */}
-              <h3 className="text-xl font-bold text-gray-800 dark:text-dark-text mb-2 flex items-center">
-                <BookOpen className="w-5 h-5 text-indigo-500 mr-2 rtl:ml-2 rtl:mr-0" />
+              <h3 className="flex items-center mb-2 text-xl font-bold text-gray-800 dark:text-dark-text">
+                <BookOpen className="w-5 h-5 mr-2 text-indigo-500 rtl:ml-2 rtl:mr-0" />
                 {c.name}
               </h3>
 
-              <div className="flex items-center text-gray-600 dark:text-dark-textSecondary mb-1">
-                <Clock className="w-4 h-4 mr-2 rtl:ml-2 rtl:mr-0 text-indigo-400" />
+              <div className="flex items-center mb-1 text-gray-600 dark:text-dark-textSecondary">
+                <Clock className="w-4 h-4 mr-2 text-indigo-400 rtl:ml-2 rtl:mr-0" />
                 {c.hours} {t("common.hours")}
               </div>
 
-              <div className="flex items-center text-gray-600 dark:text-dark-textSecondary mb-1">
-                <DollarSign className="w-4 h-4 mr-2 rtl:ml-2 rtl:mr-0 text-green-500" />
+              <div className="flex items-center mb-1 text-gray-600 dark:text-dark-textSecondary">
+                <DollarSign className="w-4 h-4 mr-2 text-green-500 rtl:ml-2 rtl:mr-0" />
                 ${c.price}
               </div>
 
-              <div className="flex items-center text-gray-600 dark:text-dark-textSecondary mb-4">
-                <Tag className="w-4 h-4 mr-2 rtl:ml-2 rtl:mr-0 text-pink-500" />
+              <div className="flex items-center mb-4 text-gray-600 dark:text-dark-textSecondary">
+                <Tag className="w-4 h-4 mr-2 text-pink-500 rtl:ml-2 rtl:mr-0" />
                 {c.category}
               </div>
 
@@ -132,13 +138,13 @@ export const CoursesDahsbord = () => {
               </div>
 
               {/* Action */}
-              <button className="mt-auto bg-indigo-600 dark:bg-indigo-700 text-white py-2 px-4 rounded-xl font-semibold hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all">
+              <button onClick={()=> {handleCourseClick(c)}} className="px-4 py-2 mt-auto font-semibold text-white transition-all bg-indigo-600 dark:bg-indigo-700 rounded-xl hover:bg-indigo-700 dark:hover:bg-indigo-600">
                 {t("common.viewDetails")}
               </button>
 
-              <div className="mt-4 flex justify-center gap-3">
+              <div className="flex justify-center gap-3 mt-4">
                 <button
-                  className="flex items-center gap-1 px-3 py-1 bg-green-500 dark:bg-green-600 text-white text-sm rounded-lg hover:bg-green-600 dark:hover:bg-green-500 transition-colors"
+                  className="flex items-center gap-1 px-3 py-1 text-sm text-white transition-colors bg-green-500 rounded-lg dark:bg-green-600 hover:bg-green-600 dark:hover:bg-green-500"
                   onClick={() => {
                     handleApprove(c.id);
                   }}
@@ -146,7 +152,7 @@ export const CoursesDahsbord = () => {
                   <Check className="w-4 h-4" /> {t("common.publish")}
                 </button>
                 <button
-                  className="flex items-center gap-1 px-3 py-1 bg-red-500 dark:bg-red-600 text-white text-sm rounded-lg hover:bg-red-600 dark:hover:bg-red-500 transition-colors"
+                  className="flex items-center gap-1 px-3 py-1 text-sm text-white transition-colors bg-red-500 rounded-lg dark:bg-red-600 hover:bg-red-600 dark:hover:bg-red-500"
                   onClick={() => {
                     handleReject(c.id);
                   }}

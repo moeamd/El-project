@@ -138,8 +138,8 @@ import { BellIcon } from "lucide-react";
 
 function Navbar() {
   const [showPopup, setShowPopup] = useState(false);
-  const currentUser = useSelector(selectCurrentUser);
   const isLoading = useSelector(selectCurrentUserLoading);
+  const currentUser = useSelector(selectCurrentUser);
   const { instructors } = useSelector((state) => state.instructors);
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();

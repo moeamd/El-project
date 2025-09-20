@@ -94,5 +94,42 @@
     "writingCourse": "Writing Course",
     "photography": "Photography",
     "videoMaking": "Video Making"
+  },
+  "courseForm": {
+    "title": "Create New Course",
+    "subtitle": "Fill in the details below to add your course to the platform",
+    "name": "Course Name",
+    "namePlaceholder": "Enter course name",
+    "description": "Course Description",
+    "descriptionPlaceholder": "Enter course description",
+    "price": "Price ($)",
+    "pricePlaceholder": "0.00",
+    "hours": "Duration (Hours)",
+    "hoursPlaceholder": "0",
+    "category": "Category",
+    "categoryPlaceholder": "Select a category",
+    "video": "Course Video",
+    "videoHint": "Click to upload or drag and drop",
+    "videoTypes": "MP4, MOV, AVI, MKV (MAX. 2GB)",
+    "poster": "Course Poster",
+    "posterHint": "Click to upload or drag and drop",
+    "posterTypes": "PNG, JPG, JPEG, WEBP (MAX. 5MB)",
+    "createButton": "Create Course",
+    "creatingButton": "Creating Course..."
+  },
+  "courseStatus": {
+    "success": "Course created successfully!",
+    "error": "Failed to create course. Please try again."
+  },
+  "courseValidation": {
+    "nameRequired": "Course name is required",
+    "nameMin": "Course name must be at least 3 characters",
+    "priceRequired": "Price is required",
+    "priceInvalid": "Please enter a valid price",
+    "hoursRequired": "Course duration is required",
+    "hoursInvalid": "Please enter a valid duration",
+    "categoryRequired": "Category is required",
+    "videoRequired": "Course video is required",
+    "posterRequired": "Course poster is required"
   }
 }
