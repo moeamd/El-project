@@ -40,7 +40,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="p-2 rounded-full border bg-white text-gray-600 shadow-sm hover:bg-gray-100 hover:shadow-md transition disabled:opacity-40 disabled:cursor-not-allowed"
+        className="p-2 text-gray-600 transition bg-white border rounded-full shadow-sm hover:bg-gray-100 hover:shadow-md disabled:opacity-40 disabled:cursor-not-allowed"
       >
         <ChevronLeftIcon className="w-5 h-5" />
       </button>
@@ -57,7 +57,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             onClick={() => handlePageChange(page)}
             className={`px-4 py-2 rounded-full text-sm font-medium shadow-sm transition ${
               page === currentPage
-                ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md"
+                ? "bg-[#0c8b74] text-white shadow-md"
                 : "bg-white text-gray-700 border hover:bg-gray-100 hover:shadow-md"
             }`}
           >
@@ -70,7 +70,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="p-2 rounded-full border bg-white text-gray-600 shadow-sm hover:bg-gray-100 hover:shadow-md transition disabled:opacity-40 disabled:cursor-not-allowed"
+        className="p-2 text-gray-600 transition bg-white border rounded-full shadow-sm hover:bg-gray-100 hover:shadow-md disabled:opacity-40 disabled:cursor-not-allowed"
       >
         <ChevronRightIcon className="w-5 h-5" />
       </button>

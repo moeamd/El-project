@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import bannerImg from "../assets/images/image.png";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 
 
 function Banner() {
   const { t, i18n } = useTranslation();
-
+  const navigate = useNavigate()
   return (
     <section
 
@@ -23,8 +22,8 @@ function Banner() {
           {t("common.becomeProfessionals")}
         </p>
 
-        <div className="flex flex-col gap-4 sm:flex-col md:flex-row sm:gap-4 md:gap-6 justify-center md:justify-start">
-          <button onClick={()=>{ navigate("/SearchPage");}} className="bg-primary text-white px-8 py-3 sm:px-10 sm:py-4 rounded-2xl font-medium text-lg hover:bg-primary-dark transition-colors">
+        <div className="flex flex-col justify-center gap-4 sm:flex-col md:flex-row sm:gap-4 md:gap-6 md:justify-start">
+          <button onClick={()=>{ navigate("/SearchPage");}} className="px-8 py-3 text-lg font-medium text-white transition-colors bg-primary sm:px-10 sm:py-4 rounded-2xl hover:bg-primary-dark">
           
           {t("common.browseCourse")}
             
