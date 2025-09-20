@@ -6,8 +6,8 @@ import { fetchCurrentUser, selectCurrentUser } from '../features/auth/currentUse
 import CourseCard from './CourseCard';
 function WishList() {
 
-    const { users, isloading, error } = useSelector(selectUsers);
-    const { currentUser } = useSelector(selectCurrentUser);
+    const currentUser = useSelector(selectCurrentUser) ?? null;
+    const { users } = useSelector(selectUsers) ?? [];
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -46,12 +46,7 @@ function WishList() {
                 </div>
             }
         </div>
-        // <div className="flex flex-col items-center w-[75%] m-auto justify-center min-h-screen p-10 gap-10 shadow-2xl mb-4">
-        //     <div>
-
-        //     </div>
-
-        // </div>
+      
     )
 }
 

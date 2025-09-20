@@ -38,15 +38,12 @@ function Navbar() {
 
   const togglePopup = () => setShowPopup((prev) => !prev);
   const darkAndLight = localStorage.getItem("theme")
-  console.log(darkAndLight);
-  
+
   return (
     <nav
-      className={`bg-white dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-800 dark:text-gray-100 px-6 md:px-12 py-4 flex justify-between items-center shadow-md mb-9 fixed top-0 z-20 w-full transition-colors duration-500 ${
-        i18n.language === "ar" ? "rtl" : "ltr"
-      }`}
+      className={`bg-white dark:bg-gradient-to-r dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-800 dark:text-gray-100 px-6 md:px-12 py-4 flex justify-between items-center shadow-md mb-9 fixed top-0 z-20 w-full transition-colors duration-500 ${i18n.language === "ar" ? "rtl" : "ltr"
+        }`}
     >
-      <h1 style={{ color: darkAndLight === "dark" ? "white" : "black" }}>test</h1>
       {/* Logo */}
       <Link
         to="/"
@@ -89,9 +86,8 @@ function Navbar() {
                 />
                 {showPopup && (
                   <div
-                    className={`absolute top-full mt-1 ${
-                      i18n.language === "ar" ? "left-0" : "right-0"
-                    } animate-slide-in`}
+                    className={`absolute top-full mt-1 ${i18n.language === "ar" ? "left-0" : "right-0"
+                      } animate-slide-in`}
                   >
                     <ProfilePopup
                       show={showPopup}

@@ -6,8 +6,8 @@ import { fetchCurrentUser, selectCurrentUser } from '../features/auth/currentUse
 import CourseCard from '../Components/CourseCard';
 function Favorites() {
 
-  const { users, isloading, error } = useSelector(selectUsers);
-  const { currentUser } = useSelector(selectCurrentUser);
+  const currentUser = useSelector(selectCurrentUser) ?? null;
+  const { users } = useSelector(selectUsers) ?? [];
 
   const dispatch = useDispatch();
   useEffect(() => {
