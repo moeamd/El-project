@@ -5,6 +5,7 @@ import { Check, X, Mail, Phone, Linkedin } from "lucide-react";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../Api/Firebase-Config";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../Components/loading-spinner";
 
 const InstructorDashboard = () => {
   const dispatch = useDispatch();
@@ -36,12 +37,13 @@ const InstructorDashboard = () => {
   useEffect(() => {
     dispatch(getInstructors());
   }, [dispatch]);
-    const handleCourseClick = (course) => {
-    localStorage.setItem("selectedInstructor", JSON.stringify(course));
+  
+    const handleCourseClick = (Instructor) => {
+    localStorage.setItem("selectedInstructor", JSON.stringify(Instructor));
     Navigate("/instructorDetials");
   };
 
-  if (isLoading) return <p className="text-center text-gray-500">Loading...</p>;
+  if (isLoading) return <LoadingSpinner />;
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (

@@ -1,9 +1,25 @@
 import React, { useState } from "react";
 import { Share2, Star, Users, BookOpen, MessageSquare } from "lucide-react";
 import { FaFacebook, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function CourseDetails() {
-  const course = JSON.parse(localStorage.getItem("selectedCourse"));
+    const Navigate = useNavigate()
+    const { instructors, isLoading, error } = useSelector(
+      (state) => state.instructors
+    );
+    const course = JSON.parse(localStorage.getItem("selectedCourse"));
+    
+
+const inst = instructors.find((e) => e.uid === course.instructor);
+    console.log(inst);
+    
+    const handleCourseClick = (Instructor) => {
+    localStorage.setItem("selectedInstructor", JSON.stringify(Instructor));
+    Navigate("/instructorDetials");
+  };
+  
   const [activeTab, setActiveTab] = useState("description");
 
   if (!course) {
@@ -47,7 +63,7 @@ function CourseDetails() {
           {/* Instructor Info */}
           <div className="flex flex-col items-center gap-4 mt-4 mb-8 sm:flex-row sm:items-center">
             <img
-              src={course.instructorImg || "https://i.pravatar.cc/100"}
+              src={inst.image || "https://i.pravatar.cc/100"}
               alt="Instructor"
               className="object-cover w-16 h-16 border-2 border-gray-300 rounded-full sm:w-20 sm:h-20 dark:border-gray-700"
             />
@@ -56,7 +72,7 @@ function CourseDetails() {
                 Created by
               </p>
               <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                {course.author}
+                {inst.name}
               </p>
             </div>
           </div>
@@ -64,7 +80,7 @@ function CourseDetails() {
           {/* Tabs */}
           <div className="w-full max-w-4xl space-y-4 md:space-y-6">
             {/* Tab Headers */}
-            <div className="flex flex-wrap justify-center gap-6 mb-6 text-base md:text-lg border-b-2 border-gray-200 lg:justify-start dark:border-gray-700">
+            <div className="flex flex-wrap justify-center gap-6 mb-6 text-base border-b-2 border-gray-200 md:text-lg lg:justify-start dark:border-gray-700">
               {["description", "certification", "instructor", "reviews"].map(
                 (tab) => (
                   <button
@@ -111,15 +127,17 @@ function CourseDetails() {
                   <h2 className="text-xl font-semibold md:text-2xl">
                     Instructor
                   </h2>
-                  <div className="flex flex-col items-center gap-4 mb-6 lg:flex-row lg:items-start">
+                  <div className="flex flex-col items-center gap-4 p-5 mb-6 transition-all rounded cursor-pointer lg:flex-row lg:items-start hover:bg-gray-200" 
+                  onClick={()=> {handleCourseClick(inst)}}
+                  >
                     <img
-                      src={course.instructorImg || "https://i.pravatar.cc/100"}
+                      src={inst.image || "https://i.pravatar.cc/100"}
                       alt="Instructor"
                       className="object-cover w-16 h-16 rounded-full sm:w-20 sm:h-20"
                     />
                     <div>
                       <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                        {course.author}
+                        {inst.name}
                       </p>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
                         Lead Instructor

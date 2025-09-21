@@ -1,9 +1,10 @@
 import { Mail, Phone, Globe, Star, BookOpen } from "lucide-react";
 import { LiaLinkedin } from "react-icons/lia";
+import InstructorCourses from "./InstructorCourses";
 
 const InstructorDetials = () => {
     const instructor = JSON.parse(localStorage.getItem("selectedInstructor")) || []
-    console.log(instructor);
+    console.log(instructor.id);
     
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 pt-[50px]">
@@ -94,47 +95,7 @@ const InstructorDetials = () => {
               </button>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
-              {/* Course Card */}
-              <div className="flex flex-col p-5 transition bg-white shadow rounded-xl dark:bg-gray-800 hover:shadow-lg">
-                <BookOpen className="mb-3 text-blue-500 w-7 h-7" />
-                <h3 className="font-semibold text-gray-800 dark:text-white">
-                  React for Beginners
-                </h3>
-                <p className="flex-1 mt-1 text-sm text-gray-600 dark:text-gray-300">
-                  A complete guide to getting started with React.
-                </p>
-                <span className="mt-3 text-xs text-gray-500 dark:text-gray-400">
-                  120 students
-                </span>
-              </div>
-
-              <div className="flex flex-col p-5 transition bg-white shadow rounded-xl dark:bg-gray-800 hover:shadow-lg">
-                <BookOpen className="mb-3 text-blue-500 w-7 h-7" />
-                <h3 className="font-semibold text-gray-800 dark:text-white">
-                  Advanced Node.js
-                </h3>
-                <p className="flex-1 mt-1 text-sm text-gray-600 dark:text-gray-300">
-                  Deep dive into Node.js architecture and scaling.
-                </p>
-                <span className="mt-3 text-xs text-gray-500 dark:text-gray-400">
-                  80 students
-                </span>
-              </div>
-
-              <div className="flex flex-col p-5 transition bg-white shadow rounded-xl dark:bg-gray-800 hover:shadow-lg">
-                <BookOpen className="mb-3 text-blue-500 w-7 h-7" />
-                <h3 className="font-semibold text-gray-800 dark:text-white">
-                  JavaScript Mastery
-                </h3>
-                <p className="flex-1 mt-1 text-sm text-gray-600 dark:text-gray-300">
-                  Build a solid foundation in modern JavaScript.
-                </p>
-                <span className="mt-3 text-xs text-gray-500 dark:text-gray-400">
-                  200 students
-                </span>
-              </div>
-            </div>
+            <InstructorCourses id={instructor.uid}/>
           </main>
         </div>
       </div>

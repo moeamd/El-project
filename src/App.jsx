@@ -18,37 +18,64 @@ import CourseDetails from "./Pages/CourseDetails";
 import WishList from "./Components/WishList";
 import SearchPage from "./Pages/search/search-page";
 import InstructorDetials from "./Pages/InstructorDetials";
-
+import InstructorCourses from "./Pages/InstructorCourses";
+import { Wishlist } from "./profile/Wishlist";
+import LoadingSpinner from "./Components/loading-spinner";
+import { useEffect, useState } from "react";
 
 
 function App() {
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
 
-  const hiddenRoutes = ["/login", "/signup", "/instructorsignup","/MainDashboard",'/MainDashboard/CoursesDahsbord',"/MainDashboard/InstructorDashboard"];
+  useEffect(() => {
+    setLoading(true); 
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000); 
+    return () => clearTimeout(timer);
+  }, [location.pathname]); 
+
+  const hiddenRoutes = [
+    "/login",
+    "/signup",
+    "/instructorsignup",
+    "/MainDashboard",
+    "/MainDashboard/CoursesDahsbord",
+    "/MainDashboard/InstructorDashboard",
+  ];
   const shouldHideNavbarAndFooter = hiddenRoutes.includes(location.pathname);
 
   return (
     <>
-      {!shouldHideNavbarAndFooter && <Navbar />}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/newCourse" element={<NewCourse />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/MainProfile/*" element={<MainProfile />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/MainDashboard/*" element={<MainDashboard />} />
-        <Route path="/instructorsignup" element={<InstructorSignUp />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/CourseDetails" element={<CourseDetails />} />
-        <Route path="/userProfile" element={<UserProfile />} />
-        <Route path = "/SearchPage" element={<SearchPage/>}/>
-        <Route path = "/instructorDetials" element={<InstructorDetials/>}/>
-        <Route path="*" element={<NotFound />} />
-        <Route path="/wishlist" element={WishList} />
-      </Routes>
-      {!shouldHideNavbarAndFooter && <Footer />}
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          {!shouldHideNavbarAndFooter && <Navbar />}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/newCourse" element={<NewCourse />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/MainProfile/*" element={<MainProfile />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/MainDashboard/*" element={<MainDashboard />} />
+            <Route path="/instructorsignup" element={<InstructorSignUp />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/CourseDetails" element={<CourseDetails />} />
+            <Route path="/userProfile" element={<UserProfile />} />
+            <Route path="/SearchPage" element={<SearchPage />} />
+            <Route path="/instructorDetials" element={<InstructorDetials />} />
+            <Route path="/InstructorCourses" element={<InstructorCourses />} />
+            <Route path="*" element={<NotFound />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+          </Routes>
+          {!shouldHideNavbarAndFooter && <Footer />}
+        </>
+      )}
     </>
   );
 }
 
 export default App;
+
