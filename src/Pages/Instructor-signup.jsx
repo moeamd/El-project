@@ -1,15 +1,15 @@
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createUser, addUser } from "../features/users/addUser";
 import { useState } from "react";
 import LoadingSpinner from "../Components/loading-spinner";
 import { X, Upload } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-export default function InstructorSignUp() {
+import MyCoursesIo from "../Components/RegisterUser/MyCourses.io";
+export default function InstructorSignUp({ onClose }) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -47,6 +47,11 @@ const { t, i18n } = useTranslation();
 
         setSuccess(true);
         formik.resetForm();
+
+       
+        setTimeout(() => {
+          onClose();
+        }, 2000);
       } catch (err) {
         if (err.code) {
           switch (err.code) {
@@ -87,25 +92,23 @@ const { t, i18n } = useTranslation();
   });
 
   return (
-    <div className="min-h-screen flex items-start justify-center bg-gray-100 dark:bg-gray-900 pt-10 px-4">
-      <div className="relative bg-white dark:bg-card max-w-md w-full p-8 rounded-2xl shadow-xl transition-colors duration-300">
-        
-        {/* Close Button */}
-       
-          <X size={28} 
-              className={`cursor-pointer absolute ${i18n.language === "ar" ? "top-2 left-2" : "top-2 right-2"
-                } z-10`}
-              onClick={() => {
-                navigate(-1);
-              }}
-          />
-       
+   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 px-4">
+  <div className="relative bg-white dark:bg-card max-w-2xl w-full max-h-[90vh] overflow-y-auto p-8 rounded-2xl shadow-2xl transition-colors duration-300">
+   <X
+  size={24}
+  className={`cursor-pointer absolute ${
+    i18n.language === "ar" ? "top-3 left-3" : "top-3 right-3"
+  } z-10`}
+  onClick={onClose}
+/>
+ <MyCoursesIo />
 
-        <h2 className="text-3xl font-extrabold text-center mb-6 text-gray-900 dark:text-gray-100">
-          Instructor Sign Up
-        </h2>
+    <h2 className="text-3xl font-extrabold text-center mb-6 text-gray-900 dark:text-gray-100">
+      Instructor Sign Up
+    </h2>
 
-        {/* Success Message */}
+
+    {/* Success Message */}
         {success && (
           <div className="mb-6 p-6 bg-green-50 border border-green-300 rounded-xl shadow-md">
             <h2 className="text-xl font-semibold text-green-700 text-center">
@@ -117,105 +120,111 @@ const { t, i18n } = useTranslation();
           </div>
         )}
 
-        {/* Error Message */}
-        {error && (
-          <div className="mb-4 p-3 text-red-700 bg-red-100 border border-red-300 rounded-lg text-sm">
-            {error}
-          </div>
-        )}
+    {/* Error Message */}
+    {error && (
+      <div className="mb-6 p-4 text-red-700 bg-red-100 border border-red-300 rounded-lg text-sm">
+        {error}
+      </div>
+    )}
 
-        <form className="space-y-5" onSubmit={formik.handleSubmit}>
-          {[
-            { name: "name", placeholder: "Full Name", type: "text" },
-            { name: "email", placeholder: "Email Address", type: "email" },
-            { name: "password", placeholder: "Password", type: "password" },
-            { name: "phone", placeholder: "Phone Number", type: "tel" },
-            { name: "linkedin", placeholder: "LinkedIn Profile", type: "url" },
-          ].map((field) => (
-            <div key={field.name} className="text-start">
-              <input
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values[field.name]}
-                type={field.type}
-                name={field.name}
-                placeholder={field.placeholder}
-                className="w-full h-12 border border-gray-300 rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-[#3DCBB1] text-lg"
-              />
-              {formik.errors[field.name] && formik.touched[field.name] && (
-                <p className="text-red-500 mt-1 text-sm">
-                  {formik.errors[field.name]}
-                </p>
-              )}
-            </div>
-          ))}
-
-          {/* Bio */}
-          <div className="text-start">
-            <textarea
+    {/* Form */}
+    <form className="space-y-6" onSubmit={formik.handleSubmit}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {[
+          { name: "name", placeholder: "Full Name", type: "text" },
+          { name: "email", placeholder: "Email Address", type: "email" },
+          { name: "password", placeholder: "Password", type: "password" },
+          { name: "phone", placeholder: "Phone Number", type: "tel" },
+          { name: "linkedin", placeholder: "LinkedIn Profile", type: "url" },
+        ].map((field) => (
+          <div key={field.name} className="text-start col-span-1">
+            <input
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.bio}
-              name="bio"
-              placeholder="Short Bio"
-              rows="5"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3DCBB1] text-lg"
+              value={formik.values[field.name]}
+              type={field.type}
+              name={field.name}
+              placeholder={field.placeholder}
+              className="w-full h-12 border border-gray-300 rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-[#3DCBB1] text-lg"
             />
-            {formik.errors.bio && formik.touched.bio && (
-              <p className="text-red-500 mt-1 text-sm">{formik.errors.bio}</p>
+            {formik.errors[field.name] && formik.touched[field.name] && (
+              <p className="text-red-500 mt-1 text-sm">
+                {formik.errors[field.name]}
+              </p>
             )}
           </div>
-
-          {/* Image Upload */}
-          <div className="text-start">
-            <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
-              <Upload size={36} className="text-gray-500 mb-2" />
-              <span className="text-gray-600">Click to upload profile picture</span>
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                className="hidden"
-                onChange={(event) =>
-                  formik.setFieldValue("image", event.currentTarget.files[0])
-                }
-              />
-            </label>
-
-            {formik.errors.image && formik.touched.image && (
-              <p className="text-red-500 mt-2 text-sm">{formik.errors.image}</p>
-            )}
-
-            {formik.values.image && (
-              <div className="mt-4 flex justify-center">
-                <img
-                  src={URL.createObjectURL(formik.values.image)}
-                  alt="Preview"
-                  className="w-28 h-28 md:w-32 md:h-32 object-cover rounded-full border-4 border-[#3DCBB1] shadow-md"
-                />
-              </div>
-            )}
-          </div>
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full py-4 bg-[#3DCBB1] text-white rounded-xl text-lg font-semibold hover:bg-[#35b3a1] transition"
-          >
-            {loading ? <LoadingSpinner /> : "Create Account"}
-          </button>
-        </form>
-
-        <p className="text-center mt-6 text-gray-600 dark:text-gray-300">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="text-[#3DCBB1] font-semibold hover:underline"
-          >
-            Login
-          </Link>
-        </p>
+        ))}
       </div>
-    </div>
+
+      {/* Bio */}
+      <div className="text-start">
+        <textarea
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.bio}
+          name="bio"
+          placeholder="Short Bio"
+          rows="5"
+          className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3DCBB1] text-lg"
+        />
+        {formik.errors.bio && formik.touched.bio && (
+          <p className="text-red-500 mt-1 text-sm">{formik.errors.bio}</p>
+        )}
+      </div>
+
+      {/* Image Upload */}
+      <div className="text-start">
+        <label className="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
+          <Upload size={40} className="text-gray-500 mb-3" />
+          <span className="text-gray-600 font-medium">
+            Click to upload profile picture
+          </span>
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            className="hidden"
+            onChange={(event) =>
+              formik.setFieldValue("image", event.currentTarget.files[0])
+            }
+          />
+        </label>
+
+        {formik.errors.image && formik.touched.image && (
+          <p className="text-red-500 mt-2 text-sm">{formik.errors.image}</p>
+        )}
+
+        {formik.values.image && (
+          <div className="mt-4 flex justify-center">
+            <img
+              src={URL.createObjectURL(formik.values.image)}
+              alt="Preview"
+              className="w-32 h-32 md:w-36 md:h-36 object-cover rounded-full border-4 border-[#3DCBB1] shadow-md"
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Submit Button */}
+      <button
+        type="submit"
+        className="w-full py-4 bg-[#3DCBB1] text-white rounded-xl text-lg font-semibold hover:bg-[#35b3a1] transition"
+      >
+        {loading ? <LoadingSpinner /> : "Create Account"}
+      </button>
+    </form>
+
+    <p className="text-center mt-8 text-gray-600 dark:text-gray-300">
+      Already have an account?{" "}
+      <Link
+        to="/login"
+        className="text-[#3DCBB1] font-semibold hover:underline"
+      >
+        Login
+      </Link>
+    </p>
+  </div>
+</div>
+
   );
 }

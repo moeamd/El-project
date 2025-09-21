@@ -15,7 +15,7 @@ import LanguageToggle from "./LanguageToggle";
 import { useTranslation } from "react-i18next";
 import { getInstructors } from "../features/users/getinstructors-aprove";
 import { Bars3Icon } from "@heroicons/react/24/outline";
-function Navbar() {
+function Navbar({onOpenInstructorSignUp , onSignup , onLogin}) {
   const [showPopup, setShowPopup] = useState(false);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,7 +25,6 @@ function Navbar() {
 
   const { instructors } = useSelector((state) => state.instructors);
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -74,13 +73,16 @@ function Navbar() {
           isMenuOpen ? "flex" : "hidden"
         }`}
       >
-        {!currentUser && (
-          <Link to="/instructorsignup" onClick={() => setIsMenuOpen(false)}>
-            <span className="block px-4 py-2 font-medium transition-colors hover:underline md:inline">
-              {t("common.becomeInstructor")}
-            </span>
-          </Link>
-        )}
+          {!currentUser && (
+        <button
+          onClick={() => {
+            onOpenInstructorSignUp();
+          }}
+          className="px-4 py-2 font-medium transition-colors hover:underline"
+        >
+          {t("common.becomeInstructor")}
+        </button>
+      )}
 
         {isInstructor && (
           <Link to="/newCourse" onClick={() => setIsMenuOpen(false)}>
@@ -117,16 +119,20 @@ function Navbar() {
             <>
               <button
                 onClick={() => {
-                  navigate("/login");
+                  onLogin();
                   setIsMenuOpen(false);
                 }}
                 className="py-1.5 px-4 rounded-xl font-semibold border border-gray-300 hover:bg-gray-100 transition-colors duration-300"
 >
                 {t("common.logIn")}
+
               </button>
               <button
 
-                onClick={() => navigate("/signup")}
+                onClick={() => {
+                  onSignup();
+                  setIsMenuOpen(false);
+                }}
 
                   className="px-4 py-2 font-semibold text-white transition-colors duration-300 rounded-xl bg-[#21ac92] hover:bg-[#0c8b74]"
               >

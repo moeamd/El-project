@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 import LanguageToggle from "../Components/LanguageToggle";
 import ThemeToggle from "../Components/ThemeToggle";
 
-function Signup() {
+function Signup({onClose}) {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const [showAlert, setShowAlert] = useState(false);
@@ -202,6 +202,7 @@ function Signup() {
   };
 
   return (
+    <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
     <main
       id="signup"
       className={`w-full h-screen inset-0 bg-black/40 dark:bg-surface-dark/80 z-50 transition-colors duration-300 ${i18n.language === "ar" ? "rtl" : "ltr"
@@ -240,7 +241,7 @@ function Signup() {
               className={`cursor-pointer absolute ${i18n.language === "ar" ? "top-2 left-2" : "top-2 right-2"
                 } z-10`}
               onClick={() => {
-                navigate(-1);
+                onClose();
               }}
             />
 
@@ -347,6 +348,7 @@ function Signup() {
 
       {showAlert && <Alert message={alertMessage} type={alertType} />}
     </main>
+    </div>
   );
 }
 

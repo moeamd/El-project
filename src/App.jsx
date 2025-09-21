@@ -23,18 +23,23 @@ import { Wishlist } from "./profile/Wishlist";
 import LoadingSpinner from "./Components/loading-spinner";
 import { useEffect, useState } from "react";
 
-
 function App() {
   const [loading, setLoading] = useState(true);
   const location = useLocation();
 
+
+  const [showInstructorSignUp, setShowInstructorSignUp] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
+
+
   useEffect(() => {
-    setLoading(true); 
+    setLoading(true);
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1000); 
+    }, 1000);
     return () => clearTimeout(timer);
-  }, [location.pathname]); 
+  }, [location.pathname]);
 
   const hiddenRoutes = [
     "/login",
@@ -52,7 +57,14 @@ function App() {
         <LoadingSpinner />
       ) : (
         <>
-          {!shouldHideNavbarAndFooter && <Navbar />}
+          {!shouldHideNavbarAndFooter && (
+            <Navbar
+              onOpenInstructorSignUp={() => setShowInstructorSignUp(true)}
+              onLogin={() => setShowLogin(true)}
+              onSignup={() => setShowSignup(true)}
+            />
+          )}
+
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/newCourse" element={<NewCourse />} />
@@ -70,6 +82,14 @@ function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="/wishlist" element={<Wishlist />} />
           </Routes>
+
+          
+          {showInstructorSignUp && (
+            <InstructorSignUp onClose={() => setShowInstructorSignUp(false)} />
+          )}
+          {showLogin && <Login onClose={() => setShowLogin(false)} />}
+          {showSignup && <Signup onClose={() => setShowSignup(false)} />}
+
           {!shouldHideNavbarAndFooter && <Footer />}
         </>
       )}
@@ -78,4 +98,3 @@ function App() {
 }
 
 export default App;
-
