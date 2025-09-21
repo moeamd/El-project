@@ -196,7 +196,7 @@ function Signup({onClose}) {
         setShowAlert(true);
 
         setTimeout(() => {
-          setShowAlert(false);
+          onClose()
         }, 3000);
       });
   };

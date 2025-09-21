@@ -168,7 +168,7 @@ function Login({onClose}) {
         setShowAlert(true);
 
         setTimeout(() => {
-          setShowAlert(false);
+          onClose()
         }, 3000);
       });
   };
