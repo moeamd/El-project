@@ -18,6 +18,8 @@ import { useTranslation } from "react-i18next";
 export const NewCourse = () => {
   const { t } = useTranslation();
   const currentUser = useSelector(selectCurrentUser);
+  console.log(currentUser);
+  
   const [errors, setErrors] = useState({});
   const [data, setData] = useState({
     name: "",
@@ -28,7 +30,7 @@ export const NewCourse = () => {
     poster: null,
     status: "draft",
     description: "",
-    instructor: currentUser && currentUser.uid,
+    instructor: currentUser?.uid ,
     createdAt: new Date(),
     rejectReason: "",
   });
@@ -127,7 +129,7 @@ export const NewCourse = () => {
         poster: null,
         status: "draft",
         description: "",
-        instructor: "",
+        instructor: currentUser?.uid || "",
         createdAt: new Date(),
         rejectReason: "",
       });

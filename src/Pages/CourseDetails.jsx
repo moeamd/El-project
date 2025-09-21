@@ -3,6 +3,7 @@ import { Share2, Star, Users, BookOpen, MessageSquare } from "lucide-react";
 import { FaFacebook, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../Components/loading-spinner";
 
 function CourseDetails() {
     const Navigate = useNavigate()
@@ -16,8 +17,11 @@ const inst = instructors.find((e) => e.uid === course.instructor);
     console.log(inst);
     
     const handleCourseClick = (Instructor) => {
-    localStorage.setItem("selectedInstructor", JSON.stringify(Instructor));
-    Navigate("/instructorDetials");
+      const handleCourseClick = (Instructor) => {
+        if (!Instructor) return;
+        localStorage.setItem("selectedInstructor", JSON.stringify(Instructor));
+        Navigate("/instructorDetials");
+      };
   };
   
   const [activeTab, setActiveTab] = useState("description");
@@ -29,7 +33,8 @@ const inst = instructors.find((e) => e.uid === course.instructor);
       </p>
     );
   }
-
+  if (isLoading) return <LoadingSpinner/>;
+  if (!inst) return <p>Instructor not found.</p>;
   return (
     <div className="min-h-screen bg-[#f2f8fc] dark:bg-gray-900 flex justify-center px-4 sm:px-6 pt-[140px] md:pt-[160px] lg:pt-[180px] transition-colors duration-500">
       <div className="grid w-full gap-6 mb-20 max-w-7xl md:gap-10 lg:gap-14 lg:grid-cols-4">
@@ -63,7 +68,7 @@ const inst = instructors.find((e) => e.uid === course.instructor);
           {/* Instructor Info */}
           <div className="flex flex-col items-center gap-4 mt-4 mb-8 sm:flex-row sm:items-center">
             <img
-              src={inst.image || "https://i.pravatar.cc/100"}
+              src={inst?.image || "https://i.pravatar.cc/100"}
               alt="Instructor"
               className="object-cover w-16 h-16 border-2 border-gray-300 rounded-full sm:w-20 sm:h-20 dark:border-gray-700"
             />
