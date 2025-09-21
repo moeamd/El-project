@@ -55,7 +55,13 @@
     "logout": "تسجيل الخروج",
     "noCourseSelected": "لم يتم تحديد دورة",
     "notFound": "الصفحة غير موجودة",
-    "pageNotFound": "الصفحة التي تبحث عنها غير موجودة."
+    "pageNotFound": "الصفحة التي تبحث عنها غير موجودة.",
+    "areYouSure": "هل أنت متأكد؟",
+    "unenrollConfirm": "ستتم إزالة هذا الكورس من الكورسات التي سجلت بها!",
+    "yesUnenroll": "نعم، إلغاء التسجيل",
+    "cancel": "إلغاء",
+    "removedFromMyCourses": "تمت الإزالة من كورساتي",
+    "addedToMyCourses": "تمت الإضافة إلى كورساتي"
   },
   "dashboard": {
     "title": "جميع الدورات",
