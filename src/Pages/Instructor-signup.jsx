@@ -25,6 +25,7 @@ export default function InstructorSignUp({ onClose }) {
       status: false,
       courses: [],
       uid: "",
+      role:"",
     },
     onSubmit: async (values) => {
       setError("");
@@ -41,6 +42,7 @@ export default function InstructorSignUp({ onClose }) {
             ...userData,
             status: "pending",
             createdAt: new Date(),
+            role:'instructor'
           },
           user.uid
         );
@@ -92,7 +94,7 @@ export default function InstructorSignUp({ onClose }) {
   });
 
   return (
-   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 px-4">
+   <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/20">
   <div className="relative bg-white dark:bg-card max-w-2xl w-full max-h-[90vh] overflow-y-auto p-8 rounded-2xl shadow-2xl transition-colors duration-300">
    <X
   size={24}
@@ -103,18 +105,18 @@ export default function InstructorSignUp({ onClose }) {
 />
  <MyCoursesIo />
 
-    <h2 className="text-3xl font-extrabold text-center mb-6 text-gray-900 dark:text-gray-100">
+    <h2 className="mb-6 text-3xl font-extrabold text-center text-gray-900 dark:text-gray-100">
       Instructor Sign Up
     </h2>
 
 
     {/* Success Message */}
         {success && (
-          <div className="mb-6 p-6 bg-green-50 border border-green-300 rounded-xl shadow-md">
-            <h2 className="text-xl font-semibold text-green-700 text-center">
+          <div className="p-6 mb-6 border border-green-300 shadow-md bg-green-50 rounded-xl">
+            <h2 className="text-xl font-semibold text-center text-green-700">
               Your account has been created!
             </h2>
-            <p className="text-center text-gray-700 mt-2">
+            <p className="mt-2 text-center text-gray-700">
               Your account is under review. We will get back to you shortly.
             </p>
           </div>
@@ -122,14 +124,14 @@ export default function InstructorSignUp({ onClose }) {
 
     {/* Error Message */}
     {error && (
-      <div className="mb-6 p-4 text-red-700 bg-red-100 border border-red-300 rounded-lg text-sm">
+      <div className="p-4 mb-6 text-sm text-red-700 bg-red-100 border border-red-300 rounded-lg">
         {error}
       </div>
     )}
 
     {/* Form */}
     <form className="space-y-6" onSubmit={formik.handleSubmit}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {[
           { name: "name", placeholder: "Full Name", type: "text" },
           { name: "email", placeholder: "Email Address", type: "email" },
@@ -137,7 +139,7 @@ export default function InstructorSignUp({ onClose }) {
           { name: "phone", placeholder: "Phone Number", type: "tel" },
           { name: "linkedin", placeholder: "LinkedIn Profile", type: "url" },
         ].map((field) => (
-          <div key={field.name} className="text-start col-span-1">
+          <div key={field.name} className="col-span-1 text-start">
             <input
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -148,7 +150,7 @@ export default function InstructorSignUp({ onClose }) {
               className="w-full h-12 border border-gray-300 rounded-lg px-4 focus:outline-none focus:ring-2 focus:ring-[#3DCBB1] text-lg"
             />
             {formik.errors[field.name] && formik.touched[field.name] && (
-              <p className="text-red-500 mt-1 text-sm">
+              <p className="mt-1 text-sm text-red-500">
                 {formik.errors[field.name]}
               </p>
             )}
@@ -168,15 +170,15 @@ export default function InstructorSignUp({ onClose }) {
           className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3DCBB1] text-lg"
         />
         {formik.errors.bio && formik.touched.bio && (
-          <p className="text-red-500 mt-1 text-sm">{formik.errors.bio}</p>
+          <p className="mt-1 text-sm text-red-500">{formik.errors.bio}</p>
         )}
       </div>
 
       {/* Image Upload */}
       <div className="text-start">
-        <label className="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
-          <Upload size={40} className="text-gray-500 mb-3" />
-          <span className="text-gray-600 font-medium">
+        <label className="flex flex-col items-center justify-center w-full transition border-2 border-gray-300 border-dashed cursor-pointer h-44 rounded-xl bg-gray-50 hover:bg-gray-100">
+          <Upload size={40} className="mb-3 text-gray-500" />
+          <span className="font-medium text-gray-600">
             Click to upload profile picture
           </span>
           <input
@@ -191,11 +193,11 @@ export default function InstructorSignUp({ onClose }) {
         </label>
 
         {formik.errors.image && formik.touched.image && (
-          <p className="text-red-500 mt-2 text-sm">{formik.errors.image}</p>
+          <p className="mt-2 text-sm text-red-500">{formik.errors.image}</p>
         )}
 
         {formik.values.image && (
-          <div className="mt-4 flex justify-center">
+          <div className="flex justify-center mt-4">
             <img
               src={URL.createObjectURL(formik.values.image)}
               alt="Preview"
@@ -214,7 +216,7 @@ export default function InstructorSignUp({ onClose }) {
       </button>
     </form>
 
-    <p className="text-center mt-8 text-gray-600 dark:text-gray-300">
+    <p className="mt-8 text-center text-gray-600 dark:text-gray-300">
       Already have an account?{" "}
       <Link
         to="/login"

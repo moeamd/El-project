@@ -47,7 +47,7 @@ function Navbar({onOpenInstructorSignUp , onSignup , onLogin}) {
 
   const togglePopup = () => setShowPopup((prev) => !prev);
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
-
+const insta = instructors.find((i) => i.uid === currentUser?.uid);
   return (
     <nav className="flex items-center justify-between p-4 bg-white shadow-md dark:bg-gray-800">
       {/* Logo */}
@@ -88,6 +88,13 @@ function Navbar({onOpenInstructorSignUp , onSignup , onLogin}) {
           <Link to="/newCourse" onClick={() => setIsMenuOpen(false)}>
             <span className="block px-4 py-2 font-medium transition-colors hover:underline md:inline">
               {t("addNewCourse")}
+            </span>
+          </Link>
+        )}
+        {  insta?.role === "admin" && (
+          <Link to="/MainDashboard" onClick={() => setIsMenuOpen(false)}>
+            <span className="block px-4 py-2 font-medium transition-colors hover:underline md:inline">
+              Dashboard
             </span>
           </Link>
         )}
