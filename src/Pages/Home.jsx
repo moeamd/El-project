@@ -1,9 +1,17 @@
-import React from 'react'
+import { auth } from "../Api/Firebase-Config";
+import Banner from "../Components/BannerComponent";
+import JoinComponent from "../Components/JoinComponent";
+import Courses from "./Courses";
 
 function Home() {
   return (
-    <div>Home</div>
-  )
+    <>
+      <Banner />
+      <Courses />
+      <JoinComponent />
+    </>
+  );
 }
 
-export default Home
+export default Home;
+

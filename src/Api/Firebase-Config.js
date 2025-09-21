@@ -1,28 +1,39 @@
 // firebase.js
 
 import { initializeApp } from "firebase/app";
-import { 
-  getFirestore, 
-  collection, 
-  getDocs, 
-  addDoc, 
-  updateDoc, 
-  deleteDoc, 
-  doc 
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  addDoc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  getDoc,
+  arrayUnion,
 } from "firebase/firestore";
-import { 
-  getAuth, 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword, 
-  signOut, 
-  onAuthStateChanged 
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  updatePassword,
+  onAuthStateChanged,
+  updateProfile,
+  signInWithPopup,
+  signInWithRedirect,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  signOut,
 } from "firebase/auth";
-import { 
-  getStorage, 
-  ref, 
-  uploadBytes, 
-  getDownloadURL, 
-  deleteObject 
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject
 } from "firebase/storage";
 
 // Firebase config
@@ -30,7 +41,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyAPa1OC6LZGybNrCHg3z5X4IYvnNZOUovM",
   authDomain: "react-project-71613.firebaseapp.com",
   projectId: "react-project-71613",
-  storageBucket: "react-project-71613.appspot.com", 
+  storageBucket: "react-project-71613.appspot.com",
   messagingSenderId: "723934840527",
   appId: "1:723934840527:web:0a22738c3343354fb419ba"
 };
@@ -44,15 +55,18 @@ const auth = getAuth(app);
 const storage = getStorage(app);
 
 // Export everything you may need
-export { 
+export {
   app,
   db,
   auth,
   storage,
   // Firestore
-  collection, getDocs, addDoc, updateDoc, deleteDoc, doc,
+  collection, getDocs, getDoc, addDoc, setDoc, updateDoc, deleteDoc, doc, arrayUnion,
   // Auth
-  createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  sendEmailVerification, updateProfile, signOut, onAuthStateChanged,
+  GoogleAuthProvider, signInWithPopup, signInWithRedirect,
+  GithubAuthProvider, updatePassword, sendPasswordResetEmail,
   // Storage
   ref, uploadBytes, getDownloadURL, deleteObject
 };
