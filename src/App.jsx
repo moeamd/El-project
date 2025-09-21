@@ -18,26 +18,29 @@ import CourseDetails from "./Pages/CourseDetails";
 import WishList from "./Components/WishList";
 import SearchPage from "./Pages/search/search-page";
 import InstructorDetials from "./Pages/InstructorDetials";
-
+import { useState } from "react";
 
 
 function App() {
   const location = useLocation();
+  const [showInstructorSignUp, setShowInstructorSignUp] = useState(false); 
+  const [showLogin, setShowLogin] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
 
-  const hiddenRoutes = ["/login", "/signup", "/instructorsignup","/MainDashboard",'/MainDashboard/CoursesDahsbord',"/MainDashboard/InstructorDashboard"];
+  const hiddenRoutes = ["/MainDashboard",'/MainDashboard/CoursesDahsbord',"/MainDashboard/InstructorDashboard"];
   const shouldHideNavbarAndFooter = hiddenRoutes.includes(location.pathname);
 
   return (
     <>
-      {!shouldHideNavbarAndFooter && <Navbar />}
+      {!shouldHideNavbarAndFooter && <Navbar  onOpenInstructorSignUp={() => setShowInstructorSignUp(true)} 
+      onLogin={() => setShowLogin(true)} 
+      onSignup={() => setShowSignup(true)}
+      />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/newCourse" element={<NewCourse />} />
-        <Route path="/signup" element={<Signup />} />
         <Route path="/MainProfile/*" element={<MainProfile />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/MainDashboard/*" element={<MainDashboard />} />
-        <Route path="/instructorsignup" element={<InstructorSignUp />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/CourseDetails" element={<CourseDetails />} />
         <Route path="/userProfile" element={<UserProfile />} />
@@ -46,6 +49,17 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/wishlist" element={WishList} />
       </Routes>
+      {showInstructorSignUp && (
+          <InstructorSignUp onClose={() => setShowInstructorSignUp(false)} />
+      )}
+      {showLogin && (
+          <Login onClose={() => setShowLogin(false)} />
+      )}
+      {showSignup && (
+          <Signup onClose={() => setShowSignup(false)} />
+
+      )}
+
       {!shouldHideNavbarAndFooter && <Footer />}
     </>
   );

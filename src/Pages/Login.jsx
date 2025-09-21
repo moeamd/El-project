@@ -16,7 +16,7 @@ import MyCoursesIo from "../Components/RegisterUser/MyCourses.io";
 import Alert from "../Components/Alert";
 import { useTranslation } from "react-i18next";
 
-function Login() {
+function Login({onClose}) {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const [showAlert, setShowAlert] = useState(false);
@@ -174,6 +174,7 @@ function Login() {
   };
 
   return (
+    <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
     <main
       className={`w-full h-screen bg-black/40 dark:bg-surface-dark/80 transition-colors duration-300 ${i18n.language === "ar" ? "rtl" : "ltr"
         }`}
@@ -210,9 +211,7 @@ function Login() {
               size={20}
               className={`cursor-pointer absolute ${i18n.language === "ar" ? "top-2 left-2" : "top-2 right-2"
                 } z-10`}
-              onClick={() => {
-                navigate(-1);
-              }}
+              onClick={onClose}
             />
 
             <MyCoursesIo />
@@ -303,6 +302,7 @@ function Login() {
 
       {showAlert && <Alert message={alertMessage} type={alertType} />}
     </main>
+    </div>
   );
 }
 
