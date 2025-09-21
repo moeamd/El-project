@@ -10,11 +10,11 @@ function Footer() {
   return (
    <footer className="pt-10 transition-colors duration-300 bg-gray-200 text-text dark:text-text-dark">
 
-      <div
-        className={`max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 items-start ${
-          i18n.language === "ar" ? "rtl" : "ltr"
-        }`}
-      >
+<div
+  className={`max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 items-start justify-items-center md:justify-items-start ${
+    i18n.language === "ar" ? "rtl" : "ltr"
+  }`}
+>
         <div className="flex items-start space-x-3 rtl:space-x-reverse">
           <img src={logoImg} alt="Logo" className="w-10 h-10" />
           <span className="text-2xl font-bold text-text dark:text-text-dark">
