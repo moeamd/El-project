@@ -18,7 +18,7 @@ if (isLoading) return <LoadingSpinner />;
   const instructorCourses = course?.filter((c) => c.instructor === id);
 
   return (
-    <div>
+    <div className="flex flex-wrap gap-[50px] justify-center">
       {instructorCourses.length > 0 ? (
         instructorCourses.map((c) => (
           <CourseCard
