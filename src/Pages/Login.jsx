@@ -57,7 +57,7 @@ function Login({onClose}) {
 
           formik.resetForm();
           setTimeout(() => {
-            navigate("/", { replace: false });
+            onClose()
           }, 3000);
         })
         .catch((error) => {
@@ -107,7 +107,7 @@ function Login({onClose}) {
         setShowAlert(true);
 
         setTimeout(() => {
-          navigate("/", { replace: false });
+          onClose()
         }, 3000);
       })
       .catch((error) => {

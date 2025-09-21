@@ -135,7 +135,7 @@ function Signup({onClose}) {
         setShowAlert(true);
 
         setTimeout(() => {
-          navigate("/", { replace: false });
+          onClose()
         }, 3000);
       })
       .catch((error) => {
@@ -172,7 +172,7 @@ function Signup({onClose}) {
         setShowAlert(true);
 
         setTimeout(() => {
-          navigate("/", { replace: false });
+          onClose()
         }, 3000);
       })
       .catch((error) => {
