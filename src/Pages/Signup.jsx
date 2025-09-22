@@ -15,8 +15,6 @@ import {
 } from "../features/auth/auth";
 import Alert from "../Components/Alert";
 import { useTranslation } from "react-i18next";
-import LanguageToggle from "../Components/LanguageToggle";
-import ThemeToggle from "../Components/ThemeToggle";
 
 function Signup({ onClose }) {
   const navigate = useNavigate();

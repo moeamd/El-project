@@ -210,7 +210,6 @@ async function updateUser(updates) {
     }
 }
 
-
 async function addToWishList(course, userId) {
     const userRef = doc(db, "users", userId)
     await updateDoc(userRef, { wishList: arrayUnion(course) });

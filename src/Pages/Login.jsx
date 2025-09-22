@@ -1,4 +1,4 @@
-import { useFormik } from "formik";
+import { replace, useFormik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -59,7 +59,7 @@ function Login({ onClose }) {
 
           formik.resetForm();
           setTimeout(() => {
-            onclose();
+           navigate("/" , replace(false));
           }, 3000);
         })
         .catch((error) => {
