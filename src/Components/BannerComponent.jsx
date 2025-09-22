@@ -23,10 +23,10 @@ function Banner() {
         </p>
 
         <div className="flex flex-col justify-center gap-4 sm:flex-col md:flex-row sm:gap-4 md:gap-6 md:justify-start">
-          <button onClick={()=>{ navigate("/SearchPage");}} className="px-8 py-3 text-lg font-medium text-white transition-colors bg-primary sm:px-10 sm:py-4 rounded-2xl hover:bg-primary-dark">
-          
-          {t("common.browseCourse")}
-            
+          <button onClick={() => { navigate("/SearchPage"); }} className="px-8 py-3 border text-lg font-medium hover:text-white text-black transition-colors bg-primary sm:px-10 sm:py-4 rounded-2xl hover:bg-[#149981]">
+
+            {t("common.browseCourse")}
+
           </button>
           <button className="bg-white dark:bg-card text-primary border border-primary px-8 py-3 sm:px-10 sm:py-4 rounded-2xl font-medium text-lg hover:text-white hover:bg-[#149981] transition-colors">
 

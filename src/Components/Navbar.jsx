@@ -13,7 +13,9 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import LanguageToggle from "./LanguageToggle";
 import { useTranslation } from "react-i18next";
 import { getInstructors } from "../features/users/getinstructors-aprove";
+
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+
 
 function Navbar({ onOpenInstructorSignUp, onSignup, onLogin }) {
   const [showPopup, setShowPopup] = useState(false);
@@ -133,7 +135,9 @@ function Navbar({ onOpenInstructorSignUp, onSignup, onLogin }) {
             onLogin();
             setIsMenuOpen(false);
           }}
-          className="py-1.5 px-4 rounded-xl font-semibold border border-gray-300 hover:bg-gray-100 transition-colors duration-300"
+
+            className="px-4 py-2 font-medium transition-colors rounded-xl hover:text-white hover:bg-[#149981]"
+
         >
           {t("common.logIn")}
         </button>

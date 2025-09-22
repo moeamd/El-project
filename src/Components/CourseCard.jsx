@@ -19,7 +19,7 @@ import Swal from 'sweetalert2';
 export default function CourseCard({ course, onCardClick }) {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
-const navigate = useNavigate();
+  const navigate = useNavigate();
   // Alerts
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -51,11 +51,11 @@ const navigate = useNavigate();
       if (isWishListed) {
         await removeFromWishList(course.id, userId);
         setLocalWishList(prev => prev.filter(w => w.id !== course.id));
-        setAlertMessage(t("common.removedFromWishlist"));
+        setAlertMessage("removedFromWishlist");
       } else {
         await addToWishList(course, userId);
         setLocalWishList(prev => [...prev, course]);
-        setAlertMessage(t("common.addedToWishlist"));
+        setAlertMessage("addedToWishlist");
       }
       setAlertType("success");
       setShowAlert(true);
@@ -80,11 +80,11 @@ const navigate = useNavigate();
         console.log(isFavoritesed)
         await removeFromFavorites(course.id, userId);
         setLocalFavorites(prev => prev.filter(w => w.id !== course.id));
-        setAlertMessage(t("common.removedFromFavorites"));
+        setAlertMessage("removedFromFavorites");
       } else {
         await addToFavorites(course, userId);
         setLocalFavorites(prev => [...prev, course]);
-        setAlertMessage(t("common.addedToFavorites"));
+        setAlertMessage("addedToFavorites");
       }
       setAlertType("success");
       setShowAlert(true);
@@ -102,6 +102,7 @@ const navigate = useNavigate();
     setLocalMyCourses(currentUserInfo?.myCourses || []
     )
   }, [currentUserInfo]);
+
   const isMyCoursesed = useMemo(() => localMyCourses.some(w => w.id === course.id),
     [localMyCourses, course]);
     
@@ -157,7 +158,7 @@ const navigate = useNavigate();
       onClick={() => handleCourseClick(course)}
 
     >
-      {showAlert && <Alert type={alertType} message={alertMessage} />}
+      {/* {showAlert && <Alert type={alertType} message={alertMessage} />} */}
 
       <div className="relative">
 
@@ -180,7 +181,7 @@ const navigate = useNavigate();
       </div>
 
       <div className="p-4 space-y-2">
-        <h3 className="text-lg font-semibold">{course.title}</h3>
+        <h3 className="text-lg font-semibold">{course.name}</h3>
         <p className="text-sm text-gray-500">by {course.author}</p>
 
 
@@ -237,6 +238,7 @@ const navigate = useNavigate();
           <button
             onClick={(e) => {
               handleAddToMyCourses(e);
+
             }}
             className="bg-[#149981] text-white px-4 py-2 rounded-full text-sm hover:bg-gray-800 transition"
 

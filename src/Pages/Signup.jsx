@@ -15,10 +15,8 @@ import {
 } from "../features/auth/auth";
 import Alert from "../Components/Alert";
 import { useTranslation } from "react-i18next";
-import LanguageToggle from "../Components/LanguageToggle";
-import ThemeToggle from "../Components/ThemeToggle";
 
-function Signup({onClose}) {
+function Signup({ onClose }) {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const [showAlert, setShowAlert] = useState(false);
@@ -91,7 +89,7 @@ function Signup({onClose}) {
           formik.resetForm();
 
           setTimeout(() => {
-            navigate("/login");
+            onclose();
           }, 5000);
         })
         .catch((error) => {
@@ -135,7 +133,9 @@ function Signup({onClose}) {
         setShowAlert(true);
 
         setTimeout(() => {
-          onClose()
+
+          onClose();
+
         }, 3000);
       })
       .catch((error) => {
@@ -172,7 +172,9 @@ function Signup({onClose}) {
         setShowAlert(true);
 
         setTimeout(() => {
-          onClose()
+
+          onClose();
+
         }, 3000);
       })
       .catch((error) => {
@@ -203,151 +205,152 @@ function Signup({onClose}) {
 
   return (
     <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
-    <main
-      id="signup"
-      className={`w-full h-screen inset-0 bg-black/40 dark:bg-surface-dark/80 z-50 transition-colors duration-300 ${i18n.language === "ar" ? "rtl" : "ltr"
-        }`}
-    >
-      <div className="w-full h-full flex justify-center items-center">
-        <div className="w-full h-full max-w-[800px] md:max-h-[550px] sm:h-auto flex flex-col sm:flex-row shadow-lg sm:rounded-lg overflow-hidden bg-transparent">
-          <div
-            className={`hidden sm:block w-full md:w-1/2 h-full md:h-auto ${i18n.language === "ar"
+      <main
+        id="signup"
+        className={`w-full h-screen inset-0 bg-black/40 dark:bg-surface-dark/80 z-50 transition-colors duration-300 ${i18n.language === "ar" ? "rtl" : "ltr"
+          }`}
+      >
+        <div className="w-full h-full flex justify-center items-center">
+          <div className="w-full h-full max-w-[800px] md:max-h-[550px] sm:h-auto flex flex-col sm:flex-row shadow-lg sm:rounded-lg overflow-hidden bg-transparent">
+            <div
+              className={`hidden sm:block w-full md:w-1/2 h-full md:h-auto ${i18n.language === "ar"
                 ? "rounded-tr-[8px] rounded-br-[6px]"
                 : "rounded-tl-[8px] rounded-bl-[6px]"
-              }`}
-          >
-            <img
-              src={RegisterImage}
-              className={`w-full h-full ${i18n.language === "ar"
+                }`}
+            >
+              <img
+                src={RegisterImage}
+                className={`w-full h-full ${i18n.language === "ar"
                   ? "rounded-tr-[8px] rounded-br-[6px]"
                   : "rounded-tl-[8px] rounded-bl-[6px]"
-                }`}
-              alt="loading"
-            />
-          </div>
-          <div
-            className={`relative w-full md:w-1/2 h-full md:h-auto flex flex-col justify-stretch md:justify-between bg-white dark:bg-card p-5 ${i18n.language === "ar"
+                  }`}
+                alt="loading"
+              />
+            </div>
+            <div
+              className={`relative w-full md:w-1/2 h-full md:h-auto flex flex-col justify-stretch md:justify-between bg-white dark:bg-card p-5 ${i18n.language === "ar"
                 ? "sm:rounded-tl-[8px] sm:rounded-bl-[6px]"
                 : "sm:rounded-tr-[8px] sm:rounded-br-[6px]"
-              } transition-colors duration-300`}
-          >
-            {/* <div className="absolute top-2 right-2 flex items-center gap-2">
+                } transition-colors duration-300`}
+            >
+              {/* <div className="absolute top-2 right-2 flex items-center gap-2">
               <LanguageToggle />
               <ThemeToggle />
             </div> */}
 
-            <X
-              size={20}
-              className={`cursor-pointer absolute ${i18n.language === "ar" ? "top-2 left-2" : "top-2 right-2"
-                } z-10`}
-              onClick={() => {
-                onClose();
-              }}
-            />
-
-            <MyCoursesIo />
-
-            <p className="loading-[24px] my-4 md:my-1 text-muted dark:text-muted-dark">
-              {t("common.joinUs")}
-            </p>
-
-            <div className="gap-3 flex flex-col">
-              <RegisterButton
-                image={GitHubIcon}
-                text={t("common.signUpWithGitHub")}
-                onClick={handleSignInWithGithub}
-                bgColor="bg-[#1B1B1B] dark:bg-gray-700"
-                hover="hover:bg-[#000000] dark:hover:bg-gray-800"
-              />
-              <RegisterButton
-                image={GoogleIcon}
-                text={t("common.signUpWithGoogle")}
-                onClick={handleSignInWithGoogle}
-                bgColor="border-[#1B1B1B1A] dark:border-gray-600"
-                textColor="text-black dark:text-white"
-                hover="hover:bg-amber-300 dark:hover:bg-amber-400"
-              />
-            </div>
-
-            <div className="flex justify-center items-center my-4 md:my-0">
-              {t("common.orYouCan")}
-            </div>
-
-            <form
-              className="flex flex-col gap-2"
-              onSubmit={formik.handleSubmit}
-            >
-              <input
-                type="text"
-                name="username"
-                placeholder={t("common.username")}
-                onChange={formik.handleChange}
-                value={formik.values.username}
-                onBlur={formik.handleBlur}
-                className="w-full p-2 bg-gray-100 dark:bg-card dark:text-text-dark rounded-sm transition-colors"
-              />
-              {displayError(formik.errors.username, formik.touched.username)}
-              <input
-                type="email"
-                name="email"
-                placeholder={t("common.emailAddress")}
-                onChange={formik.handleChange}
-                value={formik.values.email}
-                onBlur={formik.handleBlur}
-                className="w-full p-2 bg-gray-100 dark:bg-card dark:text-text-dark rounded-sm transition-colors"
-              />
-              {displayError(formik.errors.email, formik.touched.email)}
-
-              <input
-                type="text"
-                name="password"
-                placeholder={t("common.password")}
-                onChange={formik.handleChange}
-                value={formik.values.password}
-                onBlur={formik.handleBlur}
-                className="w-full p-2 bg-gray-100 dark:bg-card dark:text-text-dark rounded-sm transition-colors"
-              />
-              {displayError(formik.errors.password, formik.touched.password)}
-
-              <input
-                type="text"
-                name="confirmPassword"
-                placeholder={t("common.confirmPassword")}
-                onChange={formik.handleChange}
-                value={formik.values.confirmPassword}
-                onBlur={formik.handleBlur}
-                className="w-full p-2 bg-gray-100 dark:bg-gray-700 dark:text-white rounded-[3px] transition-colors"
-              />
-              {displayError(
-                formik.errors.confirmPassword,
-                formik.touched.confirmPassword
-              )}
-
-              <input
-                type="submit"
-                value={t("common.createAccount")}
-                name="submit"
-                className="bg-[#3DCBB1] hover:bg-[#21b69a] dark:bg-primary dark:hover:bg-primary-dark w-full text-white font-semibold py-2 px-4 rounded-lg "
-              />
-            </form>
-
-            <div className="text-center mt-[50px] md:mt-1">
-              {t("common.alreadyHaveAccount")}{" "}
-              <span
+              <X
+                size={20}
+                className={`cursor-pointer absolute ${i18n.language === "ar" ? "top-2 left-2" : "top-2 right-2"
+                  } z-10`}
                 onClick={() => {
-                  navigate("/login");
+                  onClose();
                 }}
-                className="text-[#3DCBB1] hover:underline cursor-pointer dark:text-[#3DCBB1] transition-colors"
+              />
+
+              <MyCoursesIo />
+
+              <p className="loading-[24px] my-4 md:my-1 text-muted dark:text-muted-dark">
+                {t("common.joinUs")}
+              </p>
+
+              <div className="gap-3 flex flex-col">
+                <RegisterButton
+                  image={GitHubIcon}
+                  text={t("common.signUpWithGitHub")}
+                  onClick={handleSignInWithGithub}
+                  bgColor="bg-[#1B1B1B] dark:bg-gray-700 "
+                  hover="hover:bg-[#000000] "
+                />
+                <RegisterButton
+                  image={GoogleIcon}
+                  text={t("common.signUpWithGoogle")}
+                  onClick={handleSignInWithGoogle}
+                  bgColor="border-[#1B1B1B1A] "
+                  textColor="text-black dark:text-white"
+                  hover="hover:bg-yellow-400 "
+                />
+              </div>
+
+              <div className="flex justify-center items-center my-4 md:my-0">
+                {t("common.orYouCan")}
+              </div>
+
+              <form
+                className="flex flex-col gap-2"
+                onSubmit={formik.handleSubmit}
               >
-                {t("common.logIn")}
-              </span>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder={t("common.username")}
+                  onChange={formik.handleChange}
+                  value={formik.values.username}
+                  onBlur={formik.handleBlur}
+                  className="w-full p-2 bg-gray-100 dark:bg-card dark:text-text-dark rounded-sm transition-colors"
+                />
+                {displayError(formik.errors.username, formik.touched.username)}
+                <input
+                  type="email"
+                  name="email"
+                  placeholder={t("common.emailAddress")}
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                  onBlur={formik.handleBlur}
+                  className="w-full p-2 bg-gray-100 dark:bg-card dark:text-text-dark rounded-sm transition-colors"
+                />
+                {displayError(formik.errors.email, formik.touched.email)}
+
+                <input
+                  type="text"
+                  name="password"
+                  placeholder={t("common.password")}
+                  onChange={formik.handleChange}
+                  value={formik.values.password}
+                  onBlur={formik.handleBlur}
+                  className="w-full p-2 bg-gray-100 dark:bg-card dark:text-text-dark rounded-sm transition-colors"
+                />
+                {displayError(formik.errors.password, formik.touched.password)}
+
+                <input
+                  type="text"
+                  name="confirmPassword"
+                  placeholder={t("common.confirmPassword")}
+                  onChange={formik.handleChange}
+                  value={formik.values.confirmPassword}
+                  onBlur={formik.handleBlur}
+                  className="w-full p-2 bg-gray-100 dark:bg-gray-700 dark:text-white rounded-[3px] transition-colors"
+                />
+                {displayError(
+                  formik.errors.confirmPassword,
+                  formik.touched.confirmPassword
+                )}
+                <div>
+                  <input
+                    type="submit"
+                    value={t("common.createAccount")}
+                    name="submit"
+                    className="bg-[#3DCBB1] hover:bg-[#21b69a] dark:bg-primary dark:hover:bg-primary-dark w-full text-white font-semibold py-2 px-4 rounded-lg "
+                  />
+                </div>
+              </form>
+
+              <div className="text-center mt-[50px] md:mt-1">
+                {t("common.alreadyHaveAccount")}{" "}
+                <span
+                  onClick={() => {
+                    onClose();
+                  }}
+                  className="text-[#3DCBB1] hover:underline cursor-pointer focus:text-[#23a890] transition-colors"
+                >
+                  {t("common.logIn")}
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {showAlert && <Alert message={alertMessage} type={alertType} />}
-    </main>
+        {showAlert && <Alert message={alertMessage} type={alertType} />}
+      </main>
     </div>
   );
 }

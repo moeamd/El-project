@@ -1,4 +1,4 @@
-import { useFormik } from "formik";
+import { replace, useFormik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -16,12 +16,13 @@ import MyCoursesIo from "../Components/RegisterUser/MyCourses.io";
 import Alert from "../Components/Alert";
 import { useTranslation } from "react-i18next";
 
-function Login({onClose}) {
+function Login({ onClose }) {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("info");
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -47,6 +48,7 @@ function Login({onClose}) {
       return errors;
     },
     onSubmit: (values) => {
+      setLoading(true);
       const user = values;
 
       logIn(user)
@@ -57,7 +59,9 @@ function Login({onClose}) {
 
           formik.resetForm();
           setTimeout(() => {
+
             onClose()
+
           }, 3000);
         })
         .catch((error) => {
@@ -95,6 +99,8 @@ function Login({onClose}) {
           setTimeout(() => {
             setShowAlert(false);
           }, 3000);
+        }).finally(() => {
+          setLoading(false);
         });
     },
   });
@@ -107,7 +113,9 @@ function Login({onClose}) {
         setShowAlert(true);
 
         setTimeout(() => {
+
           onClose()
+
         }, 3000);
       })
       .catch((error) => {
@@ -144,7 +152,7 @@ function Login({onClose}) {
         setShowAlert(true);
 
         setTimeout(() => {
-          navigate("/", { replace: false });
+          onclose();
         }, 3000);
       })
       .catch((error) => {
@@ -175,134 +183,139 @@ function Login({onClose}) {
 
   return (
     <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
-    <main
-      className={`w-full h-screen bg-black/40 dark:bg-surface-dark/80 transition-colors duration-300 ${i18n.language === "ar" ? "rtl" : "ltr"
-        }`}
-    >
-      <div className="flex items-center justify-center w-full h-full">
-        <div className="w-full h-full max-w-[800px] md:max-h-[550px] sm:h-auto flex flex-col sm:flex-row shadow-lg sm:rounded-lg overflow-hidden bg-transparent">
-          <div
-            className={`hidden sm:block w-full md:w-1/2 h-full md:h-auto ${i18n.language === "ar"
-              ? "rounded-tr-[8px] rounded-br-[6px]"
-              : "rounded-tl-[8px] rounded-bl-[6px]"
-              }`}
-          >
-            <img
-              src={LoginImage}
-              className={`w-full h-full ${i18n.language === "ar"
+      <main
+        className={`w-full h-screen bg-black/40 dark:bg-surface-dark/80 transition-colors duration-300 ${i18n.language === "ar" ? "rtl" : "ltr"
+          }`}
+      >
+
+        <div className="flex items-center justify-center w-full h-full">
+          <div className="w-full h-full max-w-[800px] md:max-h-[550px] sm:h-auto flex flex-col sm:flex-row shadow-lg sm:rounded-lg overflow-hidden bg-transparent">
+            <div
+              className={`hidden sm:block w-full md:w-1/2 h-full md:h-auto ${i18n.language === "ar"
                 ? "rounded-tr-[8px] rounded-br-[6px]"
                 : "rounded-tl-[8px] rounded-bl-[6px]"
                 }`}
-              alt="loading"
-            />
-          </div>
-          <div
-            className={`relative w-full md:w-1/2 h-full md:h-auto flex flex-col justify-stretch md:justify-between bg-white dark:bg-card p-5 ${i18n.language === "ar"
-              ? "sm:rounded-tl-[8px] sm:rounded-bl-[6px]"
-              : "sm:rounded-tr-[8px] sm:rounded-br-[6px]"
-              } transition-colors duration-300`}
-          >
-            {/* <div className="absolute flex items-center gap-2 top-2 right-2">
+            >
+              <img
+                src={LoginImage}
+                className={`w-full h-full ${i18n.language === "ar"
+                  ? "rounded-tr-[8px] rounded-br-[6px]"
+                  : "rounded-tl-[8px] rounded-bl-[6px]"
+                  }`}
+                alt="loading"
+              />
+            </div>
+            <div
+              className={`relative w-full md:w-1/2 h-full md:h-auto flex flex-col justify-stretch md:justify-between bg-white dark:bg-card p-5 ${i18n.language === "ar"
+                ? "sm:rounded-tl-[8px] sm:rounded-bl-[6px]"
+                : "sm:rounded-tr-[8px] sm:rounded-br-[6px]"
+                } transition-colors duration-300`}
+            >
+
+              {/* <div className="absolute flex items-center gap-2 top-2 right-2">
               <LanguageToggle />
               <ThemeToggle />
             </div> */}
 
-            <X
-              size={20}
-              className={`cursor-pointer absolute ${i18n.language === "ar" ? "top-2 left-2" : "top-2 right-2"
-                } z-10`}
-              onClick={onClose}
-            />
-
-            <MyCoursesIo />
-
-            <p className="loading-[24px] my-5 md:my-1 text-muted dark:text-muted-dark">
-              {t("common.joinUs")}
-            </p>
-
-            <div className="flex flex-col gap-3">
-              <RegisterButton
-                image={GitHubIcon}
-                text={t("common.signUpWithGitHub")}
-                onClick={handleSignInWithGithub}
-                bgColor="bg-[#1B1B1B] dark:bg-gray-700"
-                hover="hover:bg-[#000000] dark:hover:bg-gray-800"
+              <X
+                size={20}
+                className={`cursor-pointer absolute ${i18n.language === "ar" ? "top-2 left-2" : "top-2 right-2"
+                  } z-10`}
+                onClick={onClose}
               />
-              <RegisterButton
-                image={GoogleIcon}
-                text={t("common.signUpWithGoogle")}
-                onClick={handleSignInWithGoogle}
-                bgColor="border-[#1B1B1B1A] dark:border-gray-600"
-                textColor="text-black dark:text-white"
-                hover="hover:bg-amber-300 dark:hover:bg-amber-400"
-              />
-            </div>
 
-            <div className="flex justify-center items-center my-[30px] md:my-0">
-              {t("common.orYouCan")}
-            </div>
+              <MyCoursesIo />
 
-            <form
-              className="flex flex-col gap-3"
-              onSubmit={formik.handleSubmit}
-            >
-              <input
-                type="email"
-                name="email"
-                placeholder={t("common.emailAddress") || "Email Address"}
-                className="w-full p-2 transition-colors bg-gray-100 rounded-sm dark:bg-card dark:text-text-dark"
-                onChange={formik.handleChange}
-                value={formik.values.email}
-                onBlur={formik.handleBlur}
-              />
-              {displayError(formik.errors.email, formik.touched.email)}
-              <input
-                type="text"
-                name="password"
-                placeholder={t("common.password") || "Password"}
-                className="w-full p-2 transition-colors bg-gray-100 rounded-sm dark:bg-card dark:text-text-dark"
-                onChange={formik.handleChange}
-                value={formik.values.password}
-                onBlur={formik.handleBlur}
-              />
-              {displayError(formik.errors.password, formik.touched.password)}
 
-              <div className="flex justify-end my-0">
-                <span
-                  onClick={() => {
-                    resetPassword(formik.values.email);
-                  }}
-                  className="text-xs hover:underline cursor-pointer hover:text-[#3DCBB1] dark:text-gray-400 dark:hover:text-[#3DCBB1] transition-colors"
-                >
-                  {t("common.forgetPassword")}
-                </span>
+              <p className="loading-[24px] my-5 md:my-1 text-muted dark:text-muted-dark">
+                {t("common.joinUs")}
+              </p>
+
+              <div className="flex flex-col gap-3">
+                <RegisterButton
+                  image={GitHubIcon}
+                  text={t("common.signUpWithGitHub")}
+                  onClick={handleSignInWithGithub}
+                  bgColor="bg-[#1B1B1B] dark:bg-gray-700 "
+                  hover="hover:bg-[#000000] "
+                />
+                <RegisterButton
+                  image={GoogleIcon}
+                  text={t("common.signUpWithGoogle")}
+                  onClick={handleSignInWithGoogle}
+                  bgColor="border-[#1B1B1B1A] dark:border-gray-600 "
+                  textColor="text-black dark:text-white "
+                  hover="hover:bg-yellow-400 "
+                />
               </div>
 
-              <input
-                type="submit"
-                value={t("common.logIn")}
-                className="w-full px-4 py-2 mt-6 font-semibold text-white  rounded-lg bg-[#3DCBB1] hover:bg-[#21b69a] dark:bg-[#3DCBB1] dark:hover:bg-primary-dark"
-              />
-            </form>
+              <div className="flex justify-center items-center my-[30px] md:my-0">
+                {t("common.orYouCan")}
+              </div>
 
-            <div className="text-center mt-[50px] md:mt-4">
-              {t("common.needAccount")}{" "}
-              <span
-                onClick={() => {
-                  navigate("/signup");
-                }}
-                className="text-[#3DCBB1] hover:underline cursor-pointer dark:text-[#3DCBB1] transition-colors"
+              <form
+                className="flex flex-col gap-3"
+                onSubmit={formik.handleSubmit}
               >
-                {t("common.signUp")}
-              </span>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder={t("common.emailAddress") || "Email Address"}
+                  className="w-full p-2 transition-colors bg-gray-100 rounded-sm dark:bg-card dark:text-text-dark"
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                  onBlur={formik.handleBlur}
+                />
+                {displayError(formik.errors.email, formik.touched.email)}
+                <input
+                  type="text"
+                  name="password"
+                  placeholder={t("common.password") || "Password"}
+                  className="w-full p-2 transition-colors bg-gray-100 rounded-sm dark:bg-card dark:text-text-dark"
+                  onChange={formik.handleChange}
+                  value={formik.values.password}
+                  onBlur={formik.handleBlur}
+                />
+                {displayError(formik.errors.password, formik.touched.password)}
+
+                <div className="flex justify-end my-0">
+                  <span
+                    onClick={() => {
+                      resetPassword(formik.values.email);
+                    }}
+                    className="text-xs hover:underline cursor-pointer hover:text-[#3DCBB1] dark:text-gray-400 dark:hover:text-[#3DCBB1] transition-colors"
+                  >
+                    {t("common.forgetPassword")}
+                  </span>
+                </div>
+                <input
+                  type="submit"
+                  value={t("common.logIn")}
+                  className="w-full px-4 py-2 mt-6 font-semibold text-white  rounded-lg bg-[#3DCBB1] hover:bg-[#21b69a] dark:bg-[#3DCBB1] dark:hover:bg-primary-dark"
+                  disabled={loading}
+                />
+
+              </form>
+
+              <div className="text-center mt-[50px] md:mt-4">
+                {t("common.needAccount")}{" "}
+                <span
+                  onClick={() => {
+                    onClose();
+                  }}
+                  className="text-[#3DCBB1] hover:underline cursor-pointer dark:text-[#3DCBB1] transition-colors"
+                >
+                  {t("common.signUp")}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </div >
 
-      {showAlert && <Alert message={alertMessage} type={alertType} />}
-    </main>
-    </div>
+        {showAlert && <Alert message={alertMessage} type={alertType} />
+        }
+      </main >
+    </div >
   );
 }
 

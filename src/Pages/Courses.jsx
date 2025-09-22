@@ -13,7 +13,7 @@ function Courses() {
   const { course, isLoading, error } = useSelector((state) => state.course);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6; 
+  const itemsPerPage = 6;
 
   const publishedCourses = course.filter((c) => c.status === "Publish");
   const totalPages = Math.ceil(publishedCourses.length / itemsPerPage);
@@ -57,7 +57,7 @@ function Courses() {
         {t("dashboard.courses")}
       </h2>
 
-      <div className="flex flex-wrap justify-center gap-[60px] sm:flex pt-[70px] pb-[70px]">
+      <div className="flex flex-wrap justify-center gap-[50px] sm:flex pt-[70px] pb-[70px]">
         {currentCourses.map((c) => (
           <CourseCard
             key={c.id}
