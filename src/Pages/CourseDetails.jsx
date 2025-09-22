@@ -16,13 +16,11 @@ function CourseDetails() {
 const inst = instructors.find((e) => e.uid === course.instructor);
     console.log(inst);
     
-    const handleCourseClick = (Instructor) => {
-      const handleCourseClick = (Instructor) => {
-        if (!Instructor) return;
-        localStorage.setItem("selectedInstructor", JSON.stringify(Instructor));
-        Navigate("/instructorDetials");
-      };
-  };
+    const handleInstructorClick = (instructor) => {
+      if (!instructor) return;
+      localStorage.setItem("selectedInstructor", JSON.stringify(instructor));
+      Navigate("/instructorDetials");
+    };
   
   const [activeTab, setActiveTab] = useState("description");
 
@@ -133,7 +131,7 @@ const inst = instructors.find((e) => e.uid === course.instructor);
                     Instructor
                   </h2>
                   <div className="flex flex-col items-center gap-4 p-5 mb-6 transition-all rounded cursor-pointer lg:flex-row lg:items-start hover:bg-gray-200" 
-                  onClick={()=> {handleCourseClick(inst)}}
+                  onClick={()=> {handleInstructorClick(inst)}}
                   >
                     <img
                       src={inst.image || "https://i.pravatar.cc/100"}

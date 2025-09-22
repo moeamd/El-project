@@ -133,7 +133,9 @@ function Signup({ onClose }) {
         setShowAlert(true);
 
         setTimeout(() => {
+
           onClose();
+
         }, 3000);
       })
       .catch((error) => {
@@ -170,7 +172,9 @@ function Signup({ onClose }) {
         setShowAlert(true);
 
         setTimeout(() => {
+
           onClose();
+
         }, 3000);
       })
       .catch((error) => {
@@ -194,7 +198,7 @@ function Signup({ onClose }) {
         setShowAlert(true);
 
         setTimeout(() => {
-          setShowAlert(false);
+          onClose()
         }, 3000);
       });
   };

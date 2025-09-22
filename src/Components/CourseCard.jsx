@@ -14,6 +14,7 @@ import {
 } from '../features/auth/auth';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 export default function CourseCard({ course, onCardClick }) {
   const { t, i18n } = useTranslation();
@@ -72,6 +73,7 @@ export default function CourseCard({ course, onCardClick }) {
     [localFavorites, course]);
 
   const handleAddToFavorites = async (e) => {
+    
     e.stopPropagation();
     try {
       if (isFavoritesed) {
@@ -100,30 +102,48 @@ export default function CourseCard({ course, onCardClick }) {
     setLocalMyCourses(currentUserInfo?.myCourses || []
     )
   }, [currentUserInfo]);
-  const isMyCoursesed = localMyCourses.some(w => w.id === course.id);
+
+  const isMyCoursesed = useMemo(() => localMyCourses.some(w => w.id === course.id),
+    [localMyCourses, course]);
+    
 
 
-  const handleAddToMyCourses = async (e) => {
-    e.stopPropagation();
-    try {
-      if (isMyCoursesed) {
-        await unEnrollCourse(course.id, userId);
-        setLocalMyCourses(prev => prev.filter(w => w.id !== course.id));
-        setAlertMessage("Removed to My Courses");
-      } else {
-        await enrollCourse(course, userId);
-        setLocalMyCourses(prev => [...prev, course]);
-        setAlertMessage("Added form My Courses");
+    const handleAddToMyCourses = async (e) => {
+      e.stopPropagation();
+    
+      try {
+        if (isMyCoursesed) {
+          // Show confirmation before unenroll
+          const result = await Swal.fire({
+            title: t("common.areYouSure"), // "Are you sure?"
+            text: t("common.unenrollConfirm"), // "You will remove this course from your enrolled courses!"
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: t("common.yesUnenroll"), // "Yes, unenroll"
+            cancelButtonText: t("common.cancel"), // "Cancel"
+            reverseButtons: true,
+          });
+    
+          if (!result.isConfirmed) return; // Exit if cancelled
+    
+          await unEnrollCourse(course.id, userId);
+          setLocalMyCourses((prev) => prev.filter((w) => w.id !== course.id));
+          setAlertMessage(t("common.removedFromMyCourses"));
+        } else {
+          await enrollCourse(course, userId);
+          setLocalMyCourses((prev) => [...prev, course.id]);
+          setAlertMessage(t("common.addedToMyCourses"));
+        }
+    
+        setAlertType("success");
+        setShowAlert(true);
+      } catch (error) {
+        setAlertMessage(error?.message);
+        setAlertType("error");
+        setShowAlert(true);
       }
-      setAlertType("success");
-      setShowAlert(true);
-    } catch (error) {
-      setAlertMessage(error?.message);
-      console.log(error)
-      setAlertType("error");
-      setShowAlert(true);
-    }
-  };
+    };
+    
 
   const createdAt = course.createdAt?.toDate?.()?.toLocaleDateString() || course.createdAt;
   const handleCourseClick = (course) => {

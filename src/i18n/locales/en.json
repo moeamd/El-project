@@ -55,7 +55,13 @@
     "logout": "Logout",
     "noCourseSelected": "No course selected",
     "notFound": "Page Not Found",
-    "pageNotFound": "The page you're looking for doesn't exist."
+    "pageNotFound": "The page you're looking for doesn't exist.",
+    "areYouSure": "Are you sure?",
+    "unenrollConfirm": "You will remove this course from your enrolled courses!",
+    "yesUnenroll": "Yes, unenroll",
+    "cancel": "Cancel",
+    "removedFromMyCourses": "Removed from My Courses",
+    "addedToMyCourses": "Added to My Courses"
   },
   "dashboard": {
     "title": "All Courses",
